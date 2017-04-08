@@ -8,9 +8,12 @@ class Lexeme
 {
 public:
 	LexemeType GetType();
-	LexemeType SetType();
+	void SetType(LexemeType lexemeType);
 	
-	Lexeme(LexemeType lexemeType);
+	LexemeCategory GetCategory();
+	
+	Lexeme(LexemeType lexemeType)
+	:lexemeType(lexemeType) {};
 	
 private:
 	LexemeType lexemeType;

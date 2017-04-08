@@ -1,7 +1,10 @@
 #include <stdio.h>
+#include "Lexer.h"
 
 int main(int argc, char **argv)
 {
-	printf("hello world\n");
+	
+	Lexer lex("test.txt");
+	lex.NextLexeme();
 	return 0;
 }

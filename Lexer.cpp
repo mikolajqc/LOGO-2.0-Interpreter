@@ -1,5 +1,19 @@
 #include <Lexer.h>
 
+Lexer::Lexer(std::string filePath)
+{
+	this->filePath = filePath;
+	if(!OpenFileStream())
+	{
+		printf("Error: No such file directory!");
+	}
+}
+
+Lexer::~Lexer()
+{
+	CloseFileStream();
+}
+
 bool Lexer::OpenFileStream()
 {
 	fileStream.open(filePath.c_str(), std::fstream::in);
@@ -20,45 +34,32 @@ char Lexer::GetNextChar()
 	return result;
 }
 
-bool Lexer::GetNextWord(std::string& newWord)
+std::string Lexer::GetNextWord()
 {
-	char readedCharacter;
-	
-	if(fileStream.eof())
-	{
-		return false;
-	}
+	std::string result;
+	char currentChar;
 	
 	do
 	{
-		fileStream.get(readedCharacter);
+		currentChar = fileStream.get();
 	}
-	while(!fileStream.eof() && std::isspace(readedCharacter));
+	while(!fileStream.eof() && std::isspace(currentChar));
 	
-	while(!fileStream.eof() && std::isgraph(readedCharacter))
+	while(!fileStream.eof() && std::isgraph(currentChar))
 	{
-		newWord.push_back(readedCharacter);
-		fileStream.get(readedCharacter);
+		result.push_back(currentChar);
+		fileStream.get(currentChar);
 	}
 	
-	return true;
+	return result;
 }
 
 Lexeme Lexer::NextLexeme()
 {
 	Lexeme lexeme(EMPTY);
-	if(!OpenFileStream())
-	{
-		printf("Error: No such file directory!");
-	}
 	
-	std::string word;
-	if(GetNextWord(word) == false)
-	{
-		printf("Error: Cannot get next word!");
-	}
-	std::cout << word;
+	std::cout << GetNextWord() << std::endl;
+	std::cout << GetNextWord() << std::endl;
 	
-	CloseFileStream();
 	return lexeme;
 }
