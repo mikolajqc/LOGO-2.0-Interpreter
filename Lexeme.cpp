@@ -1,16 +1,21 @@
 #include "Lexeme.h"
 
-LexemeType Lexeme::GetType()
+std::string Lexeme::GetValue()
 {
-	return lexemeType;
+	return value;
 }
 
-void Lexeme::SetType(LexemeType lexemeType)
+void Lexeme::SetValue(std::string value)
 {
-	this->lexemeType = lexemeType;
+	this->value = value;
 }
 
 LexemeCategory Lexeme::GetCategory()
 {
 	return lexemeCategory;
+}
+
+void Lexeme::SetCategory(LexemeCategory lexemeCategory)
+{
+	this->lexemeCategory = lexemeCategory;
 }

@@ -23,6 +23,7 @@ private:
 	
 	char GetNextChar();
 	std::string GetNextWord();
+	Lexeme CreateLexeme(std::string word);
 };
 
 #endif //LEXER.H

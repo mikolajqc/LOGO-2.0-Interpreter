@@ -14,6 +14,7 @@ enum LexemeCategory
 	KW_PRINT,
 	KW_IF,
 	KW_STOP,
+	OP_PLUS,
 	OP_MINUS,
 	OP_MULTIPLY,
 	OP_DEVIDE,
@@ -27,7 +28,9 @@ enum LexemeCategory
 	OP_COMPARISON,
 	ID_PROCEDURE,
 	ID_VARIABLE,
-	VALUE
+	VALUE,
+	
+	ERROR,
 };
 
 

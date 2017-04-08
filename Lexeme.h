@@ -3,21 +3,24 @@
 
 #include "LexemeType.h"
 #include "LexemeCategory.h"
+#include <string>
 
 class Lexeme
 {
 public:
-	LexemeType GetType();
-	void SetType(LexemeType lexemeType);
+	std::string GetValue();
+	void SetValue(std::string value);
 	
 	LexemeCategory GetCategory();
+	void SetCategory(LexemeCategory lexemeCategory);
 	
-	Lexeme(LexemeType lexemeType)
-	:lexemeType(lexemeType) {};
+	//Lexeme(LexemeType lexemeType)
+	//:lexemeType(lexemeType) {};
 	
 private:
-	LexemeType lexemeType;
+	//LexemeType lexemeType;
 	LexemeCategory lexemeCategory;
+	std::string value;
 };
 
 #endif //LEXEME.H
