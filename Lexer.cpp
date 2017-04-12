@@ -23,7 +23,7 @@ bool Lexer::OpenFileStream()
 
 bool Lexer::CloseFileStream()
 {
-	fileStream.close(); // it can be in destructor
+	fileStream.close(); 
 	return !fileStream.is_open();
 }
 
@@ -143,7 +143,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 			{
 				if(!(std::isalnum(word[i]) || word[i] == '_'))
 				{
-					std::cout << "Error: Cannot recognize " << word << std::endl;
+					std::cout << "Error: Cannot recognize: " << word << std::endl;
 					resultLexeme.SetCategory(ERROR);
 					break;
 				}
@@ -155,7 +155,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 		}
 		else
 		{
-			std::cout << "Error: Cannot recognize " << word << std::endl;
+			std::cout << "Error: Cannot recognize: " << word << std::endl;
 			resultLexeme.SetCategory(ERROR);
 		}
 	}
@@ -170,7 +170,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 		{
 			if(!(std::isalnum(word[i]) || word[i] == '_'))
 			{
-				std::cout << "Error: Cannot recognize " << word << std::endl;
+				std::cout << "Error: Cannot recognize: " << word << std::endl;
 				resultLexeme.SetCategory(ERROR);
 				break;
 			}
@@ -182,7 +182,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	{ 
 		resultLexeme.SetCategory(VALUE);
 		resultLexeme.SetValue(word);
-		
+
 		//int
 		if(std::isdigit(word.front()))
 		{
@@ -190,7 +190,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 			{
 				if(!(std::isdigit(word[i])))
 				{
-					std::cout << "Error: Cannot reecognize " << word << std::endl;
+					std::cout << "Error: Cannot recognize: " << word << std::endl;
 					resultLexeme.SetCategory(ERROR);
 					break;
 				}
@@ -200,12 +200,11 @@ Lexeme Lexer::CreateLexeme(std::string word)
 		//string
 		if(word.front() == '\"')
 		{
-			std::cout << "chuj";
 			for(unsigned int i = 1; i < word.size() - 1; ++i)
 			{
 				if(word[i] == '\"')
 				{
-					std::cout << "Error: Cannot recognize" << word << std::endl;
+					std::cout << "Error: Cannot recognize: " << word << std::endl;
 					resultLexeme.SetCategory(ERROR);
 					break;
 				}
@@ -213,7 +212,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 			
 			if(!(word.back() == '\"'))
 			{
-				std::cout << "Error: Cannot recognize" << word << std::endl;
+				std::cout << "Error: Cannot recognize: " << word << std::endl;
 				resultLexeme.SetCategory(ERROR);
 			}
 			
@@ -224,7 +223,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	//error
 	else
 	{
-		std::cout << "Error: Cannot recognzzize" << word << std::endl;
+		std::cout << "Error: Cannot recognize: " << word << std::endl;
 		resultLexeme.SetCategory(ERROR);
 	}
 	
@@ -233,7 +232,6 @@ Lexeme Lexer::CreateLexeme(std::string word)
 
 std::string Lexer::GetNextWord()
 {
-	//this doesnt supports strings with spaces!
 	std::string result;
 	char currentChar;
 	bool isString = false;
@@ -241,7 +239,6 @@ std::string Lexer::GetNextWord()
 	do
 	{
 		currentChar = fileStream.get();
-		
 	}
 	while(!fileStream.eof() && std::isspace(currentChar));
 	
@@ -250,8 +247,21 @@ std::string Lexer::GetNextWord()
 		isString = true;
 	}
 	
+	if(currentChar == '(' || currentChar == '[' || currentChar == ')' || currentChar == ']')
+	{
+		result.push_back(currentChar);
+		return result;
+	}
+	
 	while(!fileStream.eof() && (std::isgraph(currentChar) || (std::isprint(currentChar) && isString) ))
 	{
+		if(currentChar == '(' || currentChar == '[' || currentChar == ')' || currentChar == ']')
+		{
+			//reset file pointer
+			fileStream.seekg (fileStream.tellg() - (std::streampos)1);
+			break;
+		}
+		
 		result.push_back(currentChar);
 		fileStream.get(currentChar);
 		if(isString && currentChar == '\"') isString = false;
