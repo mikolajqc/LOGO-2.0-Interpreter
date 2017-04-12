@@ -39,6 +39,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	Lexeme resultLexeme;
 	if(word.empty())
 	{
+		resultLexeme.SetCategory(EMPTY);
 		return resultLexeme;
 	}
 	
@@ -46,92 +47,114 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	{
 		resultLexeme.SetCategory(KW_MOVE);
 		resultLexeme.SetValue(word);
+		return resultLexeme;
 	}
 	else if(word == "REPEAT")
 	{
 		resultLexeme.SetCategory(KW_REPEAT);
+		return resultLexeme;
 	}
 	else if(word == "TO")
 	{
 		resultLexeme.SetCategory(KW_TO);
+		return resultLexeme;
 	}
 	else if(word == "END")
 	{
 		resultLexeme.SetCategory(KW_END);
+		return resultLexeme;
 	}
 	else if(word == "PU" || word == "PD" || word =="CS")
 	{
 		resultLexeme.SetCategory(KW_SCREEN);
 		resultLexeme.SetValue(word);
+		return resultLexeme;
 	}
 	else if(word == "SETPC")
 	{
 		resultLexeme.SetCategory(KW_SETPC);
+		return resultLexeme;
 	}
 	else if(word == "OUTPUT")
 	{
 		resultLexeme.SetCategory(KW_OUTPUT);
+		return resultLexeme;
 	}
 	else if(word == "PRINT")
 	{
 		resultLexeme.SetCategory(KW_PRINT);
+		return resultLexeme;
 	}
 	else if(word == "IF")
 	{
 		resultLexeme.SetCategory(KW_IF);
+		return resultLexeme;
 	}
 	else if(word == "STOP")
 	{
 		resultLexeme.SetCategory(KW_STOP);
+		return resultLexeme;
 	}
 	else if(word == "+")
 	{
 		resultLexeme.SetCategory(OP_PLUS);
+		return resultLexeme;
 	}
 	else if(word == "-")
 	{
 		resultLexeme.SetCategory(OP_MINUS);
+		return resultLexeme;
 	}
 	else if(word == "*")
 	{
 		resultLexeme.SetCategory(OP_MULTIPLY);
+		return resultLexeme;
 	}
 	else if(word == "/")
 	{
 		resultLexeme.SetCategory(OP_DEVIDE);
+		return resultLexeme;
 	}
 	else if(word == "&&")
 	{
 		resultLexeme.SetCategory(OP_AND);
+		return resultLexeme;
 	}
 	else if(word =="||")
 	{
 		resultLexeme.SetCategory(OP_OR);
+		return resultLexeme;
 	}
 	else if(word == "[")
 	{
 		resultLexeme.SetCategory(OB_SBRACKET);
+		return resultLexeme;
 	}
 	else if(word == "]")
 	{
 		resultLexeme.SetCategory(CB_SBRACKET);
+		return resultLexeme;
 	}
 	else if(word == "(")
 	{
 		resultLexeme.SetCategory(OB_CBRACKET);
+		return resultLexeme;
 	}
 	else if(word == ")")
 	{
 		resultLexeme.SetCategory(CB_SBRACKET);
+		return resultLexeme;
 	}
 	else if(word == "=")
 	{
 		resultLexeme.SetCategory(OP_ASSIGN);
+		return resultLexeme;
 	}
 	else if(word =="==" || word == "!=" || word == ">" || word == ">=" || word == "<" || word == "<=")
 	{
 		resultLexeme.SetCategory(OP_COMPARISON);
 		resultLexeme.SetValue(word); // change in docu
+		return resultLexeme;
 	}
 	
 	//ID_VARIABLE
@@ -149,10 +172,17 @@ Lexeme Lexer::CreateLexeme(std::string word)
 				}
 			}
 		}
+		else
+		{
+			std::cout << "Error: Cannot recognize " << word << std::endl;
+			resultLexeme.SetCategory(ERROR);
+			return resultLexeme;
+		}
 		
 		resultLexeme.SetCategory(ID_VARIABLE);
 		word.erase(word.begin());
 		resultLexeme.SetValue(word);
+		return resultLexeme;
 	}
 	//id_procedure
 	else if(std::isalpha(word.front()) || word.front() == '_')
@@ -170,6 +200,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 		
 		resultLexeme.SetCategory(ID_PROCEDURE);
 		resultLexeme.SetValue(word);
+		return resultLexeme;
 	}
 	
 	//value
@@ -213,7 +244,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 		}
 		resultLexeme.SetCategory(VALUE);
 		resultLexeme.SetValue(word);
-		
+		return resultLexeme;
 	}
 	//error
 	else
@@ -234,6 +265,7 @@ std::string Lexer::GetNextWord()
 	do
 	{
 		currentChar = fileStream.get();
+		
 	}
 	while(!fileStream.eof() && std::isspace(currentChar));
 	

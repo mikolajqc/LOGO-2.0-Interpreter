@@ -1,4 +1,4 @@
-#ifndef  LEXEMECATEGORY.H
+#ifndef LEXEMECATEGORY.H
 #define LEXEMECATEGORY.H
 
 
@@ -31,6 +31,7 @@ enum LexemeCategory
 	VALUE,
 	
 	ERROR,
+	EMPTY
 };
 
 

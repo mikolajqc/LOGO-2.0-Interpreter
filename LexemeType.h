@@ -23,8 +23,7 @@ enum LexemeType
 	STRING,
 	FLOAT,			//|--VALUE, ID_PROCEDURE or ID_VARIABLE
 	INT,
-	
-	EMPTY
+
 };
 
 
