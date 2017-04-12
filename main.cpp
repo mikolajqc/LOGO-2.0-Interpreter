@@ -6,10 +6,11 @@ int main(int argc, char **argv)
 	
 	Lexer lex("test.txt");
 	Lexeme currentLexeme = lex.NextLexeme();
-	while(currentLexeme.GetCategory() != EMPTY)
+	int i = 0;
+	while(currentLexeme.GetCategory() != EMPTY && i < 50)
 	{
-		std::cout << currentLexeme.GetCategory() << " " << currentLexeme.GetValue() << std::endl;
 		currentLexeme = lex.NextLexeme();
+		++i;
 	}
 	return 0;
 }
