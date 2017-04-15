@@ -1,10 +1,9 @@
-#ifndef  LEXER.H
-#define LEXER.H
-
+#ifndef  LEXER_H
+#define  LEXER_H
 #include <fstream>
 #include <string>
 #include <locale>
-#include <iostream> // do usuniecia
+#include <iostream>
 #include "Lexeme.h"
 
 class Lexer
@@ -26,4 +25,4 @@ private:
 	Lexeme CreateLexeme(std::string word);
 };
 
-#endif //LEXER.H
+#endif //LEXER_H

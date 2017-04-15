@@ -1,7 +1,5 @@
-#ifndef LEXEME.H
-#define LEXEME.H
-
-#include "LexemeType.h"
+#ifndef LEXEME_H
+#define LEXEME_H 
 #include "LexemeCategory.h"
 #include <string>
 
@@ -14,13 +12,9 @@ public:
 	LexemeCategory GetCategory();
 	void SetCategory(LexemeCategory lexemeCategory);
 	
-	//Lexeme(LexemeType lexemeType)
-	//:lexemeType(lexemeType) {};
-	
 private:
-	//LexemeType lexemeType;
 	LexemeCategory lexemeCategory;
 	std::string value;
 };
 
-#endif //LEXEME.H
+#endif //LEXEME_H

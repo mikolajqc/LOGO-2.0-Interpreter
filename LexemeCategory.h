@@ -1,6 +1,5 @@
-#ifndef LEXEMECATEGORY.H
-#define LEXEMECATEGORY.H
-
+#ifndef LEXEMECATEGORY_H
+#define LEXEMECATEGORY_H
 
 enum LexemeCategory
 {
@@ -9,7 +8,7 @@ enum LexemeCategory
 	KW_TO,
 	KW_END,
 	KW_SCREEN,
-	KW_SETPC,// popraw w doku
+	KW_SETPC,// change in docu
 	KW_OUTPUT,
 	KW_PRINT,
 	KW_IF,
@@ -35,4 +34,4 @@ enum LexemeCategory
 };
 
 
-#endif //LEXEMECATEGORY.H
+#endif //LEXEMECATEGORY_H

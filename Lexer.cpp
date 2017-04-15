@@ -257,7 +257,7 @@ std::string Lexer::GetNextWord()
 	{
 		if(currentChar == '(' || currentChar == '[' || currentChar == ')' || currentChar == ']')
 		{
-			//reset file pointer
+			//taking file pointer back
 			fileStream.seekg (fileStream.tellg() - (std::streampos)1);
 			break;
 		}
