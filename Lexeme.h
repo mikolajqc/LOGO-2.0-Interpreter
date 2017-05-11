@@ -15,6 +15,7 @@ public:
 private:
 	LexemeCategory lexemeCategory;
 	std::string value;
+	///osition
 };
 
 #endif //LEXEME_H

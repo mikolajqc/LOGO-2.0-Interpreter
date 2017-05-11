@@ -1,8 +1,10 @@
 #include <stdio.h>
-#include "Lexer.h"
+//#include "Lexer.h"
+#include "Parser.h"
 
 int main(int argc, char **argv)
 {
+	/*
 	
 	Lexer lex("test.txt");
 	Lexeme currentLexeme = lex.NextLexeme();
@@ -12,6 +14,7 @@ int main(int argc, char **argv)
 		currentLexeme = lex.NextLexeme();
 		++i;
 	}
+	*/
 	
 	return 0;
 }

@@ -8,7 +8,7 @@ enum LexemeCategory
 	KW_TO,
 	KW_END,
 	KW_SCREEN,
-	KW_SETPC,// change in docu
+	KW_SETPC,
 	KW_OUTPUT,
 	KW_PRINT,
 	KW_IF,
