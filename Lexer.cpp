@@ -36,7 +36,7 @@ char Lexer::GetNextChar()
 
 Lexeme Lexer::CreateLexeme(std::string word)
 {
-	std::cout << word << " ";
+	//std::cout << word << " ";
 	Lexeme resultLexeme;
 	if(word.empty())
 	{
@@ -121,7 +121,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	}
 	else if(word == ")")
 	{
-		resultLexeme.SetCategory(CB_SBRACKET);
+		resultLexeme.SetCategory(CB_CBRACKET);
 	}
 	else if(word == "=")
 	{

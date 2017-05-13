@@ -2,48 +2,45 @@
 #define PARSER_H
 
 #include "Lexer.h"
+#include "AstNode.h"
 
 class Parser
 {
 public:
 	Parser();
 	~Parser();
+	void start();
 	
-	bool start();
-
 private:
 	Lexer* lexer;
 	Lexeme currentLexeme;
+	bool isLexemeUsed;
+	Lexeme NextLexeme();
 	
-	void setCurrentLexeme();
+	AstNode* astTree;
 	
 	//funkcje rozbioru:
-	
-	bool instructionList();
-	bool instruction();
-	
-	bool assignment();
-	bool exp();
-	bool sExp();
-	bool factor();
-	bool multOp();
-	bool addOp();
-	bool arguments();
-	bool procedureCall();
-	bool out();
-	bool graphics();
-	bool innerInstructionsList();
-	bool condition();
-	bool sCondition();
-	bool tCondition();
-	bool conditional();
-	bool agumentsDec();
-	bool procedureDeclaration();
-	bool loop();
-	bool val();
-	
-	
-
+	bool InstructionList(AstNode* parent);
+	bool Instruction(AstNode* parent);
+	bool Assignment(AstNode* parent);
+	bool Exp(AstNode* parent);
+	bool SExp(AstNode* parent);
+	bool Factor(AstNode* parent);
+	bool MultOp(AstNode* parent);
+	bool AddOp(AstNode* parent);
+	bool Arguments(AstNode* parent);
+	bool ProcedureCall(AstNode* parent);
+	bool Out(AstNode* parent);
+	bool Graphics(AstNode* parent);
+	bool InnerInstructionsList(AstNode* parent);
+	bool Condition(AstNode* parent);
+	bool SCondition(AstNode* parent);
+	bool TCondition(AstNode* parent);
+	bool Conditional(AstNode* parent);
+	bool AgumentsDec(AstNode* parent);
+	bool ProcedureDeclaration(AstNode* parent);
+	bool Loop(AstNode* parent);
+	bool Val(AstNode* parent);
 };
 
 #endif // PARSER_H
