@@ -12,6 +12,9 @@ public:
 	void AddChild(AstNode* astNode);
 	//tu bedzie execute gdzies
 	
+	//ForDebug only:
+	AstNode* getParent();
+	
 private:
 	AstNode* parent;
 	std::vector<AstNode*> children;

@@ -18,3 +18,8 @@ void AstNode::AddChild(AstNode* astNode)
 {
 	children.push_back(astNode);
 }
+
+AstNode* AstNode::getParent()
+{
+	return parent;
+}

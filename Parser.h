@@ -41,6 +41,9 @@ private:
 	bool ProcedureDeclaration(AstNode* parent);
 	bool Loop(AstNode* parent);
 	bool Val(AstNode* parent);
+	
+	//For Debug only:
+	int depthCalculate(AstNode* astNode);
 };
 
 #endif // PARSER_H

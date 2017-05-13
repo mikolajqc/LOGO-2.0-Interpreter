@@ -44,6 +44,8 @@ void Parser::start()
 
 bool Parser::InstructionList(AstNode* parent)
 {
+	int depth = depthCalculate(parent);
+	
 	AstNode* currentAstNode = new AstNode(parent);
 	
 	if(Instruction(currentAstNode)/* && InstructionList(currentAstNode)*/)
@@ -53,10 +55,12 @@ bool Parser::InstructionList(AstNode* parent)
 	}
 	else
 	{
-		delete currentAstNode;
+		
 	}
 	
-	return true;
+	delete currentAstNode;
+	//std::cout << "asd" <<std::endl;
+	return false;
 }
 
 bool Parser::Instruction(AstNode* parent)
@@ -69,6 +73,7 @@ bool Parser::Instruction(AstNode* parent)
 		return true;
 	}
 	delete currentAstNode;
+	
 	return false;// kiedys kiedy jest EOF trzeba zwrocic false;
 }
 
@@ -83,6 +88,7 @@ bool Parser::Assignment(AstNode* parent)
 		isLexemeUsed = true;
 		if(NextLexeme().GetCategory() == OP_ASSIGN)
 		{
+			std:: cout << "OP_ASSIGN" << std::endl;
 			isLexemeUsed = true;
 			
 			if(Exp(currentAstNode))
@@ -122,6 +128,7 @@ bool Parser::Exp(AstNode* parent)
 		return true;
 	}
 	
+	
 	delete currentAstNode;
 	return false;
 }
@@ -132,14 +139,23 @@ bool Parser::SExp(AstNode* parent)
 	AstNode* currentAstNode = new AstNode(parent);
 	if(Factor(parent))
 	{
-		//if(MultOp(parent)) // optional
-		//{
-			//s_exp
-			
-		//}
+		if(MultOp(parent)) // optional
+		{
+			if(SExp(parent))
+			{
+				parent->AddChild(currentAstNode);
+				return true;
+			}
+			else
+			{
+				delete currentAstNode;
+				return false;
+			}
+		}
 		parent->AddChild(currentAstNode);
 		return true;
 	}
+	
 	
 	delete currentAstNode;
 	return false;
@@ -157,6 +173,7 @@ bool Parser::Factor(AstNode* parent)
 	} 
 	else if (ProcedureCall(parent))
 	{
+		//std::cout <<"a" << std::endl;
 		parent->AddChild(currentAstNode);
 		return true;
 	}
@@ -326,4 +343,18 @@ bool Parser::Val(AstNode* parent)
 	
 	delete currentAstNode;
 	return false;
+}
+
+int Parser::depthCalculate(AstNode* astNode)
+{
+	int result = 0;
+	
+	AstNode* currentNode = astNode;
+	while(currentNode->getParent() != nullptr)
+	{
+		++result;
+		currentNode = currentNode->getParent();
+	}
+	
+	return result;
 }
