@@ -845,8 +845,53 @@ int Parser::Loop(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
-	
 	std:: cout << "Loop" << std::endl;
+	
+	if(NextLexeme().GetCategory() == KW_REPEAT)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_REPEAT" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			if(NextLexeme().GetCategory() == OB_SBRACKET)
+			{
+				WritePrefix(currentAstNode);
+				std:: cout << " KW_REPEAT" << std::endl;
+				isLexemeUsed = true;
+				
+				if(InnerInstructionsList(currentAstNode) == 2)
+				{
+					if(NextLexeme().GetCategory() == CB_SBRACKET)
+					{
+						WritePrefix(currentAstNode);
+						std:: cout << " KW_REPEAT" << std::endl;
+						isLexemeUsed = true;
+						
+						parent->AddChild(currentAstNode);
+						return 2; 
+					}
+				}
+				else
+				{
+					delete currentAstNode;
+					return 0;
+				}
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
+			}
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
+	
 	
 	delete currentAstNode;
 	return 1;
