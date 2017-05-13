@@ -115,41 +115,71 @@ int Parser::Instruction(AstNode* parent)
 	}
 	std::cout << "Instruction" <<std::endl;
 	
-	int callResult = Assignment(currentAstNode);
+	int instructionResult = Assignment(currentAstNode);
 	
-	if(callResult == 2)
+	if(instructionResult == 2)
 	{
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
-	else if(callResult == 0) // error
+	else if(instructionResult == 0) // error
 	{
 		delete currentAstNode;
 		return 0;
 	}
-	//here we ve got callResult eq to 1
-	/*
-	if(ProcedureCall(currentAstNode))
+	
+	instructionResult = ProcedureCall(currentAstNode);
+	
+	if(instructionResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
-	if(Conditional(currentAstNode))
+	else if(instructionResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	instructionResult = Conditional(currentAstNode);
+	
+	if(instructionResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
-	if(Loop(currentAstNode))
+	else if(instructionResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	instructionResult = Loop(currentAstNode);
+	
+	if(instructionResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
-	if(Graphics(currentAstNode))
+	else if(instructionResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	instructionResult = Graphics(currentAstNode);
+	
+	if(instructionResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
-	*/
+	else if(instructionResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
 	
 	delete currentAstNode;
 	return 1;// kiedys kiedy jest EOF trzeba zwrocic false;
@@ -456,7 +486,32 @@ int Parser::AddOp(AstNode* parent)
 
 int Parser::Arguments(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
 	std:: cout << "Arguments" << std::endl;
+	
+	int expResult = Exp(currentAstNode);
+	
+	if(expResult == 2)
+	{
+		Arguments(currentAstNode);
+		
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	else if(expResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	delete currentAstNode;
 	return 1;
 }
 
@@ -471,6 +526,24 @@ int Parser::ProcedureCall(AstNode* parent)
 		std::cout << " ";
 	}
 	std:: cout << "ProcedureCall" << std::endl;
+	
+	if(NextLexeme().GetCategory() == ID_PROCEDURE)
+	{
+		isLexemeUsed = true;
+		
+		if(Arguments(currentAstNode) == 2)
+		{
+			parent->AddChild(currentAstNode);
+			return 2;
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
+	
+	
 	delete currentAstNode;
 	return 1;
 }
