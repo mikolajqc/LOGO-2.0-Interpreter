@@ -182,6 +182,19 @@ int Parser::Instruction(AstNode* parent)
 	}
 	
 	
+	instructionResult = Out(currentAstNode);
+	
+	if(instructionResult == 2)
+	{
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	else if(instructionResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
 	delete currentAstNode;
 	return 1;// kiedys kiedy jest EOF trzeba zwrocic false;
 }
@@ -559,6 +572,52 @@ int Parser::Out(AstNode* parent)
 	}
 	std:: cout << "Out" << std::endl;
 	
+	if(NextLexeme().GetCategory() == KW_OUTPUT)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_OUTPUT" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			parent->AddChild(currentAstNode);
+			return 2;
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
+	
+	if(NextLexeme().GetCategory() == KW_PRINT)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_PRINT" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			parent->AddChild(currentAstNode);
+			return 2;
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
+	
+	if(NextLexeme().GetCategory() == KW_STOP)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_STOP" << std::endl;
+		isLexemeUsed = true;
+		
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	
 	delete currentAstNode;
 	return 1;
 }
@@ -574,6 +633,67 @@ int Parser::Graphics(AstNode* parent)
 	}
 	
 	std:: cout << "Graphics" << std::endl;
+	
+	if(NextLexeme().GetCategory() == KW_MOVE)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_MOVE" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			parent->AddChild(currentAstNode);
+			return 2;
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
+	
+	if(NextLexeme().GetCategory() == KW_SETPC)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_SETPC" << std::endl;
+		isLexemeUsed = true;
+		
+		if(NextLexeme().GetCategory() == OB_SBRACKET)
+		{
+			WritePrefix(currentAstNode);
+			std:: cout << " OB_SBRACKET" << std::endl;
+			isLexemeUsed = true;
+			
+			if((Exp(currentAstNode) == 2)  && (Exp(currentAstNode) == 2) && (Exp(currentAstNode) == 2))
+			{
+				if(NextLexeme().GetCategory() == CB_SBRACKET)
+				{
+					WritePrefix(currentAstNode);
+					std:: cout << " CB_SBRACKET" << std::endl;
+					isLexemeUsed = true;
+					
+					parent->AddChild(currentAstNode);
+					return 2;
+				}
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
+			}
+		}
+	}
+	
+	if(NextLexeme().GetCategory() == KW_SCREEN)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_SCREEN" << std::endl;
+		isLexemeUsed = true;
+		
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	
 	
 	delete currentAstNode;
 	return 1;
@@ -815,15 +935,30 @@ int Parser::Conditional(AstNode* parent)
 	return 1;
 }
 
-int Parser::AgumentsDec(AstNode* parent)
+int Parser::ArgumentsDec(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "ArgumentsDec" << std::endl;
 	
-	delete currentAstNode;
-	return 1;
+	if(NextLexeme().GetCategory() == ID_VARIABLE)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " ID_VARIABLE" << std::endl;
+		isLexemeUsed = true;
+		
+		if(ArgumentsDec(currentAstNode) == 2)
+		{
+			
+		}
+		
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	
+	parent->AddChild(currentAstNode); //jesli nic nie ma to jest ";"
+	return 2;
 }
 
 int Parser::ProcedureDeclaration(AstNode* parent)
@@ -836,6 +971,52 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 		std::cout << " ";
 	}
 	std:: cout << "ProcedureDeclaration" << std::endl;
+	
+	if(NextLexeme().GetCategory() == KW_TO)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_TO" << std::endl;
+		isLexemeUsed = true;
+		
+		if(NextLexeme().GetCategory() == ID_PROCEDURE)
+		{
+			WritePrefix(currentAstNode);
+			std:: cout << " ID_PROCEDURE" << std::endl;
+			isLexemeUsed = true;
+			
+			if(ArgumentsDec(currentAstNode) == 2)
+			{
+				///WE HAVE TO CHANGE GRAMATICS
+				if(InnerInstructionsList(currentAstNode) == 2)
+				{
+					if(NextLexeme().GetCategory() == KW_END)
+					{
+						WritePrefix(currentAstNode);
+						std:: cout << " KW_END" << std::endl;
+						isLexemeUsed = true;
+						
+						parent->AddChild(currentAstNode);
+						return 2;
+					}
+				}
+				else
+				{
+					delete currentAstNode;
+					return 0;
+				}
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
+			}
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
 	
 	delete currentAstNode;
 	return 1;

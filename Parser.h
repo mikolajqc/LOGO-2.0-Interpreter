@@ -38,7 +38,7 @@ private:
 	int SCondition(AstNode* parent);
 	int TCondition(AstNode* parent);
 	int Conditional(AstNode* parent);
-	int AgumentsDec(AstNode* parent);
+	int ArgumentsDec(AstNode* parent);
 	int ProcedureDeclaration(AstNode* parent);
 	int Loop(AstNode* parent);
 	int Val(AstNode* parent);
