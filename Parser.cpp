@@ -32,13 +32,13 @@ void Parser::start()
 {
 	astTree = new AstNode(nullptr);
 	std::cout << "start" << std::endl;
-	if(InstructionList(astTree) == 0)
+	if(InstructionList(astTree) == 2)
 	{
-		std::cout << "error!" << std::endl;
+		std::cout << "succes!" << std::endl;
 	}
 	else
 	{
-		std::cout << "success!" << std::endl;
+		std::cout << "error!" << std::endl;
 	}
 }
 
@@ -93,11 +93,11 @@ int Parser::InstructionList(AstNode* parent)
 		return 0;
 	}
 	
-	else //tylko wtedy mozna zwrocic ok, bo procedure declaration  = 1
+	//spawdzamy czy na koncu pliku
+	if(NextLexeme().GetCategory() == EMPTY) 
 	{
-		//check it !!! may cause EOF errors?
-		parent->AddChild(currentAstNode);
-		return 2;
+		delete currentAstNode;
+		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
 	}
 	
 	delete currentAstNode;
@@ -152,7 +152,7 @@ int Parser::Instruction(AstNode* parent)
 	*/
 	
 	delete currentAstNode;
-	return false;// kiedys kiedy jest EOF trzeba zwrocic false;
+	return 1;// kiedys kiedy jest EOF trzeba zwrocic false;
 }
 
 int Parser::Assignment(AstNode* parent)
