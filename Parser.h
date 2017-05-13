@@ -36,6 +36,7 @@ private:
 	int InnerInstructionsList(AstNode* parent);
 	int Condition(AstNode* parent);
 	int SCondition(AstNode* parent);
+	int QCondition(AstNode* parent);
 	int TCondition(AstNode* parent);
 	int Conditional(AstNode* parent);
 	int ArgumentsDec(AstNode* parent);

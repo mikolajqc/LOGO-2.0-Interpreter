@@ -544,10 +544,37 @@ int Parser::ProcedureCall(AstNode* parent)
 		std:: cout << " ID_PROCEDURE" << std::endl;
 		isLexemeUsed = true;
 		
-		if(Arguments(currentAstNode) == 2)
+		if(NextLexeme().GetCategory() == OB_SBRACKET)
 		{
-			parent->AddChild(currentAstNode);
-			return 2;
+			WritePrefix(currentAstNode);
+			std:: cout << " OB_SBRACKET" << std::endl;
+			isLexemeUsed = true;
+			
+			if(Arguments(currentAstNode) == 2)
+			{
+				
+				if(NextLexeme().GetCategory() == CB_SBRACKET)
+				{
+					WritePrefix(currentAstNode);
+					std:: cout << " CB_SBRACKET" << std::endl;
+					isLexemeUsed = true;
+					
+					parent->AddChild(currentAstNode);
+					return 2;
+					
+				}
+				else
+				{
+					delete currentAstNode;
+					return 0;
+				}
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
+			}
+			
 		}
 		else
 		{
@@ -786,9 +813,9 @@ int Parser::SCondition(AstNode* parent)
 	
 	std:: cout << "SCondition" << std::endl;
 	
-	int tConditionResult = TCondition(currentAstNode);
+	int qConditionResult = QCondition(currentAstNode);
 	
-	if(tConditionResult == 2)
+	if(qConditionResult == 2)
 	{
 		if(NextLexeme().GetCategory() == OP_AND)
 		{
@@ -797,6 +824,48 @@ int Parser::SCondition(AstNode* parent)
 			isLexemeUsed = true;
 			
 			if(SCondition(currentAstNode) == 2)
+			{
+				parent->AddChild(currentAstNode);
+				return 2; 
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0; 
+			}
+		}
+		
+		parent->AddChild(currentAstNode);
+		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
+	}
+	else if(qConditionResult == 0)
+	{
+		delete currentAstNode;
+		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+	}
+	
+	delete currentAstNode;
+	return 1;
+}
+
+int Parser::QCondition(AstNode* parent)
+{
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
+	std:: cout << "QCondition" << std::endl;
+	
+	int tConditionResult = TCondition(currentAstNode);
+	
+	if(tConditionResult == 2)
+	{
+		if(NextLexeme().GetCategory() == OP_COMPARISON)
+		{
+			WritePrefix(currentAstNode);
+			std:: cout << " OP_COMPARISON" << std::endl;
+			isLexemeUsed = true;
+			
+			if(TCondition(currentAstNode) == 2)
 			{
 				parent->AddChild(currentAstNode);
 				return 2; 
@@ -833,12 +902,12 @@ int Parser::TCondition(AstNode* parent)
 		std:: cout << " OB_CBRACKET" << std::endl;
 		isLexemeUsed = true;
 		
-		if(Exp(currentAstNode) == 2)
+		if(Condition(currentAstNode) == 2)
 		{
 			if(NextLexeme().GetCategory() == CB_CBRACKET)
 			{
 				WritePrefix(currentAstNode);
-				std:: cout << " OB_CBRACKET" << std::endl;
+				std:: cout << " CB_CBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
 				parent->AddChild(currentAstNode);
@@ -986,18 +1055,30 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 			
 			if(ArgumentsDec(currentAstNode) == 2)
 			{
-				///WE HAVE TO CHANGE GRAMATICS
-				if(InnerInstructionsList(currentAstNode) == 2)
+				if(NextLexeme().GetCategory() == OB_SBRACKET)
 				{
-					if(NextLexeme().GetCategory() == KW_END)
+					WritePrefix(currentAstNode);
+					std:: cout << " OB_SBRACKET" << std::endl;
+					isLexemeUsed = true;
+					///WE HAVE TO CHANGE GRAMATICS
+					if(InnerInstructionsList(currentAstNode) == 2)
 					{
-						WritePrefix(currentAstNode);
-						std:: cout << " KW_END" << std::endl;
-						isLexemeUsed = true;
-						
-						parent->AddChild(currentAstNode);
-						return 2;
+						if(NextLexeme().GetCategory() == CB_SBRACKET)
+						{
+							WritePrefix(currentAstNode);
+							std:: cout << " CB_SBRACKET" << std::endl;
+							isLexemeUsed = true;
+							
+							parent->AddChild(currentAstNode);
+							return 2;
+						}
 					}
+					else
+					{
+						delete currentAstNode;
+						return 0;
+					}
+					
 				}
 				else
 				{
