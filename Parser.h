@@ -43,7 +43,9 @@ private:
 	bool Val(AstNode* parent);
 	
 	//For Debug only:
-	int depthCalculate(AstNode* astNode);
+	int DepthCalculate(AstNode* astNode);
+	void WritePrefix(AstNode* astNode);
+	
 };
 
 #endif // PARSER_H

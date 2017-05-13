@@ -46,21 +46,41 @@ bool Parser::InstructionList(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
+	WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
 	
-	if(Instruction(currentAstNode)/* && InstructionList(currentAstNode)*/)
+	if(Instruction(currentAstNode))
 	{
-		parent->AddChild(currentAstNode);
-		return true;
+		if(InstructionList(currentAstNode))
+		{
+			parent->AddChild(currentAstNode);
+			return true;
+		}
+		else
+		{
+			delete currentAstNode;
+			return false;
+		}
+
+	}
+	else if(ProcedureDeclaration(currentAstNode))
+	{
+		if(InstructionList(currentAstNode))
+		{
+			WritePrefix(currentAstNode);
+			//std::cout << " TODO: procedure declaration" <<std::endl;
+		}
+		else
+		{
+			delete currentAstNode;
+			return false;
+		}
 	}
 	else
 	{
-		
+		//check it !!! may cause EOF errors?
+		parent->AddChild(currentAstNode);
+		return true;
 	}
 	
 	delete currentAstNode;
@@ -71,20 +91,41 @@ bool Parser::Instruction(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
 	}
 	std::cout << "Instruction" <<std::endl;
 	
-	if(Assignment(parent))
+	if(Assignment(currentAstNode))
 	{
 		parent->AddChild(currentAstNode);
 		return true;
 	}
-	delete currentAstNode;
+	if(ProcedureCall(currentAstNode))
+	{
+		parent->AddChild(currentAstNode);
+		return true;
+	}
+	if(Conditional(currentAstNode))
+	{
+		parent->AddChild(currentAstNode);
+		return true;
+	}
+	if(Loop(currentAstNode))
+	{
+		parent->AddChild(currentAstNode);
+		return true;
+	}
+	if(Graphics(currentAstNode))
+	{
+		parent->AddChild(currentAstNode);
+		return true;
+	}
 	
+	
+	delete currentAstNode;
 	return false;// kiedys kiedy jest EOF trzeba zwrocic false;
 }
 
@@ -93,7 +134,7 @@ bool Parser::Assignment(AstNode* parent)
 	
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -136,7 +177,7 @@ bool Parser::Exp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -171,7 +212,7 @@ bool Parser::SExp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -206,7 +247,7 @@ bool Parser::Factor(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -260,7 +301,7 @@ bool Parser::MultOp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -298,7 +339,7 @@ bool Parser::AddOp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -342,7 +383,7 @@ bool Parser::ProcedureCall(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	
 	for(unsigned int i = 0; i < depth; ++i)
 	{
@@ -355,61 +396,126 @@ bool Parser::ProcedureCall(AstNode* parent)
 
 bool Parser::Out(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
 	std:: cout << "Out" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::Graphics(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
+	
 	std:: cout << "Graphics" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::InnerInstructionsList(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
+	
 	std:: cout << "InnerInsrucionsList" << std::endl;
 	return false;
 }
 
 bool Parser::Condition(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "Condition" << std::endl;
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::SCondition(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "SCondition" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::TCondition(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "TCondition" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::Conditional(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "Conditional" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::AgumentsDec(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "ArgumentsDec" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::ProcedureDeclaration(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
 	std:: cout << "ProcedureDeclaration" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
 bool Parser::Loop(AstNode* parent)
 {
+	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	
 	std:: cout << "Loop" << std::endl;
+	
+	delete currentAstNode;
 	return false;
 }
 
@@ -417,7 +523,7 @@ bool Parser::Val(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = depthCalculate(currentAstNode);
+	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
 	{
 		std::cout << " ";
@@ -451,7 +557,7 @@ bool Parser::Val(AstNode* parent)
 	return false;
 }
 
-int Parser::depthCalculate(AstNode* astNode)
+int Parser::DepthCalculate(AstNode* astNode)
 {
 	int result = 0;
 	
@@ -463,4 +569,13 @@ int Parser::depthCalculate(AstNode* astNode)
 	}
 	
 	return result;
+}
+
+void Parser::WritePrefix(AstNode* astNode)
+{
+	unsigned int depth = DepthCalculate(astNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
 }
