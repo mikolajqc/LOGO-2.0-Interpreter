@@ -20,27 +20,28 @@ private:
 	AstNode* astTree;
 	
 	//funkcje rozbioru:
-	bool InstructionList(AstNode* parent);
-	bool Instruction(AstNode* parent);
-	bool Assignment(AstNode* parent);
-	bool Exp(AstNode* parent);
-	bool SExp(AstNode* parent);
-	bool Factor(AstNode* parent);
-	bool MultOp(AstNode* parent);
-	bool AddOp(AstNode* parent);
-	bool Arguments(AstNode* parent);
-	bool ProcedureCall(AstNode* parent);
-	bool Out(AstNode* parent);
-	bool Graphics(AstNode* parent);
-	bool InnerInstructionsList(AstNode* parent);
-	bool Condition(AstNode* parent);
-	bool SCondition(AstNode* parent);
-	bool TCondition(AstNode* parent);
-	bool Conditional(AstNode* parent);
-	bool AgumentsDec(AstNode* parent);
-	bool ProcedureDeclaration(AstNode* parent);
-	bool Loop(AstNode* parent);
-	bool Val(AstNode* parent);
+	///3 values 0 - error, 1 - not recognize, 2 - success
+	int InstructionList(AstNode* parent);
+	int Instruction(AstNode* parent);
+	int Assignment(AstNode* parent);
+	int Exp(AstNode* parent);
+	int SExp(AstNode* parent);
+	int Factor(AstNode* parent);
+	int MultOp(AstNode* parent);
+	int AddOp(AstNode* parent);
+	int Arguments(AstNode* parent);
+	int ProcedureCall(AstNode* parent);
+	int Out(AstNode* parent);
+	int Graphics(AstNode* parent);
+	int InnerInstructionsList(AstNode* parent);
+	int Condition(AstNode* parent);
+	int SCondition(AstNode* parent);
+	int TCondition(AstNode* parent);
+	int Conditional(AstNode* parent);
+	int AgumentsDec(AstNode* parent);
+	int ProcedureDeclaration(AstNode* parent);
+	int Loop(AstNode* parent);
+	int Val(AstNode* parent);
 	
 	//For Debug only:
 	int DepthCalculate(AstNode* astNode);

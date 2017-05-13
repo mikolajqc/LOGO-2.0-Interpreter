@@ -32,62 +32,79 @@ void Parser::start()
 {
 	astTree = new AstNode(nullptr);
 	std::cout << "start" << std::endl;
-	if(InstructionList(astTree))
-	{
-		std::cout << "success!" << std::endl;
-	}
-	else
+	if(InstructionList(astTree) == 0)
 	{
 		std::cout << "error!" << std::endl;
 	}
+	else
+	{
+		std::cout << "success!" << std::endl;
+	}
 }
 
-bool Parser::InstructionList(AstNode* parent)
+int Parser::InstructionList(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
 	WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
 	
-	if(Instruction(currentAstNode))
+	int instructionResult = Instruction(currentAstNode);
+	if(instructionResult == 2)
 	{
-		if(InstructionList(currentAstNode))
+		if(InstructionList(currentAstNode) == 2)
 		{
 			parent->AddChild(currentAstNode);
-			return true;
+			return 2;
 		}
 		else
 		{
 			delete currentAstNode;
-			return false;
+			return 0; // im sure that here is an error intructin list 0 or 1
 		}
 
 	}
-	else if(ProcedureDeclaration(currentAstNode))
+	else if(instructionResult == 0)
 	{
-		if(InstructionList(currentAstNode))
+		delete currentAstNode;
+		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+	}
+	
+	//instruction == 1 nie wie co zrobic zatem proba rozpoznania przez procedure declaration
+	int procedureDeclarationResult = ProcedureDeclaration(currentAstNode);
+	
+	if(procedureDeclarationResult == 2) //instrctinresult 1
+	{
+		if(InstructionList(currentAstNode) == 2)
 		{
 			WritePrefix(currentAstNode);
-			//std::cout << " TODO: procedure declaration" <<std::endl;
+			parent->AddChild(currentAstNode);
+			return 2;
 		}
 		else
 		{
 			delete currentAstNode;
-			return false;
+			return 0;
 		}
 	}
-	else
+	else if(procedureDeclarationResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	else //tylko wtedy mozna zwrocic ok, bo procedure declaration  = 1
 	{
 		//check it !!! may cause EOF errors?
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
-bool Parser::Instruction(AstNode* parent)
+int Parser::Instruction(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -98,11 +115,12 @@ bool Parser::Instruction(AstNode* parent)
 	}
 	std::cout << "Instruction" <<std::endl;
 	
-	if(Assignment(currentAstNode))
+	if(Assignment(currentAstNode) == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
+	/*
 	if(ProcedureCall(currentAstNode))
 	{
 		parent->AddChild(currentAstNode);
@@ -123,13 +141,13 @@ bool Parser::Instruction(AstNode* parent)
 		parent->AddChild(currentAstNode);
 		return true;
 	}
-	
+	*/
 	
 	delete currentAstNode;
 	return false;// kiedys kiedy jest EOF trzeba zwrocic false;
 }
 
-bool Parser::Assignment(AstNode* parent)
+int Parser::Assignment(AstNode* parent)
 {
 	
 	AstNode* currentAstNode = new AstNode(parent);
@@ -159,21 +177,31 @@ bool Parser::Assignment(AstNode* parent)
 			std:: cout << " OP_ASSIGN" << std::endl;
 			isLexemeUsed = true;
 			
-			if(Exp(currentAstNode))
+			if(Exp(currentAstNode) == 2)
 			{
 				//TODO exp();
 				parent->AddChild(currentAstNode);
-				return true;
+				return 2;
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
 			}
 			
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
 		}
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
-bool Parser::Exp(AstNode* parent)
+int Parser::Exp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -184,31 +212,31 @@ bool Parser::Exp(AstNode* parent)
 	}
 	std:: cout << "Exp" << std::endl;
 	
-	if(SExp(currentAstNode))
+	if(SExp(currentAstNode) == 2)
 	{
-		if(AddOp(currentAstNode)) // optional
+		if(AddOp(currentAstNode) == 2) // optional
 		{
-			if(Exp(currentAstNode))
+			if(Exp(currentAstNode) == 2)
 			{
 				parent->AddChild(currentAstNode);
-				return true;
+				return 2;
 			}
 			else
 			{
 				delete currentAstNode;
-				return false;
+				return 0;
 			}
 		}
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	
 	delete currentAstNode;
-	return false;
+	return 0;
 }
 
-bool Parser::SExp(AstNode* parent)
+int Parser::SExp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -219,31 +247,31 @@ bool Parser::SExp(AstNode* parent)
 	}
 	std:: cout << "SExp" << std::endl;
 	
-	if(Factor(currentAstNode))
+	if(Factor(currentAstNode) == 2)
 	{
-		if(MultOp(currentAstNode)) // optional
+		if(MultOp(currentAstNode) == 2) // optional
 		{
-			if(SExp(currentAstNode))
+			if(SExp(currentAstNode) == 2)
 			{
 				parent->AddChild(currentAstNode);
-				return true;
+				return 2;
 			}
 			else
 			{
 				delete currentAstNode;
-				return false;
+				return 0;
 			}
 		}
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	
 	delete currentAstNode;
-	return false;
+	return 0;
 }
 
-bool Parser::Factor(AstNode* parent)
+int Parser::Factor(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -254,10 +282,12 @@ bool Parser::Factor(AstNode* parent)
 	}
 	std:: cout << "Factor" << std::endl;
 	
-	if(Val(currentAstNode))
+	int valResult = Val(currentAstNode);
+	
+	if(valResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	} 
 	else if (ProcedureCall(currentAstNode))
 	{
@@ -297,7 +327,7 @@ bool Parser::Factor(AstNode* parent)
 	return false;
 }
 
-bool Parser::MultOp(AstNode* parent)
+int Parser::MultOp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -335,7 +365,7 @@ bool Parser::MultOp(AstNode* parent)
 	return false;
 }
 
-bool Parser::AddOp(AstNode* parent)
+int Parser::AddOp(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -373,13 +403,13 @@ bool Parser::AddOp(AstNode* parent)
 	return false;
 }
 
-bool Parser::Arguments(AstNode* parent)
+int Parser::Arguments(AstNode* parent)
 {
 	std:: cout << "Arguments" << std::endl;
 	return false;
 }
 
-bool Parser::ProcedureCall(AstNode* parent)
+int Parser::ProcedureCall(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -394,7 +424,7 @@ bool Parser::ProcedureCall(AstNode* parent)
 	return false;
 }
 
-bool Parser::Out(AstNode* parent)
+int Parser::Out(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -409,7 +439,7 @@ bool Parser::Out(AstNode* parent)
 	return false;
 }
 
-bool Parser::Graphics(AstNode* parent)
+int Parser::Graphics(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -425,7 +455,7 @@ bool Parser::Graphics(AstNode* parent)
 	return false;
 }
 
-bool Parser::InnerInstructionsList(AstNode* parent)
+int Parser::InnerInstructionsList(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -439,7 +469,7 @@ bool Parser::InnerInstructionsList(AstNode* parent)
 	return false;
 }
 
-bool Parser::Condition(AstNode* parent)
+int Parser::Condition(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -449,7 +479,7 @@ bool Parser::Condition(AstNode* parent)
 	return false;
 }
 
-bool Parser::SCondition(AstNode* parent)
+int Parser::SCondition(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -460,7 +490,7 @@ bool Parser::SCondition(AstNode* parent)
 	return false;
 }
 
-bool Parser::TCondition(AstNode* parent)
+int Parser::TCondition(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -471,7 +501,7 @@ bool Parser::TCondition(AstNode* parent)
 	return false;
 }
 
-bool Parser::Conditional(AstNode* parent)
+int Parser::Conditional(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -482,7 +512,7 @@ bool Parser::Conditional(AstNode* parent)
 	return false;
 }
 
-bool Parser::AgumentsDec(AstNode* parent)
+int Parser::AgumentsDec(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -493,7 +523,7 @@ bool Parser::AgumentsDec(AstNode* parent)
 	return false;
 }
 
-bool Parser::ProcedureDeclaration(AstNode* parent)
+int Parser::ProcedureDeclaration(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -508,7 +538,7 @@ bool Parser::ProcedureDeclaration(AstNode* parent)
 	return false;
 }
 
-bool Parser::Loop(AstNode* parent)
+int Parser::Loop(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
@@ -519,7 +549,7 @@ bool Parser::Loop(AstNode* parent)
 	return false;
 }
 
-bool Parser::Val(AstNode* parent)
+int Parser::Val(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
@@ -539,7 +569,7 @@ bool Parser::Val(AstNode* parent)
 		}
 		std:: cout << " ID_VARIABLE" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2; //everthing is ok
 	}
 	else if(NextLexeme().GetCategory() == VALUE)
 	{
@@ -550,11 +580,11 @@ bool Parser::Val(AstNode* parent)
 		}
 		std:: cout << " VALUE" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1; //i dont know what is it but i m not sure if it is an error
 }
 
 int Parser::DepthCalculate(AstNode* astNode)
