@@ -96,7 +96,8 @@ int Parser::InstructionList(AstNode* parent)
 	//spawdzamy czy na koncu pliku
 	if(NextLexeme().GetCategory() == EMPTY) 
 	{
-		delete currentAstNode;
+		//delete currentAstNode;
+		parent->AddChild(currentAstNode);
 		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
 	}
 	
@@ -128,7 +129,7 @@ int Parser::Instruction(AstNode* parent)
 		return 0;
 	}
 	
-	instructionResult = ProcedureCall(currentAstNode);
+	instructionResult = ProcedureCall(currentAstNode); //za tym nie mozna definiowac zmiennych!
 	
 	if(instructionResult == 2)
 	{
@@ -511,24 +512,23 @@ int Parser::Arguments(AstNode* parent)
 		return 0;
 	}
 	
-	delete currentAstNode;
-	return 1;
+	//nie rozpoznajemy kolejnego argumentu moze tam byc eof lub cokolwiek innego co nie jest exp
+	
+	parent->AddChild(currentAstNode); // to jest ";"
+	return 2;
 }
 
 int Parser::ProcedureCall(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
+	WritePrefix(currentAstNode);
 	std:: cout << "ProcedureCall" << std::endl;
 	
 	if(NextLexeme().GetCategory() == ID_PROCEDURE)
 	{
+		WritePrefix(currentAstNode);
+		std:: cout << " ID_PROCEDURE" << std::endl;
 		isLexemeUsed = true;
 		
 		if(Arguments(currentAstNode) == 2)
@@ -582,14 +582,41 @@ int Parser::Graphics(AstNode* parent)
 int Parser::InnerInstructionsList(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
+	WritePrefix(currentAstNode);
+	std:: cout << "InnerInsrucionsList" << std::endl;
 	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
+	int instructionResult = Instruction(currentAstNode);
+	if(instructionResult == 2)
 	{
-		std::cout << " ";
+		if(InnerInstructionsList(currentAstNode) == 2)
+		{
+			parent->AddChild(currentAstNode);
+			return 2;
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0; // im sure that here is an error intructin list 0 or 1
+		}
+
+	}
+	else if(instructionResult == 0)
+	{
+		delete currentAstNode;
+		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
 	}
 	
-	std:: cout << "InnerInsrucionsList" << std::endl;
+	//instruction == 1
+	
+	//spawdzamy czy na koncu bloku
+	if(NextLexeme().GetCategory() == KW_END || NextLexeme().GetCategory() == CB_SBRACKET) 
+	{
+		//delete currentAstNode;
+		parent->AddChild(currentAstNode);
+		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
+	}
+	
+	delete currentAstNode;
 	return 1;
 }
 
@@ -597,8 +624,37 @@ int Parser::Condition(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
-	
 	std:: cout << "Condition" << std::endl;
+	
+	int sConditionResult = SCondition(currentAstNode);
+	
+	if(sConditionResult == 2)
+	{
+		if(NextLexeme().GetCategory() == OP_OR)
+		{
+			isLexemeUsed = true;
+			
+			if(Condition(currentAstNode) == 2)
+			{
+				parent->AddChild(currentAstNode);
+				return 2; 
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0; 
+			}
+		}
+		
+		parent->AddChild(currentAstNode);
+		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
+	}
+	else if(sConditionResult == 0)
+	{
+		delete currentAstNode;
+		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+	}
+	
 	delete currentAstNode;
 	return 1;
 }
@@ -610,6 +666,37 @@ int Parser::SCondition(AstNode* parent)
 	
 	std:: cout << "SCondition" << std::endl;
 	
+	int tConditionResult = TCondition(currentAstNode);
+	
+	if(tConditionResult == 2)
+	{
+		if(NextLexeme().GetCategory() == OP_AND)
+		{
+			WritePrefix(currentAstNode);
+			std:: cout << " OP_AND" << std::endl;
+			isLexemeUsed = true;
+			
+			if(SCondition(currentAstNode) == 2)
+			{
+				parent->AddChild(currentAstNode);
+				return 2; 
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0; 
+			}
+		}
+		
+		parent->AddChild(currentAstNode);
+		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
+	}
+	else if(tConditionResult == 0)
+	{
+		delete currentAstNode;
+		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+	}
+	
 	delete currentAstNode;
 	return 1;
 }
@@ -618,8 +705,51 @@ int Parser::TCondition(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
-	
 	std:: cout << "TCondition" << std::endl;
+	
+	if(NextLexeme().GetCategory() == OB_CBRACKET)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " OB_CBRACKET" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			if(NextLexeme().GetCategory() == CB_CBRACKET)
+			{
+				WritePrefix(currentAstNode);
+				std:: cout << " OB_CBRACKET" << std::endl;
+				isLexemeUsed = true;
+				
+				parent->AddChild(currentAstNode);
+				return 2;
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0; 
+			}
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0; 
+		}
+	}
+	
+	//exp
+	int expResult = Exp(currentAstNode);
+	
+	if(expResult == 2)
+	{
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	else if(expResult == 0)
+	{
+		delete currentAstNode;
+		return 0; 
+	}
 	
 	delete currentAstNode;
 	return 1;
@@ -629,8 +759,57 @@ int Parser::Conditional(AstNode* parent)
 {
 	AstNode* currentAstNode = new AstNode(parent);
 	WritePrefix(currentAstNode);
-	
 	std:: cout << "Conditional" << std::endl;
+	
+	if(NextLexeme().GetCategory() == KW_IF)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " KW_IF" << std::endl;
+		isLexemeUsed = true;
+		
+		if(Condition(currentAstNode) == 2)
+		{
+			if(NextLexeme().GetCategory() == OB_SBRACKET)
+			{
+				WritePrefix(currentAstNode);
+				std:: cout << " OB_SBRACKET" << std::endl;
+				isLexemeUsed = true;
+				
+				if(InnerInstructionsList(currentAstNode) == 2)
+				{
+					if(NextLexeme().GetCategory() == CB_SBRACKET)
+					{
+						WritePrefix(currentAstNode);
+						std:: cout << " OB_SBRACKET" << std::endl;
+						isLexemeUsed = true;
+						
+						parent->AddChild(currentAstNode);
+						return 2;
+					}
+					else
+					{
+						delete currentAstNode;
+						return 0;
+					}
+				}
+				else
+				{
+					delete currentAstNode;
+					return 0;
+				}
+			}
+			else
+			{
+				delete currentAstNode;
+				return 0;
+			}
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
 	
 	delete currentAstNode;
 	return 1;
