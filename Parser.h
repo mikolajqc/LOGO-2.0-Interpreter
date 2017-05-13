@@ -3,6 +3,7 @@
 
 #include "Lexer.h"
 #include "AstNode.h"
+#include "ValAstNode.h"
 
 class Parser
 {

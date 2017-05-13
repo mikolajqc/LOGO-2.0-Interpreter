@@ -1161,7 +1161,7 @@ int Parser::Loop(AstNode* parent)
 
 int Parser::Val(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	AstNode* currentAstNode = new ValAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)

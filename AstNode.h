@@ -15,7 +15,7 @@ public:
 	//ForDebug only:
 	AstNode* getParent();
 	
-private:
+protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;
 
