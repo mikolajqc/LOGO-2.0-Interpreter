@@ -115,11 +115,19 @@ int Parser::Instruction(AstNode* parent)
 	}
 	std::cout << "Instruction" <<std::endl;
 	
-	if(Assignment(currentAstNode) == 2)
+	int callResult = Assignment(currentAstNode);
+	
+	if(callResult == 2)
 	{
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
+	else if(callResult == 0) // error
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	//here we ve got callResult eq to 1
 	/*
 	if(ProcedureCall(currentAstNode))
 	{
@@ -192,10 +200,13 @@ int Parser::Assignment(AstNode* parent)
 		}
 		else
 		{
+			std::cout << "= operator expected!\n";
 			delete currentAstNode;
 			return 0;
 		}
 	}
+
+	//std::cout << "I wanted :sth";
 	
 	delete currentAstNode;
 	return 1;
@@ -212,7 +223,9 @@ int Parser::Exp(AstNode* parent)
 	}
 	std:: cout << "Exp" << std::endl;
 	
-	if(SExp(currentAstNode) == 2)
+	int sExpResult = SExp(currentAstNode);
+	
+	if(sExpResult == 2) //rozpoznalismy sexp
 	{
 		if(AddOp(currentAstNode) == 2) // optional
 		{
@@ -230,10 +243,15 @@ int Parser::Exp(AstNode* parent)
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
+	else if(sExpResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
 	
-	
+	//nie rozpoznalem
 	delete currentAstNode;
-	return 0;
+	return 1;
 }
 
 int Parser::SExp(AstNode* parent)
@@ -247,7 +265,9 @@ int Parser::SExp(AstNode* parent)
 	}
 	std:: cout << "SExp" << std::endl;
 	
-	if(Factor(currentAstNode) == 2)
+	int factorResult = Factor(currentAstNode);
+	
+	if(factorResult == 2)
 	{
 		if(MultOp(currentAstNode) == 2) // optional
 		{
@@ -265,10 +285,14 @@ int Parser::SExp(AstNode* parent)
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
-	
+	else if(factorResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
 	
 	delete currentAstNode;
-	return 0;
+	return 1;
 }
 
 int Parser::Factor(AstNode* parent)
@@ -288,43 +312,70 @@ int Parser::Factor(AstNode* parent)
 	{
 		parent->AddChild(currentAstNode);
 		return 2;
-	} 
-	else if (ProcedureCall(currentAstNode))
+	}
+	else if(valResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	//valResult == 1
+	
+	int procedureCallResult = ProcedureCall(currentAstNode);
+	
+	if (procedureCallResult == 2)
 	{
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
-	else
+	else if(procedureCallResult == 0)
 	{
-		if(NextLexeme().GetCategory() == OB_CBRACKET)
+		delete currentAstNode;
+		return 0;
+	}
+	
+	//procedureCallResult = 1
+	
+	if(NextLexeme().GetCategory() == OB_CBRACKET)
+	{
+		isLexemeUsed = true;
+		
+		for(unsigned int i = 0; i < depth; ++i)
 		{
-			isLexemeUsed = true;
-			
-			for(unsigned int i = 0; i < depth; ++i)
-			{
-				std::cout << " ";
-			}
-			std:: cout << " OB_CBRACKET" << std::endl;
-			if(Exp(currentAstNode))
-			{
-				if(NextLexeme().GetCategory() == CB_CBRACKET)
-				{
-					isLexemeUsed = true;
-					for(unsigned int i = 0; i < depth; ++i)
-					{
-						std::cout << " ";
-					}
-					std:: cout << " CB_CBRACKET" << std::endl;
-					parent->AddChild(currentAstNode);
-					return true;
-				}
-			}
-			
+			std::cout << " ";
 		}
+		std:: cout << " OB_CBRACKET" << std::endl;
+		
+		if(Exp(currentAstNode) == 2)
+		{
+			if(NextLexeme().GetCategory() == CB_CBRACKET)
+			{
+				isLexemeUsed = true;
+				for(unsigned int i = 0; i < depth; ++i)
+				{
+					std::cout << " ";
+				}
+				std:: cout << " CB_CBRACKET" << std::endl;
+				parent->AddChild(currentAstNode);
+				return 2;
+			}
+			else
+			{
+				std:: cout << ") was expected!\n";
+				delete currentAstNode;
+				return 0; //nieistotne czy nie rozpoznal exp czy blad w exp
+			}
+		}
+		else
+		{
+			delete currentAstNode;
+			return 0; //nieistotne czy nie rozpoznal exp czy blad w exp
+		}
+		
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::MultOp(AstNode* parent)
@@ -347,7 +398,7 @@ int Parser::MultOp(AstNode* parent)
 		}
 		std:: cout << " OP_MULTIPLY" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	else if(NextLexeme().GetCategory() == OP_DEVIDE)
 	{
@@ -358,11 +409,11 @@ int Parser::MultOp(AstNode* parent)
 		}
 		std:: cout << " OP_DEVIDE" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::AddOp(AstNode* parent)
@@ -385,7 +436,7 @@ int Parser::AddOp(AstNode* parent)
 		}
 		std:: cout << " OP_PLUS" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	else if(NextLexeme().GetCategory() == OP_MINUS)
 	{
@@ -396,17 +447,17 @@ int Parser::AddOp(AstNode* parent)
 		}
 		std:: cout << " OP_MINUS" << std::endl;
 		parent->AddChild(currentAstNode);
-		return true;
+		return 2;
 	}
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Arguments(AstNode* parent)
 {
 	std:: cout << "Arguments" << std::endl;
-	return false;
+	return 1;
 }
 
 int Parser::ProcedureCall(AstNode* parent)
@@ -421,7 +472,7 @@ int Parser::ProcedureCall(AstNode* parent)
 	}
 	std:: cout << "ProcedureCall" << std::endl;
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Out(AstNode* parent)
@@ -436,7 +487,7 @@ int Parser::Out(AstNode* parent)
 	std:: cout << "Out" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Graphics(AstNode* parent)
@@ -452,7 +503,7 @@ int Parser::Graphics(AstNode* parent)
 	std:: cout << "Graphics" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::InnerInstructionsList(AstNode* parent)
@@ -466,7 +517,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 	}
 	
 	std:: cout << "InnerInsrucionsList" << std::endl;
-	return false;
+	return 1;
 }
 
 int Parser::Condition(AstNode* parent)
@@ -476,7 +527,7 @@ int Parser::Condition(AstNode* parent)
 	
 	std:: cout << "Condition" << std::endl;
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::SCondition(AstNode* parent)
@@ -487,7 +538,7 @@ int Parser::SCondition(AstNode* parent)
 	std:: cout << "SCondition" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::TCondition(AstNode* parent)
@@ -498,7 +549,7 @@ int Parser::TCondition(AstNode* parent)
 	std:: cout << "TCondition" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Conditional(AstNode* parent)
@@ -509,7 +560,7 @@ int Parser::Conditional(AstNode* parent)
 	std:: cout << "Conditional" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::AgumentsDec(AstNode* parent)
@@ -520,7 +571,7 @@ int Parser::AgumentsDec(AstNode* parent)
 	std:: cout << "ArgumentsDec" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::ProcedureDeclaration(AstNode* parent)
@@ -535,7 +586,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 	std:: cout << "ProcedureDeclaration" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Loop(AstNode* parent)
@@ -546,7 +597,7 @@ int Parser::Loop(AstNode* parent)
 	std:: cout << "Loop" << std::endl;
 	
 	delete currentAstNode;
-	return false;
+	return 1;
 }
 
 int Parser::Val(AstNode* parent)
