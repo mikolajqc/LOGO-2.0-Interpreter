@@ -32,7 +32,7 @@ void ArgumentsDecAstNode::check()
 	if(startAstNode->checkVariable(argumentName))
 	{
 		std::cout << "You cannot use again argument: " << argumentName << " in the same procedure!\n";
-		//exit(1);
+		exit(1);
 		return;
 	}
 	else
