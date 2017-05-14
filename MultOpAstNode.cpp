@@ -18,3 +18,7 @@ float MultOpAstNode::calculate()
 void MultOpAstNode::execute()
 {
 }
+
+void MultOpAstNode::check()
+{
+}

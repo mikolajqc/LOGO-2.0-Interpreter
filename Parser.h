@@ -14,6 +14,7 @@ public:
 	
 	///only for debug.
 	void execute();
+	void check();
 	
 private:
 	Lexer* lexer;

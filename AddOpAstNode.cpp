@@ -18,3 +18,7 @@ float AddOpAstNode::calculate()
 void AddOpAstNode::execute()
 {
 }
+
+void AddOpAstNode::check()
+{
+}

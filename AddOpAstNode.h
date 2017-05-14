@@ -11,6 +11,8 @@ public:
 	void setIsPlus(bool isPlus);
 	float calculate(); //0 when minus and 1 when plus
 	void execute();
+	void check();
+	
 
 private:
 	bool isPlus;

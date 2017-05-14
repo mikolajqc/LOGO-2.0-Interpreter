@@ -10,6 +10,7 @@ public:
 	void setIsMult(bool isMult);
 	float calculate(); //0 when minus and 1 when plus
 	void execute();
+	void check();
 
 private:
 	bool isMult;

@@ -45,3 +45,8 @@ float StartAstNode::GetValue(std::string variableName)
 	}
 	return -1;
 }
+
+void StartAstNode::check()
+{
+	children[0]->check();
+}

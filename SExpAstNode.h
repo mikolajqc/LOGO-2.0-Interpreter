@@ -9,6 +9,7 @@ public:
 
 	float calculate();
 	void execute();
+	void check();
 	
 };
 

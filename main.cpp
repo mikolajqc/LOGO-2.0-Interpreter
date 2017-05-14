@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 	Parser parser;
 	parser.start();
 	
-	parser.execute();
+	parser.check();
 	
 	
 	return 0;

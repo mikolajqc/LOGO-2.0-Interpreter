@@ -19,3 +19,9 @@ void LoopAstNode::execute()
 	children[1]->execute();
 }
 
+void LoopAstNode::check()
+{
+	numberOfLoops = children[0]->calculate();
+	std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
+	children[1]->check();
+}

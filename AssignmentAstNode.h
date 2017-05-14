@@ -11,7 +11,7 @@ public:
 	void execute();
 	float calculate();
 	void setNameOfVariable(std::string name);
-	
+	void check();
 	
 private:
 	std::string nameOfVariable;

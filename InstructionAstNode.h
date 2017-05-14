@@ -9,7 +9,7 @@ public:
 
 	void execute();
 	float calculate();
-	
+	void check();
 };
 
 #endif // INSTRUCTIONASTNODE_H

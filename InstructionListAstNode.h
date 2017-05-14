@@ -10,6 +10,7 @@ public:
 	
 	void execute();
 	float calculate();
+	void check();
 	
 	//void addVariable(std::string, float value);
 	//bool checkVariable(std::string);

@@ -77,3 +77,7 @@ void ValAstNode::execute()
 {
 	
 }
+
+void ValAstNode::check()
+{
+}

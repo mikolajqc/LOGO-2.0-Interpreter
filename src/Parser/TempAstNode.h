@@ -7,6 +7,8 @@ class TempAstNode : public AstNode
 public:
 	float calculate();
 	void execute();
+	void check();
+	
 	TempAstNode(AstNode* parent);
 
 

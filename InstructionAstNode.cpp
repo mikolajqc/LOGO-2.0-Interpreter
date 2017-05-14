@@ -15,3 +15,8 @@ float InstructionAstNode::calculate()
 {
 	return 0;
 }
+
+void InstructionAstNode::check()
+{
+	children[0]->check();
+}

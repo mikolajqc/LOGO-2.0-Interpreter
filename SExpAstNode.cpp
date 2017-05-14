@@ -31,3 +31,7 @@ float SExpAstNode::calculate()
 void SExpAstNode::execute()
 {
 }
+
+void SExpAstNode::check()
+{
+}

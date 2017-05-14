@@ -7,6 +7,8 @@ class LoopAstNode :public AstNode
 public:
 	float calculate();
 	void execute();
+	void check();
+	
 	LoopAstNode(AstNode* parent);
 
 private:

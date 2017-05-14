@@ -34,3 +34,7 @@ float ExpAstNode::calculate()
 void ExpAstNode::execute()
 {
 }
+
+void ExpAstNode::check()
+{
+}

@@ -8,11 +8,14 @@ TempAstNode::TempAstNode(AstNode* parent)
 
 float TempAstNode::calculate()
 {
-	
+	return -1;
 }
 
 void TempAstNode::execute()
 {
-	children[0]->execute();
+	//children[0]->execute();
 }
 
+void TempAstNode::check()
+{
+}

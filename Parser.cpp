@@ -1262,5 +1262,10 @@ void Parser::WritePrefix(AstNode* astNode)
 
 void Parser::execute()
 {
-	astTree->execute();
+	astTree->check();
+}
+
+void Parser::check()
+{
+	astTree->check();
 }

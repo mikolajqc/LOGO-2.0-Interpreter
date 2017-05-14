@@ -17,6 +17,7 @@ public:
 	
 	virtual float calculate() = 0;
 	virtual void execute() = 0;
+	virtual void check() = 0;
 	
 	AstNode* FindStart(AstNode* startNode);
 	

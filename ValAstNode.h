@@ -15,6 +15,7 @@ public:
 	
 	float calculate(); // ten node jest lisciem wiec nie schodzi nizej.
 	void execute();
+	void check();
 	
 private:
 	float numericValue;

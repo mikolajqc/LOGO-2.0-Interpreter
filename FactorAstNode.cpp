@@ -13,3 +13,7 @@ float FactorAstNode::calculate()
 void FactorAstNode::execute()
 {
 }
+
+void FactorAstNode::check()
+{
+}
