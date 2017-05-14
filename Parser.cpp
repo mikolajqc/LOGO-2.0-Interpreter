@@ -16,6 +16,8 @@
 #include "src/Parser/LoopAstNode.h"
 #include "src/Parser/ProcedureDeclarationAstNode.h"
 #include "src/Parser/ArgumentsDecAstNode.h"
+#include "src/Parser/ProcedureCallAstNode.h"
+#include "src/Parser/ArgumentsAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -561,7 +563,7 @@ int Parser::AddOp(AstNode* parent)
 
 int Parser::Arguments(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ArgumentsAstNode* currentAstNode = new ArgumentsAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	
@@ -586,13 +588,14 @@ int Parser::Arguments(AstNode* parent)
 		return 0;
 	}
 	
-	parent->AddChild(currentAstNode); // to jest ";"
+	delete currentAstNode;
+	//parent->AddChild(currentAstNode); // to jest ";"
 	return 2;
 }
 
 int Parser::ProcedureCall(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ProcedureCallAstNode* currentAstNode = new ProcedureCallAstNode(parent);
 	
 	WritePrefix(currentAstNode);
 	std:: cout << "ProcedureCall" << std::endl;
@@ -601,6 +604,8 @@ int Parser::ProcedureCall(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " ID_PROCEDURE" << std::endl;
+		currentAstNode->SetProcedureName(NextLexeme().GetValue());
+		
 		isLexemeUsed = true;
 		
 		if(NextLexeme().GetCategory() == OB_SBRACKET)

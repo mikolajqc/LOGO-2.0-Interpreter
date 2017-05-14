@@ -12,6 +12,10 @@ public:
 	void execute();
 	
 	void SetProcedureName(std::string);
+	void SetArgumentsNumber(int argumentsNumber);
+	
+	//debug:
+	std::string GetProcedureName();
 	
 	ProcedureDeclarationAstNode(AstNode* parent);
 

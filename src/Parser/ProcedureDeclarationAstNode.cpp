@@ -50,3 +50,13 @@ void ProcedureDeclarationAstNode::SetProcedureName(std::string procedureName)
 {
 	this->procedureName = procedureName;
 }
+
+void ProcedureDeclarationAstNode::SetArgumentsNumber(int argumentsNumber)
+{
+	this->argumentsNumber = argumentsNumber;
+}
+
+std::string ProcedureDeclarationAstNode::GetProcedureName()
+{
+	return procedureName;
+}
