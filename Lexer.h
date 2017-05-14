@@ -5,6 +5,7 @@
 #include <locale>
 #include <iostream>
 #include "Lexeme.h"
+#include "FileManager.h"
 
 class Lexer
 {
@@ -14,14 +15,7 @@ public:
 	Lexer(std::string filePath);
 	~Lexer();
 private:
-	std::string filePath;
-	std::fstream fileStream;
-	
-	bool OpenFileStream();
-	bool CloseFileStream();
-	
-	char GetNextChar();
-	std::string GetNextWord();
+	FileManager* fileManager;
 	Lexeme CreateLexeme(std::string word);
 };
 

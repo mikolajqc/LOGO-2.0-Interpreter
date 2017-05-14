@@ -1,12 +1,14 @@
-#ifndef LEXEME_H
-#define LEXEME_H 
+#ifndef FILEMANAGER_H
+#define FILEMANAGER_H 
+#include <string>
+#include <fstream>
 
 class FileManager
 {
-	//TODO
-	/*
 public:
-	//FileManager (std::)
+	FileManager (std::string filePath);
+	~FileManager ();
+	std::string GetNextWord();
 	
 private:
 	std::string filePath;
@@ -14,7 +16,8 @@ private:
 	
 	bool OpenFileStream();
 	bool CloseFileStream();
-	*/
-}
+	
+	char GetNextChar();
+};
 
-#endif // LEXEME_H
+#endif // FILEMANAGER_H
