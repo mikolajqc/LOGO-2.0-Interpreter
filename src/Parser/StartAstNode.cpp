@@ -50,3 +50,33 @@ void StartAstNode::check()
 {
 	children[0]->check();
 }
+
+bool StartAstNode::CheckProcedure(std::string procedureName)
+{
+	if(procedures.count(procedureName) > 0)
+	{
+		return true;
+	}
+	
+	return false;
+}
+
+void StartAstNode::AddProcedure(std::string procedureName, AstNode* pointerToProcedureNode)
+{
+	std::cout << "Adding procedure to table: " << procedureName << "\n";
+			
+	procedures.insert(std::pair<std::string,AstNode*>(procedureName, pointerToProcedureNode));
+}
+
+AstNode* StartAstNode::GetPointerToProcedureNode(std::string procedureName)
+{
+	if(procedures.count(procedureName) > 0)
+	{
+		return procedures[procedureName];
+	}
+	else
+	{
+		std::cout << "ERROR: No such procedure Name"<<procedureName <<"in StartNode!\n";
+	}
+	return nullptr;
+}

@@ -14,6 +14,7 @@
 #include "MultOpAstNode.h"
 #include "src/Parser/StartAstNode.h"
 #include "src/Parser/LoopAstNode.h"
+#include "src/Parser/ProcedureDeclarationAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -60,6 +61,28 @@ int Parser::InnerStart(AstNode* parent)
 	std::cout << "InnerStart(NOT GRAMMAR ELEMENT!)" << std::endl;
 	
 	if(InnerInstructionsList(currentAstNode) == 2)
+	{
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	else
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	delete currentAstNode;
+	return 1;
+}
+
+int Parser::ArgumentsDecStart(AstNode* parent)
+{
+	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
+	StartAstNode* currentAstNode = new StartAstNode(parent);
+	WritePrefix(currentAstNode);
+	std::cout << "ArgumentsDecStart(NOT GRAMMAR ELEMENT!)" << std::endl;
+	
+	if(ArgumentsDec(currentAstNode) == 2)
 	{
 		parent->AddChild(currentAstNode);
 		return 2;
@@ -1067,7 +1090,7 @@ int Parser::ArgumentsDec(AstNode* parent)
 
 int Parser::ProcedureDeclaration(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ProcedureDeclarationAstNode* currentAstNode = new ProcedureDeclarationAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -1086,9 +1109,11 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 		{
 			WritePrefix(currentAstNode);
 			std:: cout << " ID_PROCEDURE" << std::endl;
+			
+			currentAstNode->SetProcedureName(NextLexeme().GetValue());
 			isLexemeUsed = true;
 			
-			if(ArgumentsDec(currentAstNode) == 2)
+			if(ArgumentsDecStart(currentAstNode) == 2/*ArgumentsDec(currentAstNode) == 2*/)
 			{
 				if(NextLexeme().GetCategory() == OB_SBRACKET)
 				{
@@ -1096,7 +1121,8 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 					std:: cout << " OB_SBRACKET" << std::endl;
 					isLexemeUsed = true;
 					///WE HAVE TO CHANGE GRAMATICS
-					if(InnerInstructionsList(currentAstNode) == 2)
+					
+					if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
 					{
 						if(NextLexeme().GetCategory() == CB_SBRACKET)
 						{
@@ -1262,7 +1288,6 @@ void Parser::WritePrefix(AstNode* astNode)
 
 void Parser::execute()
 {
-	astTree->check();
 }
 
 void Parser::check()

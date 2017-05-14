@@ -17,8 +17,13 @@ public:
 	bool checkVariable(std::string);
 	float GetValue(std::string);
 	
+	bool CheckProcedure(std::string procedureName);
+	void AddProcedure(std::string procedureName, AstNode* pointerToProcedureNode);
+	AstNode* GetPointerToProcedureNode(std::string procedureName);
+	
+	
 private:
-	std::map<std::string, std::pair <AstNode*, std::vector<float> > > procedures;
+	std::map<std::string, AstNode* > procedures;
 	std::map<std::string, float> variables;
 };
 

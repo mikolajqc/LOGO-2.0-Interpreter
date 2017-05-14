@@ -1,6 +1,7 @@
 #ifndef PROCEDUREDECLARATIONASTNODE_H
 #define PROCEDUREDECLARATIONASTNODE_H
 #include "AstNode.h"
+#include "string"
 
 class ProcedureDeclarationAstNode : public AstNode
 {
@@ -10,8 +11,12 @@ public:
 	void check();
 	void execute();
 	
+	void SetProcedureName(std::string);
+	
 	ProcedureDeclarationAstNode(AstNode* parent);
 
+private:
+	std::string procedureName;
 
 };
 

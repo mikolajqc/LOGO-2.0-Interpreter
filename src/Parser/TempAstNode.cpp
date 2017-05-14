@@ -18,4 +18,5 @@ void TempAstNode::execute()
 
 void TempAstNode::check()
 {
+	//children[0]->check();
 }
