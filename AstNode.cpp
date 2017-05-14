@@ -55,7 +55,7 @@ AstNode* AstNode::FindStart(AstNode* sourceNode)
 		{
 			if(sourceNode != n->GetChildren()[0])
 			{
-				std::cout << "I am in \n";
+				//std::cout << "I am in \n";
 				currentNode = currentNode->GetChildren()[0];
 				return currentNode;
 			}

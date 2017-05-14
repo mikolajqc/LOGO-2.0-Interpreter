@@ -53,11 +53,12 @@ void Parser::start()
 	std::cout << "start" << std::endl;
 	if(InstructionList(astTree) == 2)
 	{
-		std::cout << "succes!" << std::endl;
+		std::cout << "Parsing success!" << std::endl;
 	}
 	else
 	{
-		std::cout << "error!" << std::endl;
+		std::cout << "Parsing error!" << std::endl;
+		exit(1);
 	}
 }
 
@@ -309,8 +310,9 @@ int Parser::Assignment(AstNode* parent)
 		else
 		{
 			std::cout << "= operator expected!\n";
-			delete currentAstNode;
-			return 0;
+			exit(1);
+			//delete currentAstNode;
+			//return 0;
 		}
 	}
 
@@ -470,8 +472,9 @@ int Parser::Factor(AstNode* parent)
 			else
 			{
 				std:: cout << ") was expected!\n";
-				delete currentAstNode;
-				return 0; //nieistotne czy nie rozpoznal exp czy blad w exp
+				exit(1);
+				//delete currentAstNode;
+				//return 0; //nieistotne czy nie rozpoznal exp czy blad w exp
 			}
 		}
 		else
