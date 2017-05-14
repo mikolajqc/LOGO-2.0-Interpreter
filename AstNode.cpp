@@ -32,7 +32,7 @@ float AstNode::calculate()
 	return 0; //this will be virtual
 }
 
-void AstNode::execute() ///TEMPORARY !!!!!
+void AstNode::execute() ///TEMPORARY !!!!! poki co execute jest wykonywane w ramach semantyki - do zmiany
 {
 	std::cout << "executeAstNode\n";
 	children[0]->execute();
