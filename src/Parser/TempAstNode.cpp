@@ -1,4 +1,5 @@
 #include "TempAstNode.h"
+#include <iostream>
 
 TempAstNode::TempAstNode(AstNode* parent)
 :AstNode(parent)
@@ -13,10 +14,13 @@ float TempAstNode::calculate()
 
 void TempAstNode::execute()
 {
-	//children[0]->execute();
+	
 }
 
 void TempAstNode::check()
 {
-	//children[0]->check();
+	for(unsigned int i = 0; i < children.size(); ++i)
+	{
+		std::cout <<"Value: "  << children[i]->calculate() << "\n";
+	}
 }

@@ -1130,6 +1130,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 			
 			if(ArgumentsDecStart(currentAstNode) == 2/*ArgumentsDec(currentAstNode) == 2*/)
 			{
+				
 				if(NextLexeme().GetCategory() == OB_SBRACKET)
 				{
 					WritePrefix(currentAstNode);
@@ -1137,7 +1138,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 					isLexemeUsed = true;
 					///WE HAVE TO CHANGE GRAMATICS
 					
-					if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
+					if(InnerStart(currentAstNode) == 2)
 					{
 						if(NextLexeme().GetCategory() == CB_SBRACKET)
 						{
@@ -1161,6 +1162,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 					delete currentAstNode;
 					return 0;
 				}
+				
 			}
 			else
 			{
