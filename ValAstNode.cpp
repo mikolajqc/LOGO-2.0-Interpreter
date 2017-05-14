@@ -23,7 +23,7 @@ ValAstNode::ValAstNode(AstNode* parent)
 
 void ValAstNode::SetValue(std::string value)
 {
-	if(value[0] > '0' && value[0] < '9')
+	if(value[0] >= '0' && value[0] <= '9')
 	{
 		numericValue = StringToNumber(value,  0.0);
 	}
@@ -50,7 +50,6 @@ float ValAstNode::calculate()
 	{
 		result = numericValue;
 	}
-	
 	return result;
 }
 

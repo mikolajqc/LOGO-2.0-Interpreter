@@ -37,22 +37,7 @@ void AstNode::execute() ///TEMPORARY !!!!!
 	std::cout << "executeAstNode\n";
 	children[0]->execute();
 }
-/*
-AstNode* AstNode::FindInstructionList(AstNode* startNode)
-{
-	InstructionListAstNode* insNode;
-	///innerInsNode
-	AstNode* currentNode = startNode->getParent();
-	while(!(insNode = dynamic_cast<InstructionListAstNode*>(currentNode)))
-	{
-		std::cout << "looking\n";
-		currentNode = currentNode->parent;
-		if(currentNode == nullptr) return nullptr;
-	}
-	
-	return insNode;
-}
-*/
+
 
 AstNode* AstNode::FindStart(AstNode* sourceNode)
 {
