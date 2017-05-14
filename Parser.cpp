@@ -3,7 +3,7 @@
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
-
+#include "AddOpAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -462,7 +462,7 @@ int Parser::MultOp(AstNode* parent)
 
 int Parser::AddOp(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	AddOpAstNode* currentAstNode = new AddOpAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -473,6 +473,7 @@ int Parser::AddOp(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == OP_PLUS)
 	{
+		currentAstNode->setIsPlus(true);
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{
@@ -484,6 +485,7 @@ int Parser::AddOp(AstNode* parent)
 	}
 	else if(NextLexeme().GetCategory() == OP_MINUS)
 	{
+		currentAstNode->setIsPlus(false);
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{
@@ -1161,7 +1163,7 @@ int Parser::Loop(AstNode* parent)
 
 int Parser::Val(AstNode* parent)
 {
-	AstNode* currentAstNode = new ValAstNode(parent);
+	ValAstNode* currentAstNode = new ValAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -1172,6 +1174,8 @@ int Parser::Val(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
+		currentAstNode->SetIsVariable(true);
+		currentAstNode->SetValue(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{
@@ -1183,6 +1187,8 @@ int Parser::Val(AstNode* parent)
 	}
 	else if(NextLexeme().GetCategory() == VALUE)
 	{
+		currentAstNode->SetIsVariable(false);
+		currentAstNode->SetValue(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{

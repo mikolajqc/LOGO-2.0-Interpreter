@@ -15,6 +15,8 @@ public:
 	//ForDebug only:
 	AstNode* getParent();
 	
+	float calculate();
+	
 protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;

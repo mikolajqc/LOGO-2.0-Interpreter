@@ -23,3 +23,8 @@ AstNode* AstNode::getParent()
 {
 	return parent;
 }
+
+float AstNode::calculate()
+{
+	return 0; //this will be virtual
+}

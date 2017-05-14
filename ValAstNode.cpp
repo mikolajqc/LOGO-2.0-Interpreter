@@ -34,4 +34,22 @@ void ValAstNode::SetValue(std::string value)
 	}
 }
 
+void ValAstNode::SetIsVariable(bool isVarable)
+{
+	this->isVariable = isVariable;
+}
 
+float ValAstNode::calculate()
+{
+	float result;
+	if(isVariable)
+	{
+		//TODO: odwolanie do tablicy symboli jakos tam
+	}
+	else
+	{
+		result = numericValue;
+	}
+	
+	return result;
+}
