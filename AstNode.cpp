@@ -1,5 +1,8 @@
 #include "AstNode.h"
 #include <iostream>
+#include "InstructionAstNode.h"
+#include "InstructionListAstNode.h"
+#include "src/Parser/StartAstNode.h"
 
 AstNode::AstNode(AstNode* parent)
 :parent(parent)
@@ -33,4 +36,35 @@ void AstNode::execute() ///TEMPORARY !!!!!
 {
 	std::cout << "executeAstNode\n";
 	children[0]->execute();
+}
+/*
+AstNode* AstNode::FindInstructionList(AstNode* startNode)
+{
+	InstructionListAstNode* insNode;
+	///innerInsNode
+	AstNode* currentNode = startNode->getParent();
+	while(!(insNode = dynamic_cast<InstructionListAstNode*>(currentNode)))
+	{
+		std::cout << "looking\n";
+		currentNode = currentNode->parent;
+		if(currentNode == nullptr) return nullptr;
+	}
+	
+	return insNode;
+}
+*/
+
+AstNode* AstNode::FindStart(AstNode* sourceNode)
+{
+	StartAstNode* startNode;
+	///innerInsNode
+	AstNode* currentNode = sourceNode->getParent();
+	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
+	{
+		std::cout << "looking\n";
+		currentNode = currentNode->parent;
+		if(currentNode == nullptr) return nullptr;
+	}
+	
+	return startNode;
 }

@@ -13,4 +13,5 @@ void InstructionAstNode::execute()
 
 float InstructionAstNode::calculate()
 {
+	return 0;
 }

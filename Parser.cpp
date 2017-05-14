@@ -12,6 +12,7 @@
 #include "SExpAstNode.h"
 #include "FactorAstNode.h"
 #include "MultOpAstNode.h"
+#include "src/Parser/StartAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -38,7 +39,7 @@ Lexeme Parser::NextLexeme()
 
 void Parser::start()
 {
-	astTree = new TempAstNode(nullptr);
+	astTree = new StartAstNode(nullptr);
 	std::cout << "start" << std::endl;
 	if(InstructionList(astTree) == 2)
 	{
@@ -537,8 +538,6 @@ int Parser::Arguments(AstNode* parent)
 		delete currentAstNode;
 		return 0;
 	}
-	
-	//nie rozpoznajemy kolejnego argumentu moze tam byc eof lub cokolwiek innego co nie jest exp
 	
 	parent->AddChild(currentAstNode); // to jest ";"
 	return 2;
