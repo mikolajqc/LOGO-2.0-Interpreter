@@ -1,4 +1,5 @@
 #include "InstructionListAstNode.h"
+#include <iostream>
 
 InstructionListAstNode::InstructionListAstNode(AstNode* parent)
 :AstNode(parent)

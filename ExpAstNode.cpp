@@ -8,11 +8,12 @@ ExpAstNode::ExpAstNode(AstNode* parent)
 
 float ExpAstNode::calculate()
 {
-	std::cout << "expcalculate\n";
+	//std::cout << "expcalculate\n";
 	float result;
 	
 	if(children.size() == 1)
 	{
+		//std::cout << "ok\n";
 		result = children[0]->calculate();
 	}
 	else

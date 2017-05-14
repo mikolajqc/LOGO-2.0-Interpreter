@@ -46,7 +46,6 @@ AstNode* AstNode::FindStart(AstNode* sourceNode)
 	AstNode* currentNode = sourceNode->getParent();
 	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
 	{
-		std::cout << "looking\n";
 		currentNode = currentNode->parent;
 		if(currentNode == nullptr) return nullptr;
 	}

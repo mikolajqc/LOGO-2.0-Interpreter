@@ -2,8 +2,9 @@
 #include <iostream>
 #include <string>
 #include <sstream>
+#include "src/Parser/StartAstNode.h"
 
-
+class GetValue;
 template <typename T>
 T StringToNumber ( std::string &Text, T defValue = T() )
 {
@@ -34,17 +35,36 @@ void ValAstNode::SetValue(std::string value)
 	}
 }
 
-void ValAstNode::SetIsVariable(bool isVarable)
+void ValAstNode::SetIsVariable(bool isVariable)
 {
 	this->isVariable = isVariable;
 }
 
 float ValAstNode::calculate()
 {
+	//std::cout << "asd\n";
 	float result;
-	if(isVariable)
+	if(isVariable == true)
 	{
-		//TODO: odwolanie do tablicy symboli jakos tam
+		
+		StartAstNode* startAstNode = dynamic_cast<StartAstNode*>(FindStart(this));
+
+		while(startAstNode != nullptr)
+		{
+			if(startAstNode->checkVariable(textValue))
+			{
+				std::cout << "found";
+				return startAstNode->GetValue(textValue);
+			}
+			else
+			{
+				std::cout << "Name " + textValue + " doent exist in this scope!\n";
+				//idziemy wyzej
+			}
+			startAstNode = dynamic_cast<StartAstNode*>(FindStart(startAstNode));
+			std::cout << "idziemy o poziom wyzej!\n";
+		}
+		
 	}
 	else
 	{

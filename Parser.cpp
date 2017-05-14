@@ -13,6 +13,7 @@
 #include "FactorAstNode.h"
 #include "MultOpAstNode.h"
 #include "src/Parser/StartAstNode.h"
+#include "src/Parser/LoopAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -49,6 +50,28 @@ void Parser::start()
 	{
 		std::cout << "error!" << std::endl;
 	}
+}
+
+int Parser::InnerStart(AstNode* parent)
+{
+	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
+	StartAstNode* currentAstNode = new StartAstNode(parent);
+	WritePrefix(currentAstNode);
+	std::cout << "InnerStart(NOT GRAMMAR ELEMENT!)" << std::endl;
+	
+	if(InnerInstructionsList(currentAstNode) == 2)
+	{
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	else
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	
+	delete currentAstNode;
+	return 1;
 }
 
 int Parser::InstructionList(AstNode* parent)
@@ -740,7 +763,7 @@ int Parser::Graphics(AstNode* parent)
 
 int Parser::InnerInstructionsList(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "InnerInsrucionsList" << std::endl;
 	
@@ -1117,7 +1140,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 
 int Parser::Loop(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	LoopAstNode* currentAstNode = new LoopAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Loop" << std::endl;
 	
@@ -1132,15 +1155,15 @@ int Parser::Loop(AstNode* parent)
 			if(NextLexeme().GetCategory() == OB_SBRACKET)
 			{
 				WritePrefix(currentAstNode);
-				std:: cout << " KW_REPEAT" << std::endl;
+				std:: cout << " OB_SBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
-				if(InnerInstructionsList(currentAstNode) == 2)
+				if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
 				{
 					if(NextLexeme().GetCategory() == CB_SBRACKET)
 					{
 						WritePrefix(currentAstNode);
-						std:: cout << " KW_REPEAT" << std::endl;
+						std:: cout << " CB_SBRACKET" << std::endl;
 						isLexemeUsed = true;
 						
 						parent->AddChild(currentAstNode);

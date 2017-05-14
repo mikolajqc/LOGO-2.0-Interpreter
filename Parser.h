@@ -25,6 +25,7 @@ private:
 	
 	//funkcje rozbioru:
 	///3 values: 0 - error, 1 - not recognize, 2 - success
+	int InnerStart(AstNode* parent);
 	int InstructionList(AstNode* parent);
 	int Instruction(AstNode* parent);
 	int Assignment(AstNode* parent);

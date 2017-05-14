@@ -14,6 +14,7 @@ public:
 	
 	void addVariable(std::string, float value);
 	bool checkVariable(std::string);
+	float GetValue(std::string);
 	
 private:
 	std::map<std::string, std::pair <AstNode*, std::vector<float> > > procedures;
