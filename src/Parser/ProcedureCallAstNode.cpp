@@ -39,8 +39,6 @@ void ProcedureCallAstNode::check()
 		exit(1);
 		
 	}
-	//argumentsNumber = (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[0]))->getArgumentsNumber();
-	//std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 	
 	children[0]->check(); //arguments
 }

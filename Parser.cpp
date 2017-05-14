@@ -18,6 +18,11 @@
 #include "src/Parser/ArgumentsDecAstNode.h"
 #include "src/Parser/ProcedureCallAstNode.h"
 #include "src/Parser/ArgumentsAstNode.h"
+#include "src/Parser/ConditionalAstNode.h"
+#include "src/Parser/ConditionAstNode.h"
+#include "src/Parser/SConditionAstNode.h"
+#include "src/Parser/QConditionAstNode.h"
+#include "src/Parser/TConditionAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -833,7 +838,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 
 int Parser::Condition(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ConditionAstNode* currentAstNode = new ConditionAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Condition" << std::endl;
 	
@@ -872,7 +877,7 @@ int Parser::Condition(AstNode* parent)
 
 int Parser::SCondition(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	SConditionAstNode* currentAstNode = new SConditionAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "SCondition" << std::endl;
@@ -914,7 +919,7 @@ int Parser::SCondition(AstNode* parent)
 
 int Parser::QCondition(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	QConditionAstNode* currentAstNode = new QConditionAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "QCondition" << std::endl;
@@ -927,6 +932,8 @@ int Parser::QCondition(AstNode* parent)
 		{
 			WritePrefix(currentAstNode);
 			std:: cout << " OP_COMPARISON" << std::endl;
+			currentAstNode->SetOperatorInString(NextLexeme().GetValue());
+			
 			isLexemeUsed = true;
 			
 			if(TCondition(currentAstNode) == 2)
@@ -956,7 +963,7 @@ int Parser::QCondition(AstNode* parent)
 
 int Parser::TCondition(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	TConditionAstNode* currentAstNode = new TConditionAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "TCondition" << std::endl;
 	
@@ -1010,7 +1017,7 @@ int Parser::TCondition(AstNode* parent)
 
 int Parser::Conditional(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ConditionalAstNode* currentAstNode = new ConditionalAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Conditional" << std::endl;
 	
@@ -1028,7 +1035,7 @@ int Parser::Conditional(AstNode* parent)
 				std:: cout << " OB_SBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
-				if(InnerInstructionsList(currentAstNode) == 2)
+				if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
 				{
 					if(NextLexeme().GetCategory() == CB_SBRACKET)
 					{
