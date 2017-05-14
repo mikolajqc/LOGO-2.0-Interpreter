@@ -1,5 +1,5 @@
 #include "AstNode.h"
-
+#include <iostream>
 
 AstNode::AstNode(AstNode* parent)
 :parent(parent)
@@ -27,4 +27,10 @@ AstNode* AstNode::getParent()
 float AstNode::calculate()
 {
 	return 0; //this will be virtual
+}
+
+void AstNode::execute() ///TEMPORARY !!!!!
+{
+	std::cout << "executeAstNode\n";
+	children[0]->execute();
 }

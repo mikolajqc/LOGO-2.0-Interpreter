@@ -8,7 +8,8 @@ public:
 	FactorAstNode(AstNode* parent);
 
 	float calculate();
-
+	void execute();
+	
 };
 
 #endif // FACTORASTNODE_H

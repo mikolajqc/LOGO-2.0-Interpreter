@@ -7,6 +7,9 @@ class InstructionAstNode : public AstNode
 public:
 	InstructionAstNode(AstNode* parent);
 
+	void execute();
+	float calculate();
+	
 };
 
 #endif // INSTRUCTIONASTNODE_H

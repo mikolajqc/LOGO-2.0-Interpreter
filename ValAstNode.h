@@ -14,7 +14,8 @@ public:
 	void SetIsVariable(bool isVariable);
 	
 	float calculate(); // ten node jest lisciem wiec nie schodzi nizej.
-
+	void execute();
+	
 private:
 	float numericValue;
 	std::string textValue;

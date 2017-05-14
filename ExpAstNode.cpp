@@ -1,4 +1,5 @@
 #include "ExpAstNode.h"
+#include <iostream>
 
 ExpAstNode::ExpAstNode(AstNode* parent)
 :AstNode(parent)
@@ -7,6 +8,7 @@ ExpAstNode::ExpAstNode(AstNode* parent)
 
 float ExpAstNode::calculate()
 {
+	std::cout << "expcalculate\n";
 	float result;
 	
 	if(children.size() == 1)
@@ -26,4 +28,8 @@ float ExpAstNode::calculate()
 	}
 	
 	return result;
+}
+
+void ExpAstNode::execute()
+{
 }

@@ -12,6 +12,9 @@ public:
 	~Parser();
 	void start();
 	
+	///only for debug.
+	void execute();
+	
 private:
 	Lexer* lexer;
 	Lexeme currentLexeme;

@@ -14,3 +14,7 @@ float AddOpAstNode::calculate()
 {
 	return isPlus;
 }
+
+void AddOpAstNode::execute()
+{
+}

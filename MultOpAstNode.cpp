@@ -14,3 +14,7 @@ float MultOpAstNode::calculate()
 {
 	return isMult;
 }
+
+void MultOpAstNode::execute()
+{
+}

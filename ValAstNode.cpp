@@ -53,3 +53,8 @@ float ValAstNode::calculate()
 	
 	return result;
 }
+
+void ValAstNode::execute()
+{
+	
+}

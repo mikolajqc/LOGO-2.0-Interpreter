@@ -4,6 +4,14 @@
 #include <cstdlib>
 #include <iostream>
 #include "AddOpAstNode.h"
+#include "AssignmentAstNode.h"
+#include "InstructionAstNode.h"
+#include "InstructionListAstNode.h"
+#include "src/Parser/TempAstNode.h"
+#include "ExpAstNode.h"
+#include "SExpAstNode.h"
+#include "FactorAstNode.h"
+#include "MultOpAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -30,7 +38,7 @@ Lexeme Parser::NextLexeme()
 
 void Parser::start()
 {
-	astTree = new AstNode(nullptr);
+	astTree = new TempAstNode(nullptr);
 	std::cout << "start" << std::endl;
 	if(InstructionList(astTree) == 2)
 	{
@@ -44,7 +52,7 @@ void Parser::start()
 
 int Parser::InstructionList(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
 	
 	WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
@@ -107,7 +115,7 @@ int Parser::InstructionList(AstNode* parent)
 
 int Parser::Instruction(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	InstructionAstNode* currentAstNode = new InstructionAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -202,7 +210,7 @@ int Parser::Instruction(AstNode* parent)
 int Parser::Assignment(AstNode* parent)
 {
 	
-	AstNode* currentAstNode = new AstNode(parent);
+	AssignmentAstNode* currentAstNode = new AssignmentAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -213,6 +221,7 @@ int Parser::Assignment(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
+		currentAstNode->setNameOfVariable(NextLexeme().GetValue());
 		for(unsigned int i = 0; i < depth; ++i)
 		{
 			std::cout << " ";
@@ -258,7 +267,7 @@ int Parser::Assignment(AstNode* parent)
 
 int Parser::Exp(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	ExpAstNode* currentAstNode = new ExpAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -300,7 +309,7 @@ int Parser::Exp(AstNode* parent)
 
 int Parser::SExp(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	SExpAstNode* currentAstNode = new SExpAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -341,7 +350,7 @@ int Parser::SExp(AstNode* parent)
 
 int Parser::Factor(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	FactorAstNode* currentAstNode = new FactorAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -424,7 +433,7 @@ int Parser::Factor(AstNode* parent)
 
 int Parser::MultOp(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	MultOpAstNode* currentAstNode = new MultOpAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -435,6 +444,7 @@ int Parser::MultOp(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == OP_MULTIPLY)
 	{
+		currentAstNode->setIsMult(true);
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{
@@ -446,6 +456,7 @@ int Parser::MultOp(AstNode* parent)
 	}
 	else if(NextLexeme().GetCategory() == OP_DEVIDE)
 	{
+		currentAstNode->setIsMult(false);
 		isLexemeUsed = true;
 		for(unsigned int i = 0; i < depth; ++i)
 		{
@@ -502,7 +513,7 @@ int Parser::AddOp(AstNode* parent)
 
 int Parser::Arguments(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	
@@ -535,7 +546,7 @@ int Parser::Arguments(AstNode* parent)
 
 int Parser::ProcedureCall(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	
 	WritePrefix(currentAstNode);
 	std:: cout << "ProcedureCall" << std::endl;
@@ -592,7 +603,7 @@ int Parser::ProcedureCall(AstNode* parent)
 
 int Parser::Out(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -653,7 +664,7 @@ int Parser::Out(AstNode* parent)
 
 int Parser::Graphics(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -730,7 +741,7 @@ int Parser::Graphics(AstNode* parent)
 
 int Parser::InnerInstructionsList(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "InnerInsrucionsList" << std::endl;
 	
@@ -771,7 +782,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 
 int Parser::Condition(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Condition" << std::endl;
 	
@@ -810,7 +821,7 @@ int Parser::Condition(AstNode* parent)
 
 int Parser::SCondition(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "SCondition" << std::endl;
@@ -852,7 +863,7 @@ int Parser::SCondition(AstNode* parent)
 
 int Parser::QCondition(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "QCondition" << std::endl;
@@ -894,7 +905,7 @@ int Parser::QCondition(AstNode* parent)
 
 int Parser::TCondition(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "TCondition" << std::endl;
 	
@@ -948,7 +959,7 @@ int Parser::TCondition(AstNode* parent)
 
 int Parser::Conditional(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Conditional" << std::endl;
 	
@@ -1008,7 +1019,7 @@ int Parser::Conditional(AstNode* parent)
 
 int Parser::ArgumentsDec(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "ArgumentsDec" << std::endl;
@@ -1034,7 +1045,7 @@ int Parser::ArgumentsDec(AstNode* parent)
 
 int Parser::ProcedureDeclaration(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -1107,7 +1118,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 
 int Parser::Loop(AstNode* parent)
 {
-	AstNode* currentAstNode = new AstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent);
 	WritePrefix(currentAstNode);
 	std:: cout << "Loop" << std::endl;
 	
@@ -1224,4 +1235,10 @@ void Parser::WritePrefix(AstNode* astNode)
 	{
 		std::cout << " ";
 	}
+}
+
+
+void Parser::execute()
+{
+	astTree->execute();
 }

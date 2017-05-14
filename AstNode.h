@@ -7,7 +7,7 @@ class AstNode
 {
 public:
 	AstNode(AstNode* parent);
-	~AstNode();
+	virtual ~AstNode();
 	
 	void AddChild(AstNode* astNode);
 	//tu bedzie execute gdzies
@@ -15,12 +15,12 @@ public:
 	//ForDebug only:
 	AstNode* getParent();
 	
-	float calculate();
+	virtual float calculate() = 0;
+	virtual void execute() = 0;
 	
 protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;
-
 };
 
 #endif // ASTNODE_H

@@ -9,6 +9,7 @@ public:
 	ExpAstNode(AstNode* parent);
 
 	float calculate();
+	void  execute();
 
 };
 

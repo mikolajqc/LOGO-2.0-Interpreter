@@ -8,6 +8,8 @@ public:
 	SExpAstNode(AstNode* parent);
 
 	float calculate();
+	void execute();
+	
 };
 
 #endif // SEXPASTNODE_H

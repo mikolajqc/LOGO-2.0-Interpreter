@@ -5,3 +5,12 @@ InstructionAstNode::InstructionAstNode(AstNode* parent)
 {
 	
 }
+
+void InstructionAstNode::execute()
+{
+	children[0]->execute();
+}
+
+float InstructionAstNode::calculate()
+{
+}

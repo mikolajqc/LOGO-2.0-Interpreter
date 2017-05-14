@@ -27,3 +27,7 @@ float SExpAstNode::calculate()
 	
 	return result;
 }
+
+void SExpAstNode::execute()
+{
+}
