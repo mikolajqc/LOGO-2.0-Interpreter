@@ -1,6 +1,7 @@
 #include "ProcedureDeclarationAstNode.h"
 #include "StartAstNode.h"
 #include <iostream>
+#include "ArgumentsDecAstNode.h"
 
 ProcedureDeclarationAstNode::ProcedureDeclarationAstNode(AstNode* parent)
 :AstNode(parent)
@@ -13,7 +14,6 @@ float ProcedureDeclarationAstNode::calculate()
 
 void ProcedureDeclarationAstNode::check()
 {
-	std::cout << "asdasd";
 	//to nie jest wykonywanie. To jest proces sprawdzania semantyki
 	// po 1 sprawdzmy czy cos takiego istnieje w starcie
 	StartAstNode* startAstNode = dynamic_cast<StartAstNode*>(FindStart(this));
@@ -22,6 +22,7 @@ void ProcedureDeclarationAstNode::check()
 	if(startAstNode->CheckProcedure(procedureName) == true)
 	{
 		std::cout << "Error: " << procedureName << " is defined!\n";
+		exit(1);
 		return;
 	}
 	else
@@ -35,6 +36,10 @@ void ProcedureDeclarationAstNode::check()
 	//checking inner
 	children[1]->check(); //inner instructions list with guard
 	
+	///calculating arguments number
+	//std::cout << "hrllo";
+	argumentsNumber = (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[0]))->getArgumentsNumber();
+	std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 }
 
 void ProcedureDeclarationAstNode::execute()

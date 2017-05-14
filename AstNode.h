@@ -14,6 +14,7 @@ public:
 	
 	//ForDebug only:
 	AstNode* getParent();
+	std::vector<AstNode*> GetChildren();
 	
 	virtual float calculate() = 0;
 	virtual void execute() = 0;

@@ -17,6 +17,7 @@ public:
 
 private:
 	std::string procedureName;
+	int argumentsNumber;
 
 };
 

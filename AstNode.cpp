@@ -52,3 +52,8 @@ AstNode* AstNode::FindStart(AstNode* sourceNode)
 	
 	return startNode;
 }
+
+std::vector<AstNode*> AstNode::GetChildren()
+{
+	return children;
+}

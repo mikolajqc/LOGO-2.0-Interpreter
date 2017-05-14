@@ -15,6 +15,7 @@
 #include "src/Parser/StartAstNode.h"
 #include "src/Parser/LoopAstNode.h"
 #include "src/Parser/ProcedureDeclarationAstNode.h"
+#include "src/Parser/ArgumentsDecAstNode.h"
 
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
@@ -1064,7 +1065,7 @@ int Parser::Conditional(AstNode* parent)
 
 int Parser::ArgumentsDec(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	ArgumentsDecAstNode* currentAstNode = new ArgumentsDecAstNode(parent);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "ArgumentsDec" << std::endl;
@@ -1073,6 +1074,7 @@ int Parser::ArgumentsDec(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " ID_VARIABLE" << std::endl;
+		currentAstNode->setArgumentName(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
 		if(ArgumentsDec(currentAstNode) == 2)
@@ -1084,7 +1086,8 @@ int Parser::ArgumentsDec(AstNode* parent)
 		return 2;
 	}
 	
-	parent->AddChild(currentAstNode); //jesli nic nie ma to jest ";"
+	//parent->AddChild(currentAstNode); //jesli nic nie ma to jest ";"
+	delete currentAstNode; ///ZROB TO TEZ W INNYCH MIEJSCACH !!!
 	return 2;
 }
 
