@@ -16,6 +16,7 @@ public:
 	
 	//debug:
 	std::string GetProcedureName();
+	int GetArgumentsNumber();
 	
 	ProcedureDeclarationAstNode(AstNode* parent);
 

@@ -32,5 +32,10 @@ void ArgumentsAstNode::execute()
 
 int ArgumentsAstNode::GetArgumentsNumber()
 {
-	return 0;
+	if(this->children.size() > 1)
+	{
+		return 1 + (dynamic_cast<ArgumentsAstNode*>(children[1]))->GetArgumentsNumber();
+	}
+	
+	return 1;
 }

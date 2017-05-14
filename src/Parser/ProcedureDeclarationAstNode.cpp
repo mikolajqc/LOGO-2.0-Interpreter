@@ -60,3 +60,8 @@ std::string ProcedureDeclarationAstNode::GetProcedureName()
 {
 	return procedureName;
 }
+
+int ProcedureDeclarationAstNode::GetArgumentsNumber()
+{
+	return argumentsNumber;
+}

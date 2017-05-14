@@ -1,6 +1,7 @@
 #include "ProcedureCallAstNode.h"
 #include "StartAstNode.h"
 #include <iostream>
+#include "src/Parser/ArgumentsAstNode.h"
 
 ProcedureCallAstNode::ProcedureCallAstNode(AstNode* parent)
 :AstNode(parent)
@@ -29,6 +30,15 @@ void ProcedureCallAstNode::check()
 		exit(1);
 	}
 	
+	argumentsNumber = (dynamic_cast<ArgumentsAstNode*>(children[0]))->GetArgumentsNumber();
+	if(argumentsNumber != pointerToProcedureDeclaration->GetArgumentsNumber())
+	{
+		std::cout << "Error: procedure: " << procedureName << " need " 
+		<< pointerToProcedureDeclaration->GetArgumentsNumber() << " you passed " 
+		<< argumentsNumber << "!\n";
+		exit(1);
+		
+	}
 	//argumentsNumber = (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[0]))->getArgumentsNumber();
 	//std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 	
