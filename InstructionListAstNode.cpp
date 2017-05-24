@@ -26,6 +26,13 @@ float InstructionListAstNode::calculate()
 
 void InstructionListAstNode::check()
 {
+	
+	for(unsigned int i = 0; i < children.size(); ++i)
+	{
+		children[i]->check();
+	}
+	
+	/*
 	if(children.size() == 2)
 	{
 		children[0]->check();
@@ -35,6 +42,11 @@ void InstructionListAstNode::check()
 	{
 		children[0]->check();
 	}
+	else
+	{
+		exit(1);
+	}
+	*/
 }
 /*
 void InstructionListAstNode::addVariable(std::string variableName, float value)

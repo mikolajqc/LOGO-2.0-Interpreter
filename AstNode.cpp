@@ -14,7 +14,9 @@ AstNode::~AstNode()
 {
 	for(unsigned int i = 0; i < children.size(); ++i)
 	{
-		delete children[i];
+		//std::cout << "delete child" << i << "\n";
+		if(children[i] != nullptr) delete children[i];
+		//std::cout << "delete child" << i << "\n";
 	}
 }
 

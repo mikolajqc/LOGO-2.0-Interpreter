@@ -108,59 +108,32 @@ int Parser::ArgumentsDecStart(AstNode* parent)
 
 int Parser::InstructionList(AstNode* parent)
 {
-	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
 	
-	WritePrefix(currentAstNode);
+	//WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
+	int instructionResult = Instruction(currentAstNode);vim 
+	int procedureResult  = ProcedureDeclaration(currentAstNode);
 	
-	int instructionResult = Instruction(currentAstNode);
-	if(instructionResult == 2)
-	{
-		if(InstructionList(currentAstNode) == 2)
-		{
-			parent->AddChild(currentAstNode);
-			return 2;
-		}
-		else
-		{
-			delete currentAstNode;
-			return 0; // im sure that here is an error intructin list 0 or 1
-		}
-
-	}
-	else if(instructionResult == 0)
+	if(instructionResult != 2 && procedureResult != 2)
 	{
 		delete currentAstNode;
-		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+		return 0;
 	}
-	
-	//instruction == 1 nie wie co zrobic zatem proba rozpoznania przez procedure declaration
-	int procedureDeclarationResult = ProcedureDeclaration(currentAstNode);
-	
-	if(procedureDeclarationResult == 2) //instrctinresult 1
+	/// ============
+	while(instructionResult == 2 || procedureResult == 2)
 	{
-		if(InstructionList(currentAstNode) == 2)
-		{
-			WritePrefix(currentAstNode);
-			parent->AddChild(currentAstNode);
-			return 2;
-		}
-		else
+		instructionResult = Instruction(currentAstNode);
+		procedureResult  = ProcedureDeclaration(currentAstNode);
+		std::cout  << "after inst" <<  instructionResult <<"\n";
+		if(instructionResult == 0) 
 		{
 			delete currentAstNode;
 			return 0;
 		}
 	}
-	else if(procedureDeclarationResult == 0)
-	{
-		delete currentAstNode;
-		return 0;
-	}
-	
-	//spawdzamy czy na koncu pliku
 	if(NextLexeme().GetCategory() == EMPTY) 
 	{
-		//delete currentAstNode;
 		parent->AddChild(currentAstNode);
 		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
 	}
