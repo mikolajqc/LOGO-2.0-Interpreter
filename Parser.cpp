@@ -24,6 +24,7 @@
 #include "src/Parser/QConditionAstNode.h"
 #include "src/Parser/TConditionAstNode.h"
 
+class setArgumentName;
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
 {
@@ -90,20 +91,24 @@ int Parser::ArgumentsDecStart(AstNode* parent)
 	StartAstNode* currentAstNode = new StartAstNode(parent);
 	WritePrefix(currentAstNode);
 	std::cout << "ArgumentsDecStart(NOT GRAMMAR ELEMENT!)" << std::endl;
+
+	WritePrefix(currentAstNode);
 	
-	if(ArgumentsDec(currentAstNode) == 2)
-	{
-		parent->AddChild(currentAstNode);
-		return 2;
-	}
-	else
-	{
-		delete currentAstNode;
-		return 0;
-	}
+	std:: cout << "ArgumentDec" << std::endl;
 	
-	delete currentAstNode;
-	return 1;
+	while(NextLexeme().GetCategory() == ID_VARIABLE)
+	{
+		WritePrefix(currentAstNode);
+		std:: cout << " ID_VARIABLE" << std::endl;
+		ArgumentsDecAstNode* currentArgumentNode = new ArgumentsDecAstNode(currentAstNode);
+		currentArgumentNode->setArgumentName(NextLexeme().GetValue());
+		isLexemeUsed = true;
+		
+		currentAstNode->AddChild(currentArgumentNode);
+	}
+
+	parent->AddChild(currentAstNode);
+	return 2;
 }
 
 int Parser::InstructionList(AstNode* parent)
@@ -773,13 +778,14 @@ int Parser::InnerInstructionsList(AstNode* parent)
 	std::cout << "InnerInstructionList" <<std::endl;
 	
 	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
-	int instructionResult = Instruction(currentAstNode);  /// to moze walic!!!
-	
+	int instructionResult = Instruction(currentAstNode);
+	/*
 	if(instructionResult != 2)
 	{
 		delete currentAstNode;
 		return 0;
 	}
+	*/
 	
 	while(instructionResult == 2)
 	{
@@ -1045,9 +1051,9 @@ int Parser::ArgumentsDec(AstNode* parent)
 	ArgumentsDecAstNode* currentAstNode = new ArgumentsDecAstNode(parent);
 	WritePrefix(currentAstNode);
 	
-	std:: cout << "ArgumentsDec" << std::endl;
+	std:: cout << "ArgumentDec" << std::endl;
 	
-	if(NextLexeme().GetCategory() == ID_VARIABLE)
+	while(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " ID_VARIABLE" << std::endl;
@@ -1062,8 +1068,7 @@ int Parser::ArgumentsDec(AstNode* parent)
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
-	
-	//parent->AddChild(currentAstNode); //jesli nic nie ma to jest ";"
+
 	delete currentAstNode; ///ZROB TO TEZ W INNYCH MIEJSCACH !!!
 	return 2;
 }
