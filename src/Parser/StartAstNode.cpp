@@ -48,7 +48,11 @@ float StartAstNode::GetValue(std::string variableName)
 
 void StartAstNode::check()
 {
-	children[0]->check();
+	//children[0]->check();
+	for(unsigned int i = 0 ; i < children.size(); ++i)
+	{
+		children[i]->check();
+	}
 }
 
 bool StartAstNode::CheckProcedure(std::string procedureName)
