@@ -113,8 +113,8 @@ int Parser::InstructionList(AstNode* parent)
 	std::cout << "InstructionList" <<std::endl;
 	
 	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
-	int instructionResult = Instruction(currentAstNode);//vim 
-	int procedureResult  = ProcedureDeclaration(currentAstNode);
+	int instructionResult = Instruction(currentAstNode);  /// to moze walic!!!
+	int procedureResult  = ProcedureDeclaration(currentAstNode);  /// to tez
 	
 	if(instructionResult != 2 && procedureResult != 2)
 	{
@@ -127,7 +127,7 @@ int Parser::InstructionList(AstNode* parent)
 		instructionResult = Instruction(currentAstNode);
 		procedureResult  = ProcedureDeclaration(currentAstNode);
 		std::cout  << "after inst" <<  instructionResult <<"\n";
-		if(instructionResult == 0) 
+		if(instructionResult == 0 && procedureResult == 0) 
 		{
 			delete currentAstNode;
 			return 0;
@@ -309,37 +309,71 @@ int Parser::Exp(AstNode* parent)
 	
 	int sExpResult = SExp(currentAstNode);
 	
-	if(sExpResult == 2) //rozpoznalismy sexp
-	{
-		if(AddOp(currentAstNode) == 2) // optional
-		{
-			if(Exp(currentAstNode) == 2)
-			{
-				parent->AddChild(currentAstNode);
-				return 2;
-			}
-			else
-			{
-				delete currentAstNode;
-				return 0;
-			}
-		}
-		parent->AddChild(currentAstNode);
-		return 2;
-	}
-	else if(sExpResult == 0)
+	if(sExpResult == 0)
 	{
 		delete currentAstNode;
 		return 0;
 	}
-	
-	//nie rozpoznalem
-	delete currentAstNode;
-	return 1;
+	else if(sExpResult == 1)
+	{
+		delete currentAstNode;
+		return 1;
+	}
+	else
+	{
+		while(AddOp(currentAstNode) == 2) // optional
+		{
+			if(SExp(currentAstNode) != 2)
+			{
+				delete currentAstNode; /// add op musi stac przed sexp!!!
+				return 0;
+			}
+		}
+		//jesli addop nierozpoznany to ok koniec exp
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
 }
 
 int Parser::SExp(AstNode* parent)
 {
+	SExpAstNode* currentAstNode = new SExpAstNode(parent);
+	
+	unsigned int depth = DepthCalculate(currentAstNode);
+	for(unsigned int i = 0; i < depth; ++i)
+	{
+		std::cout << " ";
+	}
+	std:: cout << "SExp" << std::endl;
+	
+	int factorResult = Factor(currentAstNode);
+	
+	if(factorResult == 0)
+	{
+		delete currentAstNode;
+		return 0;
+	}
+	else if(factorResult == 1)
+	{
+		delete currentAstNode;
+		return 1;
+	}
+	else
+	{
+		while(MultOp(currentAstNode) == 2) // optional
+		{
+			if(Factor(currentAstNode) != 2)
+			{
+				delete currentAstNode; /// mult op musi stac przed factor!!!
+				return 0;
+			}
+		}
+		//jesli addop nierozpoznany to ok koniec exp
+		parent->AddChild(currentAstNode);
+		return 2;
+	}
+	
+	/*
 	SExpAstNode* currentAstNode = new SExpAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
@@ -377,6 +411,8 @@ int Parser::SExp(AstNode* parent)
 	
 	delete currentAstNode;
 	return 1;
+	
+	*/
 }
 
 int Parser::Factor(AstNode* parent)
