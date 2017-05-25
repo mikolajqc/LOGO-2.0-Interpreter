@@ -16,6 +16,7 @@ public:
 	void addVariable(std::string, float value);
 	bool checkVariable(std::string);
 	float GetValue(std::string);
+	int GetArgumentsNumber(); //only for start in proceduredeclaration
 	
 	bool CheckProcedure(std::string procedureName);
 	void AddProcedure(std::string procedureName, AstNode* pointerToProcedureNode);

@@ -33,8 +33,8 @@ void ProcedureDeclarationAstNode::check()
 	//checking argumentsdec
 	children[0]->check();
 	
-	argumentsNumber = (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[0]))->getArgumentsNumber();
-	std::cout << "NumberOfArguments: " << argumentsNumber << "\n";	
+	argumentsNumber = (dynamic_cast<StartAstNode*>(children[0]))->GetArgumentsNumber();
+	std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 	
 	//checking inner
 	children[1]->check(); //inner instructions list with guard

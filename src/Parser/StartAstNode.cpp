@@ -80,3 +80,10 @@ AstNode* StartAstNode::GetPointerToProcedureNode(std::string procedureName)
 	}
 	return nullptr;
 }
+
+int StartAstNode::GetArgumentsNumber()
+{
+	std::cout << "children number: " << children.size() << "\n";
+	return children.size();
+	
+}
