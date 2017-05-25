@@ -39,8 +39,6 @@ void ProcedureDeclarationAstNode::check()
 	//checking inner
 	children[1]->check(); //inner instructions list with guard
 	
-	///calculating arguments number
-	//std::cout << "hrllo";
 
 }
 

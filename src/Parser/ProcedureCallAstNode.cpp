@@ -41,7 +41,14 @@ void ProcedureCallAstNode::check()
 	
 	
 	//arguments
-	argumentsNumber = (dynamic_cast<ArgumentsAstNode*>(children[0]))->GetArgumentsNumber();
+	if(children.size() == 0)
+	{
+		argumentsNumber = 0;
+	}
+	else
+	{
+		argumentsNumber = (dynamic_cast<ArgumentsAstNode*>(children[0]))->GetArgumentsNumber();
+	}
 	if(argumentsNumber != pointerToProcedureDeclaration->GetArgumentsNumber())
 	{
 		std::cout << "Error: procedure: " << procedureName << " need " 
