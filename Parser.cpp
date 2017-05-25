@@ -111,8 +111,9 @@ int Parser::InstructionList(AstNode* parent)
 	
 	//WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
+	
 	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
-	int instructionResult = Instruction(currentAstNode);vim 
+	int instructionResult = Instruction(currentAstNode);//vim 
 	int procedureResult  = ProcedureDeclaration(currentAstNode);
 	
 	if(instructionResult != 2 && procedureResult != 2)
