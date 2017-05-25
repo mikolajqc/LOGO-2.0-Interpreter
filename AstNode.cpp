@@ -41,14 +41,39 @@ void AstNode::execute() ///TEMPORARY !!!!! poki co execute jest wykonywane w ram
 	children[0]->execute();
 }
 
+AstNode* AstNode::FindStartForCall(AstNode* sourceNode)
+{
+	
+	StartAstNode* startNode;
+	///innerInsNode
+	AstNode* currentNode = sourceNode->getParent();
+	if(currentNode == nullptr) return nullptr;
+	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
+	{
+		std::cout << "I am in \n";
+		
+		currentNode = currentNode->parent;
+		std::cout << "I am in2 \n";
+		if(currentNode == nullptr) 
+		{
+			exit(1);
+		}
+	}
+	
+	return startNode;
+	
+}
+
 
 AstNode* AstNode::FindStart(AstNode* sourceNode)
 {
 	StartAstNode* startNode;
 	///innerInsNode
 	AstNode* currentNode = sourceNode->getParent();
+	if(currentNode == nullptr) return nullptr;
 	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
 	{
+		std::cout << "I am in \n";
 		//AstNode* before = currentNode;
 		
 		

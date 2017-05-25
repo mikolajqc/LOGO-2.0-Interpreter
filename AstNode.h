@@ -21,10 +21,12 @@ public:
 	virtual void check() = 0;
 	
 	AstNode* FindStart(AstNode* startNode);
+	AstNode* FindStartForCall(AstNode* sourceNode);
 	
 protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;
+	
 };
 
 #endif // ASTNODE_H

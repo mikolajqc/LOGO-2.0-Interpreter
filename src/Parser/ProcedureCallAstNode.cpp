@@ -16,20 +16,31 @@ void ProcedureCallAstNode::check()
 {
 	//is such procedure declared:
 	StartAstNode* startAstNode = dynamic_cast<StartAstNode*>(FindStart(this));
-	if(startAstNode == nullptr) std::cout << "ERROR!: I cant find start node in procedure declaration\n";
 	
-	if(startAstNode->CheckProcedure(procedureName) == true)
+	
+	while(startAstNode != nullptr)
 	{
-		pointerToProcedureDeclaration = static_cast<ProcedureDeclarationAstNode*>(startAstNode->
-		GetPointerToProcedureNode(procedureName)); ///CHECK IT!!!
-		std::cout << "pointer name: " << pointerToProcedureDeclaration->GetProcedureName() << "\n";
+		if(startAstNode->CheckProcedure(procedureName) == true)
+		{
+			pointerToProcedureDeclaration = static_cast<ProcedureDeclarationAstNode*>(startAstNode->
+			GetPointerToProcedureNode(procedureName)); ///CHECK IT!!!
+			std::cout << "pointer name: " << pointerToProcedureDeclaration->GetProcedureName() << "\n";
+			break;
+		}
+		else
+		{
+			startAstNode = dynamic_cast<StartAstNode*>(FindStartForCall(startAstNode));
+			std::cout << "chuj\n";
+		}
 	}
-	else
+	if(startAstNode == nullptr)
 	{
 		std::cout << "Error: Procedure: \'" << procedureName << "\' is not declared!\n";
 		exit(1);
 	}
 	
+	
+	//arguments
 	argumentsNumber = (dynamic_cast<ArgumentsAstNode*>(children[0]))->GetArgumentsNumber();
 	if(argumentsNumber != pointerToProcedureDeclaration->GetArgumentsNumber())
 	{
