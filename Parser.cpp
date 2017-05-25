@@ -121,7 +121,7 @@ int Parser::InstructionList(AstNode* parent)
 		delete currentAstNode;
 		return 0;
 	}
-	/// ============
+	
 	while(instructionResult == 2 || procedureResult == 2)
 	{
 		instructionResult = Instruction(currentAstNode);
@@ -373,46 +373,6 @@ int Parser::SExp(AstNode* parent)
 		return 2;
 	}
 	
-	/*
-	SExpAstNode* currentAstNode = new SExpAstNode(parent);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "SExp" << std::endl;
-	
-	int factorResult = Factor(currentAstNode);
-	
-	if(factorResult == 2)
-	{
-		if(MultOp(currentAstNode) == 2) // optional
-		{
-			if(SExp(currentAstNode) == 2)
-			{
-				parent->AddChild(currentAstNode);
-				return 2;
-			}
-			else
-			{
-				delete currentAstNode;
-				return 0;
-			}
-		}
-		parent->AddChild(currentAstNode);
-		return 2;
-	}
-	else if(factorResult == 0)
-	{
-		delete currentAstNode;
-		return 0;
-	}
-	
-	delete currentAstNode;
-	return 1;
-	
-	*/
 }
 
 int Parser::Factor(AstNode* parent)
@@ -810,43 +770,35 @@ int Parser::Graphics(AstNode* parent)
 
 int Parser::InnerInstructionsList(AstNode* parent)
 {
-	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
-	WritePrefix(currentAstNode);
-	std:: cout << "InnerInsrucionsList" << std::endl;
+	std::cout << "InnerInstructionList" <<std::endl;
 	
-	int instructionResult = Instruction(currentAstNode);
-	if(instructionResult == 2)
-	{
-		if(InnerInstructionsList(currentAstNode) == 2)
-		{
-			parent->AddChild(currentAstNode);
-			return 2;
-		}
-		else
-		{
-			delete currentAstNode;
-			return 0; // im sure that here is an error intructin list 0 or 1
-		}
-
-	}
-	else if(instructionResult == 0)
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
+	int instructionResult = Instruction(currentAstNode);  /// to moze walic!!!
+	
+	if(instructionResult != 2)
 	{
 		delete currentAstNode;
-		return 0; //error bo instuction  rozpoznal ae otem wywola bllad
+		return 0;
 	}
 	
-	//instruction == 1
-	
-	//spawdzamy czy na koncu bloku
+	while(instructionResult == 2)
+	{
+		instructionResult = Instruction(currentAstNode);
+		if(instructionResult == 0) 
+		{
+			delete currentAstNode;
+			return 0;
+		}
+	}
 	if(NextLexeme().GetCategory() == KW_END || NextLexeme().GetCategory() == CB_SBRACKET) 
 	{
-		//delete currentAstNode;
 		parent->AddChild(currentAstNode);
-		return 2; // zwracamy 2 bo moze byc przypadek pusty! - zgodnie z gramatyka
+		return 2;
 	}
 	
 	delete currentAstNode;
 	return 1;
+	
 }
 
 int Parser::Condition(AstNode* parent)
