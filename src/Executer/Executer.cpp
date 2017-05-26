@@ -15,7 +15,7 @@ void Executer::execute()
 	parser->start(); // parsing
 	parser->check(); //semantic analysis
 	parser->execute();
-	ExecuterTest();
+	//ExecuterTest();
 }
 
 void Executer::AddContext()
@@ -72,9 +72,15 @@ AstNode* Executer::GetPointerToProcedure(std::string procedureName)
 void Executer::ExecuterTest()
 {
 	AddContext();
-	AddArgument("a", 10);
+	AddArgument("c", 10);
 	AddLocalVariable("a", 100);
 	
+	AddContext();
+	AddArgument("b", 123);
+	AddLocalVariable("a", 12);
+	
 	std::cout << "a: " <<  GetVariable("a") << "\n";
+	std::cout << "b: " <<  GetVariable("b") << "\n";
+	std::cout << "c: " <<  GetVariable("c") << "\n";
 	
 }

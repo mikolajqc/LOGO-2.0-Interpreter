@@ -10,6 +10,13 @@ AssignmentAstNode::AssignmentAstNode(AstNode* parent)
 
 void AssignmentAstNode::execute()
 {
+	std::cout << "AssignmentAstNode executing\n";
+	
+	int value = children[0]->calculate();
+	
+	std::cout << "value: " << value << "\n";
+	
+	
 }
 
 void AssignmentAstNode::setNameOfVariable(std::string name)
