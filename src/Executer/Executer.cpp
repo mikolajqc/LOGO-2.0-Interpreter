@@ -44,15 +44,9 @@ void Executer::AddArgument(std::string name, float value)
 	std::cout << "argument added!\n";
 }
 
-void Executer::AddProcedure(std::string procedureName, /*AstNode* pointerToProcedure,*/  std::vector<std::string> argumentsNames)
+void Executer::AddProcedure(std::string procedureName, std::vector<std::string> argumentsNames)
 {
 	
-	//std::pair <AstNode*, std::vector<std::string> > procedure =
-	//		std::pair<AstNode*, std::vector<std::string> >(pointerToProcedure, argumentsNames);
-			
-	//std::pair <AstNode*, std::vector<std::string> > procedure =
-//			std::pair<AstNode*, std::vector<std::string> >(pointerToProcedure, argumentsNames);
-			
 	procedures[procedureName] = argumentsNames;
 	std::cout << "procedure added!\n";
 }
@@ -69,17 +63,11 @@ float Executer::GetVariable(std::string name)
 		}
 	}
 	
-	std::cout << "ERROR!: Po przejsciu przez stack nie znalezlismy zmiennej!\n";
+	std::cout << "ERROR!: Cannot to find variable on stack!\n";
 	exit(1);
 	
 }
 
-/*
-AstNode* Executer::GetPointerToProcedure(std::string procedureName)
-{
-	return procedures[procedureName].first;
-}
-*/
 
 void Executer::ExecuterTest()
 {
@@ -87,9 +75,7 @@ void Executer::ExecuterTest()
 	AddArgument("c", 10);
 	AddLocalVariable("a", 100);
 	
-	//AstNode* a  = NULL;
 	std::vector<std::string> testVector;
-	
 	
 	AddContext();
 	AddArgument("b", 123);

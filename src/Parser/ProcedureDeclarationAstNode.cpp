@@ -47,6 +47,9 @@ void ProcedureDeclarationAstNode::check()
 
 void ProcedureDeclarationAstNode::execute(Executer* executer)
 {
+	std::cout << "ProcedureDeclaration execution\n";
+	
+	//TODO
 }
 
 void ProcedureDeclarationAstNode::SetProcedureName(std::string procedureName)
