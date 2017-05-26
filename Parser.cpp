@@ -131,7 +131,7 @@ int Parser::InstructionList(AstNode* parent)
 	{
 		instructionResult = Instruction(currentAstNode);
 		procedureResult  = ProcedureDeclaration(currentAstNode);
-		std::cout  << "after inst" <<  instructionResult <<"\n";
+		//std::cout  << "after inst" <<  instructionResult <<"\n";
 		if(instructionResult == 0 && procedureResult == 0) 
 		{
 			delete currentAstNode;
@@ -290,12 +290,8 @@ int Parser::Assignment(AstNode* parent)
 		{
 			std::cout << "= operator expected!\n";
 			exit(1);
-			//delete currentAstNode;
-			//return 0;
 		}
 	}
-
-	//std::cout << "I wanted :sth";
 	
 	delete currentAstNode;
 	return 1;
@@ -1275,6 +1271,8 @@ void Parser::WritePrefix(AstNode* astNode)
 
 void Parser::execute()
 {
+	std::cout << "Parser executing\n";
+	astTree->execute();
 }
 
 void Parser::check()

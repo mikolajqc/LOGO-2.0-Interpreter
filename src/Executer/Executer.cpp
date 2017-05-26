@@ -14,4 +14,5 @@ void Executer::execute()
 {
 	parser->start(); // parsing
 	parser->check(); //semantic analysis
+	parser->execute();
 }

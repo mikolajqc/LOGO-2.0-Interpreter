@@ -9,7 +9,11 @@ StartAstNode::StartAstNode(AstNode* parent)
 
 void StartAstNode::execute()
 {
-	children[0]->execute();
+	std::cout << "StartAstNode executing\n";
+	for (unsigned int i = 0; i < children.size(); ++i)
+	{
+		children[i]->execute();
+	}
 }
 
 float StartAstNode::calculate()

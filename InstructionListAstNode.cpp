@@ -4,18 +4,15 @@
 InstructionListAstNode::InstructionListAstNode(AstNode* parent)
 :AstNode(parent)
 {
+	
 }
 
 void InstructionListAstNode::execute()
 {
-	if(children.size() == 2)
+	std::cout << "InstructionListAstNode executing\n";
+	for(unsigned int i = 0; i < children.size() ; ++i)
 	{
-		children[0]->execute();
-		children[1]->execute();
-	}
-	else if(children.size() == 1)
-	{
-		children[0]->execute();
+		children[i]->execute();
 	}
 }
 
@@ -32,35 +29,4 @@ void InstructionListAstNode::check()
 		children[i]->check();
 	}
 	
-	/*
-	if(children.size() == 2)
-	{
-		children[0]->check();
-		children[1]->check();
-	}
-	else if(children.size() == 1)
-	{
-		children[0]->check();
-	}
-	else
-	{
-		exit(1);
-	}
-	*/
 }
-/*
-void InstructionListAstNode::addVariable(std::string variableName, float value)
-{
-	variables.insert(std::pair<std::string, float>(variableName, value));
-}
-
-bool InstructionListAstNode::checkVariable(std::string variableName)
-{
-	if(variables.count(variableName) > 0)
-	{
-		return true;
-	}
-	
-	return false;
-}
-*/
