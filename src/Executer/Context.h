@@ -1,7 +1,7 @@
 #ifndef CONTEXT_H
 #define CONTEXT_H
 #include <map>
-#include "AstNode.h"
+//#include "AstNode.h"
 
 class Context
 {

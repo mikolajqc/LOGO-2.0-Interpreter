@@ -3,7 +3,7 @@
 
 #include "Lexer.h"
 #include "AstNode.h"
-#include "ValAstNode.h"
+//#include "src/Executer/Executer.h"
 
 class Parser
 {
@@ -18,6 +18,8 @@ public:
 	
 private:
 	Lexer* lexer;
+	Executer* executer;
+	
 	Lexeme currentLexeme;
 	bool isLexemeUsed;
 	Lexeme NextLexeme();

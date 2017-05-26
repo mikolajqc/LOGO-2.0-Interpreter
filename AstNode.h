@@ -1,6 +1,9 @@
 #ifndef ASTNODE_H
 #define ASTNODE_H
 #include <vector>
+#include "src/Executer/Executer.h"
+
+//class Executer;
 
 //todo: derivation of this class to more specific classes for ex: with a table of symbols
 class AstNode
@@ -26,6 +29,8 @@ public:
 protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;
+	
+	//Executer* executer;
 	
 };
 

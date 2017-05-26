@@ -10,6 +10,9 @@ InstructionListAstNode::InstructionListAstNode(AstNode* parent)
 void InstructionListAstNode::execute()
 {
 	std::cout << "InstructionListAstNode executing\n";
+	
+	//executer
+	
 	for(unsigned int i = 0; i < children.size() ; ++i)
 	{
 		children[i]->execute();

@@ -23,18 +23,21 @@
 #include "src/Parser/SConditionAstNode.h"
 #include "src/Parser/QConditionAstNode.h"
 #include "src/Parser/TConditionAstNode.h"
+#include "ValAstNode.h"
 
 class setArgumentName;
 Parser::Parser()
 :isLexemeUsed(true), astTree(nullptr)
 {
 	lexer = new Lexer("test.txt");
+	executer = new Executer();
 }
 
 Parser::~Parser()
 {
 	delete lexer;
 	delete astTree;
+	delete executer;
 }
 
 Lexeme Parser::NextLexeme()
@@ -1273,6 +1276,7 @@ void Parser::execute()
 {
 	std::cout << "Parser executing\n";
 	astTree->execute();
+	//executer->ExecuterTest();
 }
 
 void Parser::check()

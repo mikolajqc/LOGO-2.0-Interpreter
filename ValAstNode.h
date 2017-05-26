@@ -4,6 +4,8 @@
 #include "AstNode.h"
 #include <string>
 
+//class Executer;
+
 class ValAstNode : public AstNode
 {
 public:

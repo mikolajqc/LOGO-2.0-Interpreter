@@ -1,50 +1,60 @@
 #include "Executer.h"
+#include <iostream>
 
 Executer::Executer()
 {
-	parser = new Parser;
+	//parser = new Parser;
 }
 
 Executer::~Executer()
 {
-	delete parser;
+	//delete parser;
 }
 
 void Executer::execute()
 {
-	parser->start(); // parsing
-	parser->check(); //semantic analysis
-	parser->execute();
-	//ExecuterTest();
+	ExecuterTest();
 }
 
 void Executer::AddContext()
 {
+	
 	stackOfContexts.push(new Context);
+	std::cout << "Context added!\n";
 }
 
 void Executer::DeleteContext()
 {
+	
 	stackOfContexts.pop();
+	std::cout << "Context deleted!\n";
 }
 
 void Executer::AddLocalVariable(std::string name, float value)
 {
+	
 	stackOfContexts.GetTopPosition()->AddLocalVariable(name, value);
+	std::cout << "LocalVariable added!\n";
 }
 
 void Executer::AddArgument(std::string name, float value)
 {
+	
 	stackOfContexts.GetTopPosition()->AddArgument(name, value);
+	std::cout << "argument added!\n";
 }
 
-void Executer::AddProcedure(std::string procedureName, AstNode* pointerToProcedure,  std::vector<std::string> argumentsNames)
+void Executer::AddProcedure(std::string procedureName, /*AstNode* pointerToProcedure,*/  std::vector<std::string> argumentsNames)
 {
-	std::pair <AstNode*, std::vector<std::string> > procedure =
-			std::pair<AstNode*, std::vector<std::string> >(pointerToProcedure, argumentsNames);
-	std::cout << "1 , 2, 3 (potem jest 4) ";
-	procedures[procedureName] = procedure; /// check it!!!!!!!!!!!!!
-	std::cout << "4\n";
+	
+	//std::pair <AstNode*, std::vector<std::string> > procedure =
+	//		std::pair<AstNode*, std::vector<std::string> >(pointerToProcedure, argumentsNames);
+			
+	//std::pair <AstNode*, std::vector<std::string> > procedure =
+//			std::pair<AstNode*, std::vector<std::string> >(pointerToProcedure, argumentsNames);
+			
+	procedures[procedureName] = argumentsNames;
+	std::cout << "procedure added!\n";
 }
 
 float Executer::GetVariable(std::string name)
@@ -64,16 +74,25 @@ float Executer::GetVariable(std::string name)
 	
 }
 
+/*
 AstNode* Executer::GetPointerToProcedure(std::string procedureName)
 {
 	return procedures[procedureName].first;
 }
+*/
 
 void Executer::ExecuterTest()
 {
 	AddContext();
 	AddArgument("c", 10);
 	AddLocalVariable("a", 100);
+	
+	//AstNode* a  = NULL;
+	std::vector<std::string> testVector;
+	
+	
+	//AddProcedure("Foo", a , testVector);
+	//std::cout << "Pointer: " << GetPointerToProcedure("Foo") << "\n";
 	
 	AddContext();
 	AddArgument("b", 123);
