@@ -7,6 +7,7 @@ Lexer::Lexer(std::string filePath)
 
 Lexer::~Lexer()
 {
+	delete fileManager;
 }
 
 Lexeme Lexer::CreateLexeme(std::string word)
