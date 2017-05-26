@@ -20,8 +20,9 @@ public:
 	std::vector<AstNode*> GetChildren();
 	
 	virtual float calculate() = 0;
-	virtual void execute() = 0;
+	virtual void execute(Executer* executer) = 0;
 	virtual void check() = 0;
+	virtual float calc(Executer* executer) = 0;
 	
 	AstNode* FindStart(AstNode* startNode);
 	AstNode* FindStartForCall(AstNode* sourceNode);

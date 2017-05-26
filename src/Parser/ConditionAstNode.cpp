@@ -27,6 +27,10 @@ void ConditionAstNode::check()
 {
 }
 
-void ConditionAstNode::execute()
+void ConditionAstNode::execute(Executer* executer)
 {
 }
+float ConditionAstNode::calc(Executer* executer)
+{
+}
+

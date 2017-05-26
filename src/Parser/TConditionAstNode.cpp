@@ -14,6 +14,10 @@ void TConditionAstNode::check()
 {
 }
 
-void TConditionAstNode::execute()
+void TConditionAstNode::execute(Executer* executer)
 {
 }
+float TConditionAstNode::calc(Executer* executer)
+{
+}
+

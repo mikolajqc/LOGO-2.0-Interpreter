@@ -6,10 +6,11 @@
 class ExpAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	ExpAstNode(AstNode* parent);
 
 	float calculate();
-	void  execute();
+	void  execute(Executer* executer);
 	void check();
 
 };

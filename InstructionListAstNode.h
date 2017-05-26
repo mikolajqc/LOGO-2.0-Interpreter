@@ -6,9 +6,10 @@
 class InstructionListAstNode : public AstNode
 {
 public:
+	float calc(Executer* executer);
 	InstructionListAstNode(AstNode* parent);
 	
-	void execute();
+	void execute(Executer* executer);
 	float calculate();
 	void check();
 	

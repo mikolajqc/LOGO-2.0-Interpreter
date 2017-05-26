@@ -26,7 +26,7 @@ void ArgumentsAstNode::check()
 	}
 }
 
-void ArgumentsAstNode::execute()
+void ArgumentsAstNode::execute(Executer* executer)
 {
 }
 
@@ -39,3 +39,7 @@ int ArgumentsAstNode::GetArgumentsNumber()
 	
 	return 1;
 }
+float ArgumentsAstNode::calc(Executer* executer)
+{
+}
+

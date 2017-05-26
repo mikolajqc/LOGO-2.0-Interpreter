@@ -12,11 +12,11 @@ float ExpAstNode::calculate()
 
 	result = children[0]->calculate();
 	
-	if(children.size() > 1) // zawsze 2i + 1 na nieparzystych operatory
+	if(children.size() > 1)
 	{
 		for(unsigned int i = 0; i < children.size()/2; ++i)
 		{
-			if(children[2*i + 1]->calculate() == 1) //doadwanie
+			if(children[2*i + 1]->calculate() == 1)
 			{
 				result += children[2*i + 2]->calculate();
 			}
@@ -31,10 +31,14 @@ float ExpAstNode::calculate()
 	return result;
 }
 
-void ExpAstNode::execute()
+void ExpAstNode::execute(Executer* executer)
 {
 }
 
 void ExpAstNode::check()
 {
 }
+float ExpAstNode::calc(Executer* executer)
+{
+}
+

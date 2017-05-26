@@ -7,9 +7,10 @@
 class ProcedureCallAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	float calculate();
 	void check();
-	void execute();
+	void execute(Executer* executer);
 	
 	
 	ProcedureCallAstNode(AstNode* parent);

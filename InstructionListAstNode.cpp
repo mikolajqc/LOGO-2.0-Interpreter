@@ -7,7 +7,7 @@ InstructionListAstNode::InstructionListAstNode(AstNode* parent)
 	
 }
 
-void InstructionListAstNode::execute()
+void InstructionListAstNode::execute(Executer* executer)
 {
 	std::cout << "InstructionListAstNode executing\n";
 	
@@ -15,7 +15,7 @@ void InstructionListAstNode::execute()
 	
 	for(unsigned int i = 0; i < children.size() ; ++i)
 	{
-		children[i]->execute();
+		children[i]->execute(executer);
 	}
 }
 
@@ -33,3 +33,7 @@ void InstructionListAstNode::check()
 	}
 	
 }
+float InstructionListAstNode::calc(Executer* executer)
+{
+}
+

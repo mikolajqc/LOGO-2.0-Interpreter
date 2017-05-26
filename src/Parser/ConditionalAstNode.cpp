@@ -19,7 +19,19 @@ void ConditionalAstNode::check()
 	children[1]->check();
 }
 
-void ConditionalAstNode::execute()
+void ConditionalAstNode::execute(Executer* executer)
+{
+	std::cout << "ConditionalExecution\n";
+	float value = children[0]->calculate();
+	
+	if(value)
+	{
+		std::cout << "Condition is true\n";
+		children[1]->execute(executer);
+	}
+	
+}
+float ConditionalAstNode::calc(Executer* executer)
 {
 }
 

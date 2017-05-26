@@ -25,6 +25,10 @@ void SConditionAstNode::check()
 {
 }
 
-void SConditionAstNode::execute()
+void SConditionAstNode::execute(Executer* executer)
 {
 }
+float SConditionAstNode::calc(Executer* executer)
+{
+}
+

@@ -1275,7 +1275,7 @@ void Parser::WritePrefix(AstNode* astNode)
 void Parser::execute()
 {
 	std::cout << "Parser executing\n";
-	astTree->execute();
+	astTree->execute(executer);
 	//executer->ExecuterTest();
 }
 

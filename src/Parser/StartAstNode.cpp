@@ -7,12 +7,12 @@ StartAstNode::StartAstNode(AstNode* parent)
 	
 }
 
-void StartAstNode::execute()
+void StartAstNode::execute(Executer* executer)
 {
 	std::cout << "StartAstNode executing\n";
 	for (unsigned int i = 0; i < children.size(); ++i)
 	{
-		children[i]->execute();
+		children[i]->execute(executer);
 	}
 }
 
@@ -95,3 +95,7 @@ int StartAstNode::GetArgumentsNumber()
 	return children.size();
 	
 }
+float StartAstNode::calc(Executer* executer)
+{
+}
+

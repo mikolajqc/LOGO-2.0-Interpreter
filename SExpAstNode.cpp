@@ -30,10 +30,14 @@ float SExpAstNode::calculate()
 	return result;
 }
 
-void SExpAstNode::execute()
+void SExpAstNode::execute(Executer* executer)
 {
 }
 
 void SExpAstNode::check()
 {
 }
+float SExpAstNode::calc(Executer* executer)
+{
+}
+

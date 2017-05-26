@@ -10,10 +10,14 @@ float FactorAstNode::calculate()
 	return children[0]->calculate();
 }
 
-void FactorAstNode::execute()
+void FactorAstNode::execute(Executer* executer)
 {
 }
 
 void FactorAstNode::check()
 {
 }
+float FactorAstNode::calc(Executer* executer)
+{
+}
+

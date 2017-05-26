@@ -45,7 +45,7 @@ void ProcedureDeclarationAstNode::check()
 
 }
 
-void ProcedureDeclarationAstNode::execute()
+void ProcedureDeclarationAstNode::execute(Executer* executer)
 {
 }
 
@@ -68,3 +68,7 @@ int ProcedureDeclarationAstNode::GetArgumentsNumber()
 {
 	return argumentsNumber;
 }
+float ProcedureDeclarationAstNode::calc(Executer* executer)
+{
+}
+

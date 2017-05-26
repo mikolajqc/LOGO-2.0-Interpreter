@@ -6,9 +6,10 @@
 class ArgumentsDecAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	float calculate();
 	void check();
-	void execute();
+	void execute(Executer* executer);
 	
 	int getArgumentsNumber();
 	void setArgumentName(std::string argumentName);

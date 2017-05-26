@@ -15,10 +15,14 @@ float AddOpAstNode::calculate()
 	return isPlus;
 }
 
-void AddOpAstNode::execute()
+void AddOpAstNode::execute(Executer* executer)
 {
 }
 
 void AddOpAstNode::check()
 {
 }
+float AddOpAstNode::calc(Executer* executer)
+{
+}
+

@@ -6,10 +6,11 @@
 class ProcedureDeclarationAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 
 	float calculate();
 	void check();
-	void execute();
+	void execute(Executer* executer);
 	
 	void SetProcedureName(std::string);
 	void SetArgumentsNumber(int argumentsNumber);

@@ -6,9 +6,10 @@
 class QConditionAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	float calculate();
 	void check();
-	void execute();
+	void execute(Executer* executer);
 	
 	void SetOperatorInString(std::string operatorInString);
 	

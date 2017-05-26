@@ -15,10 +15,14 @@ float MultOpAstNode::calculate()
 	return isMult;
 }
 
-void MultOpAstNode::execute()
+void MultOpAstNode::execute(Executer* executer)
 {
 }
 
 void MultOpAstNode::check()
 {
 }
+float MultOpAstNode::calc(Executer* executer)
+{
+}
+

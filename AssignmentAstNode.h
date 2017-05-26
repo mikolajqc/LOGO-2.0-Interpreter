@@ -6,9 +6,10 @@
 class AssignmentAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	AssignmentAstNode(AstNode* parent);
 
-	void execute();
+	void execute(Executer* executer);
 	float calculate();
 	void setNameOfVariable(std::string name);
 	void check();

@@ -5,10 +5,11 @@
 class FactorAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	FactorAstNode(AstNode* parent);
 
 	float calculate();
-	void execute();
+	void execute(Executer* executer);
 	void check();
 	
 };

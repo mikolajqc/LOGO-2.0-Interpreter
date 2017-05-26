@@ -5,9 +5,10 @@
 class ConditionAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 	float calculate();
 	void check();
-	void execute();
+	void execute(Executer* executer);
 	
 	ConditionAstNode(AstNode* parent);
 private:

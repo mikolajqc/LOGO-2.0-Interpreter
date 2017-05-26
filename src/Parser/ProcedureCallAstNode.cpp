@@ -61,7 +61,7 @@ void ProcedureCallAstNode::check()
 	children[0]->check(); //arguments
 }
 
-void ProcedureCallAstNode::execute()
+void ProcedureCallAstNode::execute(Executer* executer)
 {
 }
 
@@ -74,3 +74,7 @@ void ProcedureCallAstNode::SetArgumentsNumber(int argumentsNumber)
 {
 	this->argumentsNumber = argumentsNumber;
 }
+float ProcedureCallAstNode::calc(Executer* executer)
+{
+}
+

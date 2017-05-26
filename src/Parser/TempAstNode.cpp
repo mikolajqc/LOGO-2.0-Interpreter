@@ -12,7 +12,7 @@ float TempAstNode::calculate()
 	return -1;
 }
 
-void TempAstNode::execute()
+void TempAstNode::execute(Executer* executer)
 {
 	
 }
@@ -24,3 +24,7 @@ void TempAstNode::check()
 		std::cout <<"Value: "  << children[i]->calculate() << "\n";
 	}
 }
+float TempAstNode::calc(Executer* executer)
+{
+}
+

@@ -8,11 +8,13 @@ AssignmentAstNode::AssignmentAstNode(AstNode* parent)
 {
 }
 
-void AssignmentAstNode::execute()
+void AssignmentAstNode::execute(Executer* executer)
 {
 	std::cout << "AssignmentAstNode executing\n";
 	
 	int value = children[0]->calculate();
+	
+	executer->AddLocalVariable(nameOfVariable, value);
 	
 	std::cout << "value: " << value << "\n";
 	
@@ -47,3 +49,7 @@ void AssignmentAstNode::check()
 		startAstNode->addVariable(nameOfVariable, children[0]->calculate());
 	}
 }
+float AssignmentAstNode::calc(Executer* executer)
+{
+}
+

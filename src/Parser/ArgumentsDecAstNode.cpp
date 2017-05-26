@@ -46,7 +46,7 @@ void ArgumentsDecAstNode::check()
 	}
 }
 
-void ArgumentsDecAstNode::execute()
+void ArgumentsDecAstNode::execute(Executer* executer)
 {
 }
 
@@ -54,3 +54,8 @@ void ArgumentsDecAstNode::setArgumentName(std::string argumentName)
 {
 	this->argumentName = argumentName;
 }
+
+float ArgumentsDecAstNode::calc(Executer* executer)
+{
+}
+

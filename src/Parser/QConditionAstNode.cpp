@@ -48,7 +48,7 @@ void QConditionAstNode::check()
 	
 }
 
-void QConditionAstNode::execute()
+void QConditionAstNode::execute(Executer* executer)
 {
 	
 }
@@ -57,3 +57,7 @@ void QConditionAstNode::SetOperatorInString(std::string operatorInString)
 {
 	this->operatorInString = operatorInString;
 }
+float QConditionAstNode::calc(Executer* executer)
+{
+}
+

@@ -7,12 +7,15 @@ InstructionAstNode::InstructionAstNode(AstNode* parent)
 	
 }
 
-void InstructionAstNode::execute()
+void InstructionAstNode::execute(Executer* executer)
 {
 	std::cout << "InstructionAstNode executing\n";
+	
+	executer->AddContext();
+	
 	for(unsigned int i = 0; i < children.size() ; ++i)
 	{
-		children[i]->execute();
+		children[i]->execute(executer);
 	}
 }
 
@@ -25,3 +28,7 @@ void InstructionAstNode::check()
 {
 	children[0]->check();
 }
+float InstructionAstNode::calc(Executer* executer)
+{
+}
+

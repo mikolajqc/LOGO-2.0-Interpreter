@@ -5,8 +5,9 @@
 class LoopAstNode :public AstNode
 {
 public:
+float calc(Executer* executer);
 	float calculate();
-	void execute();
+	void execute(Executer* executer);
 	void check();
 	
 	LoopAstNode(AstNode* parent);

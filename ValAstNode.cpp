@@ -73,7 +73,7 @@ float ValAstNode::calculate()
 	return result;
 }
 
-void ValAstNode::execute()
+void ValAstNode::execute(Executer* executer)
 {
 	
 }
@@ -81,3 +81,7 @@ void ValAstNode::execute()
 void ValAstNode::check()
 {
 }
+float ValAstNode::calc(Executer* executer)
+{
+}
+

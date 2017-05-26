@@ -9,6 +9,7 @@
 class ValAstNode : public AstNode
 {
 public:
+float calc(Executer* executer);
 //narazie tylko liczby 
 	ValAstNode(AstNode* parent);
 	
@@ -16,7 +17,7 @@ public:
 	void SetIsVariable(bool isVariable);
 	
 	float calculate(); // ten node jest lisciem wiec nie schodzi nizej.
-	void execute();
+	void execute(Executer* executer);
 	void check();
 	
 private:

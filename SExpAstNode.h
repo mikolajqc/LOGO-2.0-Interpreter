@@ -5,10 +5,12 @@
 class SExpAstNode : public AstNode
 {
 public:
+
+	float calc(Executer* executer);
 	SExpAstNode(AstNode* parent);
 
 	float calculate();
-	void execute();
+	void execute(Executer* executer);
 	void check();
 	
 };
