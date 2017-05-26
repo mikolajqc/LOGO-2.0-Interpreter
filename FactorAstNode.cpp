@@ -19,5 +19,6 @@ void FactorAstNode::check()
 }
 float FactorAstNode::calc(Executer* executer)
 {
+	return children[0]->calc(executer);
 }
 

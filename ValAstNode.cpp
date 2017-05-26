@@ -83,5 +83,18 @@ void ValAstNode::check()
 }
 float ValAstNode::calc(Executer* executer)
 {
+	
+	float result;
+	if(isVariable == true)
+	{
+		std::cout << "textValue: " << textValue << "\n";
+		result = executer->GetVariable(textValue);
+	}
+	else
+	{
+		result = numericValue;
+	}
+	return result;
+	
 }
 

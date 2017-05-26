@@ -59,5 +59,38 @@ void QConditionAstNode::SetOperatorInString(std::string operatorInString)
 }
 float QConditionAstNode::calc(Executer* executer)
 {
+	if(children.size() == 1)
+	{
+		return children[0]->calc(executer);
+	}
+	else if(children.size() == 2)
+	{
+		if(operatorInString == "==")
+		{
+			return  (children[0]->calc(executer) ==  children[1]->calc(executer));
+		}
+		else if(operatorInString == "!=")
+		{
+			return  (children[0]->calc(executer) !=  children[1]->calc(executer));
+		}
+		else if(operatorInString == ">")
+		{
+			return  (children[0]->calc(executer) > children[1]->calc(executer));
+		}
+		else if(operatorInString == "<")
+		{
+			return  (children[0]->calc(executer) < children[1]->calc(executer));
+		}
+		else if(operatorInString == ">=")
+		{
+			return  (children[0]->calc(executer) >=  children[1]->calc(executer));
+		}
+		else if(operatorInString == "<=")
+		{
+			return  (children[0]->calc(executer) <=  children[1]->calc(executer));
+		}
+	}
+	std::cout << "ERROR: I cant recognize operators!\n";
+	return -1;
 }
 

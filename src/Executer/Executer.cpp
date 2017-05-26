@@ -91,9 +91,6 @@ void Executer::ExecuterTest()
 	std::vector<std::string> testVector;
 	
 	
-	//AddProcedure("Foo", a , testVector);
-	//std::cout << "Pointer: " << GetPointerToProcedure("Foo") << "\n";
-	
 	AddContext();
 	AddArgument("b", 123);
 	AddLocalVariable("a", 12);

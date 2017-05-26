@@ -22,7 +22,9 @@ void ConditionalAstNode::check()
 void ConditionalAstNode::execute(Executer* executer)
 {
 	std::cout << "ConditionalExecution\n";
-	float value = children[0]->calculate();
+	//float value = children[0]->calculate();
+	
+	float value = children[0]->calc(executer);
 	
 	if(value)
 	{

@@ -19,5 +19,6 @@ void TConditionAstNode::execute(Executer* executer)
 }
 float TConditionAstNode::calc(Executer* executer)
 {
+	return children[0]->calc(executer);
 }
 
