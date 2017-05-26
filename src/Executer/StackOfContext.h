@@ -11,17 +11,16 @@ public:
 	StackOfContext();
 	~StackOfContext();
 	
-	Context GetTopPosition();
-	Context GetPosition(int index);
+	Context* GetTopPosition();
+	Context* GetPosition(int index);
 	
 	void pop();
-	void push(Context& context);
+	void push(Context* context);
+	size_t size();
+	
 
 private:
-	std::vector<Context> vectorOfContext;
-	int topPosition;
-
-
+	std::vector<Context*> vectorOfContext;
 };
 
 #endif // STACKOFCONTEXT_H
