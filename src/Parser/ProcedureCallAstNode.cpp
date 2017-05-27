@@ -79,5 +79,11 @@ void ProcedureCallAstNode::SetArgumentsNumber(int argumentsNumber)
 }
 float ProcedureCallAstNode::calc(Executer* executer)
 {
+	//TODO: there should be return value of procedure
+	return 0;
 }
 
+ProcedureDeclarationAstNode* ProcedureCallAstNode::GetPointerToProcedure()
+{
+	return pointerToProcedureDeclaration;
+}

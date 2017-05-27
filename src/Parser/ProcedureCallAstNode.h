@@ -18,6 +18,9 @@ float calc(Executer* executer);
 	void SetProcedureName(std::string procedureName);
 	void SetArgumentsNumber(int argumentsNumber);
 	
+	ProcedureDeclarationAstNode* GetPointerToProcedure();
+	
+	
 private:
 	std::string procedureName;
 	int argumentsNumber;

@@ -1,5 +1,7 @@
 #include "ArgumentsAstNode.h"
 #include <iostream>
+#include <vector>
+#include "ProcedureCallAstNode.h"
 
 ArgumentsAstNode::ArgumentsAstNode(AstNode* parent)
 :AstNode(parent)
@@ -21,23 +23,20 @@ void ArgumentsAstNode::check()
 		children[i]->calculate();
 	}
 	
-	/*if(children.size() == 2)
-	{
-		std::cout << children[0]->calculate() << " < value of arg\n";
-		children[1]->check(); //arguments
-	}
-	else if(children.size() == 1)
-	{
-		std::cout << children[0]->calculate() << " < value of arg\n";
-	}
-	*/
 }
 
 void ArgumentsAstNode::execute(Executer* executer)
 {
 	std::cout << "ArgumentsAstNode executing\n";
-	children[0]->calc(executer);
-	if(children.size() > 1)children[1]->execute(executer);
+	std::vector<std::string> argumentsNames = (dynamic_cast<ProcedureCallAstNode*>(parent))->GetPointerToProcedure()->GetArgumentsNames();
+	
+	for(size_t i = 0; i < children.size(); ++i)
+	{
+		executer->AddArgument(argumentsNames[i],children[i]->calc(executer));
+	}
+	
+	//children[0]->calc(executer);
+	//if(children.size() > 1)children[1]->execute(executer);
 }
 
 int ArgumentsAstNode::GetArgumentsNumber()

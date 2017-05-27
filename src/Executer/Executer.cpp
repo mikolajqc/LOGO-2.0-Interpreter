@@ -41,7 +41,7 @@ void Executer::AddArgument(std::string name, float value)
 {
 	
 	stackOfContexts.GetTopPosition()->AddArgument(name, value);
-	std::cout << "argument added!\n";
+	std::cout << "argument added! "<< value << "\n";
 }
 
 void Executer::AddProcedure(std::string procedureName, std::vector<std::string> argumentsNames)
