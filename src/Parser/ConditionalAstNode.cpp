@@ -31,6 +31,7 @@ void ConditionalAstNode::execute(Executer* executer)
 		std::cout << "Condition is true\n";
 		executer->AddContext();
 		children[1]->execute(executer);
+		executer->DeleteContext();
 	}
 	
 }

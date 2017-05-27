@@ -69,6 +69,7 @@ void ProcedureCallAstNode::execute(Executer* executer)
 	
 	pointerToProcedureDeclaration->GetChildren()[1]->execute(executer);
 	
+	std::cout <<"ProcedureCallAstNode executed\n";
 	executer->DeleteContext();
 }
 
