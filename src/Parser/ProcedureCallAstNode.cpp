@@ -40,15 +40,10 @@ void ProcedureCallAstNode::check()
 	}
 	
 	
+	argumentsNumber = children[0]->GetChildren().size();
+	
 	//arguments
-	if(children.size() == 0)
-	{
-		argumentsNumber = 0;
-	}
-	else
-	{
-		argumentsNumber = (dynamic_cast<ArgumentsAstNode*>(children[0]))->GetArgumentsNumber();
-	}
+	
 	if(argumentsNumber != pointerToProcedureDeclaration->GetArgumentsNumber())
 	{
 		std::cout << "Error: procedure: " << procedureName << " need " 
@@ -57,14 +52,20 @@ void ProcedureCallAstNode::check()
 		exit(1);
 		
 	}
+	std::cout << "test" << children.size()<< "\n";
+	if(children.size() > 0) children[0]->check(); //arguments
 	
-	children[0]->check(); //arguments
 }
 
 void ProcedureCallAstNode::execute(Executer* executer)
 {
 	std::cout <<"ProcedureCallAstNode executing\n";
 	executer->AddContext();
+	
+	for(size_t i = 0; i < children.size(); ++i)
+	{
+		children[i]->execute(executer);
+	}
 }
 
 void ProcedureCallAstNode::SetProcedureName(std::string procedureName)

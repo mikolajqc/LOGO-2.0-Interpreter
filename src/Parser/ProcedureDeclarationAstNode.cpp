@@ -50,8 +50,8 @@ void ProcedureDeclarationAstNode::execute(Executer* executer)
 	std::cout << "ProcedureDeclaration execution\n";
 	
 	//TODO
-	
-	GetArgumentsNames();
+	executer->AddProcedure(procedureName, GetArgumentsNames());
+	//GetArgumentsNames();
 }
 
 void ProcedureDeclarationAstNode::SetProcedureName(std::string procedureName)

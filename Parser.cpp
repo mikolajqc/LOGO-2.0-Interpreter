@@ -557,21 +557,22 @@ int Parser::Arguments(AstNode* parent)
 	
 	int expResult = Exp(currentAstNode);
 	
-	if(expResult == 2)
+	while(expResult == 2)
 	{
-		Arguments(currentAstNode);
+		//Arguments(currentAstNode);
 		
-		parent->AddChild(currentAstNode);
-		return 2;
+		//parent->AddChild(currentAstNode);
+		expResult = Exp(currentAstNode);
+		//return 2;
 	}
-	else if(expResult == 0)
+	if(expResult == 0)
 	{
 		delete currentAstNode;
 		return 0;
 	}
 	
-	delete currentAstNode;
-	//parent->AddChild(currentAstNode); // to jest ";"
+	//delete currentAstNode;
+	parent->AddChild(currentAstNode); // to jest ";"
 	return 2;
 }
 
