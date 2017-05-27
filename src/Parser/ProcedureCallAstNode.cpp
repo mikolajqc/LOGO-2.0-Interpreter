@@ -61,6 +61,7 @@ void ProcedureCallAstNode::execute(Executer* executer)
 {
 	std::cout <<"ProcedureCallAstNode executing\n";
 	executer->AddContext();
+	executer->SetProcedureContext();
 	
 	for(size_t i = 0; i < children.size(); ++i)
 	{
@@ -69,7 +70,7 @@ void ProcedureCallAstNode::execute(Executer* executer)
 	
 	pointerToProcedureDeclaration->GetChildren()[1]->execute(executer);
 	
-	std::cout <<"ProcedureCallAstNode executed\n";
+	std::cout <<"ProcedureCallAstNode executed value: " << executer->GetReturnValue() << "\n";
 	executer->DeleteContext();
 }
 
@@ -84,8 +85,23 @@ void ProcedureCallAstNode::SetArgumentsNumber(int argumentsNumber)
 }
 float ProcedureCallAstNode::calc(Executer* executer)
 {
-	//TODO: there should be return value of procedure
-	return 0;
+	float result;
+	
+	std::cout <<"ProcedureCallAstNode calculating\n";
+	executer->AddContext();
+	executer->SetProcedureContext();
+	
+	for(size_t i = 0; i < children.size(); ++i)
+	{
+		children[i]->execute(executer);
+	}
+	
+	pointerToProcedureDeclaration->GetChildren()[1]->execute(executer);
+	
+	result = executer->GetReturnValue();
+	executer->DeleteContext();
+	std::cout <<"ProcedureCallAstNode executed\n";
+	return result;
 }
 
 ProcedureDeclarationAstNode* ProcedureCallAstNode::GetPointerToProcedure()

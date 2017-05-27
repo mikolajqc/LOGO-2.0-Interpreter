@@ -12,7 +12,7 @@ void AssignmentAstNode::execute(Executer* executer)
 {
 	std::cout << "AssignmentAstNode executing\n";
 	
-	int value = children[0]->calculate();
+	int value = children[0]->calc(executer);
 	
 	executer->AddLocalVariable(nameOfVariable, value);
 	

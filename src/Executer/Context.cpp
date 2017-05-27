@@ -5,6 +5,7 @@ Context::Context()
 {
 	isProcedureContext = false;
 	isExecutionBlocked = false;
+	returnValue = 1;
 }
 
 Context::~Context()
@@ -63,9 +64,20 @@ void Context::SetProcedureContext()
 void Context::SetExecutionBlocked()
 {
 	isExecutionBlocked = true;
+	std::cout << "Execution blocked!\n";
 }
 
 bool Context::IsExecutionBlocked()
 {
 	return isExecutionBlocked;
+}
+
+void Context::SetReturnValue(float returnValue)
+{
+	this->returnValue = returnValue;
+}
+
+float Context::GetReturnValue()
+{
+	return returnValue;
 }

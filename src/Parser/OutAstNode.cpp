@@ -28,13 +28,15 @@ float OutAstNode::calc(Executer* executer)
 {
 	if(operation == "OUTPUT")
 	{
-		//return 
-		//output i stop bedzie zamienial flagi stopu w kontexcie. kazda operacja bedzie sprawdzac czy moze sie wykonywac
-		//jak nie moze to koniec i zwraca, az bedzie mozna
+		executer->SetReturnValue(children[0]->calc(executer));
 	}
 	else if (operation == "PRINT")
 	{
 		std::cout << children[0]->calc(executer); //zrob osobna funkcje print()
+	}
+	else if(operation == "STOP")
+	{
+		executer->SetReturnValue(0);
 	}
 	
 	return 1;

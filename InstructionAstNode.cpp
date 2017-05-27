@@ -11,7 +11,11 @@ void InstructionAstNode::execute(Executer* executer)
 {
 	std::cout << "InstructionAstNode executing\n";
 	
-	//executer->AddContext();
+	if(executer->IsExecutionBlocked())
+	{
+		std::cout << "execution is blocked\n";
+		return;
+	}
 	
 	for(unsigned int i = 0; i < children.size() ; ++i)
 	{

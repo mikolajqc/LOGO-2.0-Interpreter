@@ -87,6 +87,7 @@ void Executer::ExecuterTest()
 	
 }
 
+/*
 void Executer::SetExecutionBlocked()
 {
 	for(int i = stackOfContexts.size() - 1; i >= 0 ; --i)
@@ -100,8 +101,37 @@ void Executer::SetExecutionBlocked()
 		}
 	}
 }
+*/
 
 bool Executer::IsExecutionBlocked()
 {
 	return stackOfContexts.GetTopPosition()->IsExecutionBlocked();
+}
+
+void Executer::SetProcedureContext()
+{
+	stackOfContexts.GetTopPosition()->SetProcedureContext();
+}
+
+void Executer::SetReturnValue(float value)
+{
+	for(int i = stackOfContexts.size() - 1; i >= 0 ; --i)
+	{
+		stackOfContexts.GetPosition(i)->SetExecutionBlocked();
+		if(stackOfContexts.GetPosition(i)->IsProcedureContext())
+		{
+			stackOfContexts.GetPosition(i)->SetReturnValue(value);
+			return;
+		}
+	}
+}
+
+float Executer::GetReturnValue()
+{
+	if(!stackOfContexts.GetTopPosition()->IsProcedureContext())
+	{
+		std::cout << "Error!: You cannot get return value here!\n";
+		exit(1);
+	}
+	return stackOfContexts.GetTopPosition()->GetReturnValue();
 }

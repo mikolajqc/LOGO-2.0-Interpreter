@@ -18,6 +18,9 @@ public:
 	void SetExecutionBlocked();
 	bool IsExecutionBlocked();
 	
+	void SetReturnValue(float value);
+	float GetReturnValue();
+	
 
 private:
 	std::map<std::string, float> localVariables;
@@ -28,6 +31,8 @@ private:
 	
 	bool isProcedureContext;
 	bool isExecutionBlocked;
+	
+	float returnValue;
 	
 };
 

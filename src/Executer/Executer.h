@@ -22,8 +22,13 @@ public:
 	
 	float GetVariable(std::string name); //zwraca wartosc (nie wazne skad czy args czy local)
 	
-	void SetExecutionBlocked();
+	//void SetExecutionBlocked();
 	bool IsExecutionBlocked();
+	
+	void SetProcedureContext();
+	
+	void SetReturnValue(float value);
+	float GetReturnValue();
 	
 	void ExecuterTest();
 
