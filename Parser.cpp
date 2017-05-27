@@ -716,6 +716,7 @@ int Parser::Graphics(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_MOVE" << std::endl;
+		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
 		if(Exp(currentAstNode) == 2)
@@ -734,6 +735,7 @@ int Parser::Graphics(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_SETPC" << std::endl;
+		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
 		if(NextLexeme().GetCategory() == OB_SBRACKET)
@@ -766,6 +768,7 @@ int Parser::Graphics(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_SCREEN" << std::endl;
+		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
 		parent->AddChild(currentAstNode);

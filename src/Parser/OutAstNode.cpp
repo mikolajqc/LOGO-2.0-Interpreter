@@ -32,7 +32,7 @@ float OutAstNode::calc(Executer* executer)
 	}
 	else if (operation == "PRINT")
 	{
-		std::cout << children[0]->calc(executer); //zrob osobna funkcje print()
+		std::cout <<  "PRINT: " <<children[0]->calc(executer) << "\n"; //zrob osobna funkcje print()
 	}
 	else if(operation == "STOP")
 	{

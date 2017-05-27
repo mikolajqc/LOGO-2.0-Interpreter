@@ -41,6 +41,7 @@ Lexeme Lexer::CreateLexeme(std::string word)
 	else if(word == "SETPC")
 	{
 		resultLexeme.SetCategory(KW_SETPC);
+		resultLexeme.SetValue(word);
 	}
 	else if(word == "OUTPUT")
 	{
