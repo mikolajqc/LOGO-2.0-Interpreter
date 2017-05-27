@@ -29,6 +29,7 @@ void ConditionalAstNode::execute(Executer* executer)
 	if(value)
 	{
 		std::cout << "Condition is true\n";
+		executer->AddContext();
 		children[1]->execute(executer);
 	}
 	

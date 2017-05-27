@@ -13,6 +13,7 @@ float calc(Executer* executer);
 	
 	int getArgumentsNumber();
 	void setArgumentName(std::string argumentName);
+	std::string GetArgumentName();
 	
 	ArgumentsDecAstNode(AstNode* parent);
 	

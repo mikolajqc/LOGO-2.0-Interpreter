@@ -59,3 +59,7 @@ float ArgumentsDecAstNode::calc(Executer* executer)
 {
 }
 
+std::string ArgumentsDecAstNode::GetArgumentName()
+{
+	return argumentName;
+}

@@ -19,6 +19,8 @@ float calc(Executer* executer);
 	std::string GetProcedureName();
 	int GetArgumentsNumber();
 	
+	std::vector<std::string> GetArgumentsNames();
+	
 	ProcedureDeclarationAstNode(AstNode* parent);
 
 private:

@@ -11,7 +11,7 @@ void InstructionListAstNode::execute(Executer* executer)
 {
 	std::cout << "InstructionListAstNode executing\n";
 	
-	//executer
+	//executer->AddContext();
 	
 	for(unsigned int i = 0; i < children.size() ; ++i)
 	{

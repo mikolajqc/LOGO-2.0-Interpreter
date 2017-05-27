@@ -50,6 +50,8 @@ void ProcedureDeclarationAstNode::execute(Executer* executer)
 	std::cout << "ProcedureDeclaration execution\n";
 	
 	//TODO
+	
+	GetArgumentsNames();
 }
 
 void ProcedureDeclarationAstNode::SetProcedureName(std::string procedureName)
@@ -73,5 +75,18 @@ int ProcedureDeclarationAstNode::GetArgumentsNumber()
 }
 float ProcedureDeclarationAstNode::calc(Executer* executer)
 {
+	return 0;
 }
 
+std::vector<std::string> ProcedureDeclarationAstNode::GetArgumentsNames()
+{
+	std::vector <std::string> resultVector;
+	
+	for (size_t i = 0; i < children[0]->GetChildren().size();++i)
+	{
+		resultVector.push_back((dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[i]))->GetArgumentName());
+		std::cout << "args: " << (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[i]))->GetArgumentName() << " ";
+	}
+	std::cout <<"\n";
+	return resultVector;
+}

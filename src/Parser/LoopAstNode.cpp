@@ -16,10 +16,14 @@ void LoopAstNode::execute(Executer* executer)
 	numberOfLoops = children[0]->calc(executer);
 	std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
 	
+	executer->AddContext();
+	
 	for(int i = 0; i < numberOfLoops; ++i)
 	{
 		children[1]->execute(executer);
 	}
+	
+	executer->DeleteContext();
 }
 
 void LoopAstNode::check()

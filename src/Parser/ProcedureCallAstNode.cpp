@@ -63,6 +63,8 @@ void ProcedureCallAstNode::check()
 
 void ProcedureCallAstNode::execute(Executer* executer)
 {
+	std::cout <<"ProcedureCallAstNode executing\n";
+	executer->AddContext();
 }
 
 void ProcedureCallAstNode::SetProcedureName(std::string procedureName)
