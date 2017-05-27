@@ -66,6 +66,10 @@ void ProcedureCallAstNode::execute(Executer* executer)
 	{
 		children[i]->execute(executer);
 	}
+	
+	pointerToProcedureDeclaration->GetChildren()[1]->execute(executer);
+	
+	executer->DeleteContext();
 }
 
 void ProcedureCallAstNode::SetProcedureName(std::string procedureName)

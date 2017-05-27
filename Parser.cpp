@@ -1279,6 +1279,7 @@ void Parser::execute()
 	executer->AddContext();
 	astTree->execute(executer);
 	//executer->ExecuterTest();
+	executer->DeleteContext();
 }
 
 void Parser::check()
