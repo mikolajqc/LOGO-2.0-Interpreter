@@ -37,5 +37,6 @@ void ConditionalAstNode::execute(Executer* executer)
 }
 float ConditionalAstNode::calc(Executer* executer)
 {
+	return 0;
 }
 

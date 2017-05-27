@@ -17,14 +17,12 @@ void LoopAstNode::execute(Executer* executer)
 	std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
 	
 	
-	
 	for(int i = 0; i < numberOfLoops; ++i)
 	{
 		executer->AddContext();
 		children[1]->execute(executer);
 		executer->DeleteContext();
 	}
-	
 	
 }
 

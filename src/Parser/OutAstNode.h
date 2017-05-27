@@ -1,8 +1,8 @@
-#ifndef TEMPASTNODE_H
-#define TEMPASTNODE_H
+#ifndef OUTASTNODE_H
+#define OUTASTNODE_H
 #include "AstNode.h"
 
-class TempAstNode : public AstNode
+class OutAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
@@ -10,7 +10,7 @@ float calc(Executer* executer);
 	void execute(Executer* executer);
 	void check();
 	
-	TempAstNode(AstNode* parent);
+	OutAstNode(AstNode* parent);
 
 
 private:
