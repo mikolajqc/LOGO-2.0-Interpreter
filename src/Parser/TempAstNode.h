@@ -11,7 +11,9 @@ float calc(Executer* executer);
 	void check();
 	
 	TempAstNode(AstNode* parent);
-
+	
+	void SetOperation(std::string operation);
+	std::string GetOperation();
 
 private:
 	std::string operation;

@@ -26,5 +26,17 @@ void TempAstNode::check()
 }
 float TempAstNode::calc(Executer* executer)
 {
+	return 1;
 }
+
+void TempAstNode::SetOperation(std::string operation)
+{
+	this->operation = operation;
+}
+
+std::string TempAstNode::GetOperation()
+{
+	return operation;
+}
+
 

@@ -18,10 +18,12 @@ float FactorAstNode::calculate()
 
 void FactorAstNode::execute(Executer* executer)
 {
+	
 }
 
 void FactorAstNode::check()
 {
+	
 }
 float FactorAstNode::calc(Executer* executer)
 {
