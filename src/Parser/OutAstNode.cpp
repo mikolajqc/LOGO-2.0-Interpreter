@@ -14,7 +14,7 @@ float OutAstNode::calculate()
 
 void OutAstNode::execute(Executer* executer)
 {
-	
+	calc(executer);
 }
 
 void OutAstNode::check()
@@ -26,6 +26,26 @@ void OutAstNode::check()
 }
 float OutAstNode::calc(Executer* executer)
 {
-	return 0;
+	if(operation == "OUTPUT")
+	{
+		//return 
+		//output i stop bedzie zamienial flagi stopu w kontexcie. kazda operacja bedzie sprawdzac czy moze sie wykonywac
+		//jak nie moze to koniec i zwraca, az bedzie mozna
+	}
+	else if (operation == "PRINT")
+	{
+		std::cout << children[0]->calc(executer); //zrob osobna funkcje print()
+	}
+	
+	return 1;
 }
 
+void OutAstNode::SetOperation(std::string operation)
+{
+	this->operation = operation;
+}
+
+std::string OutAstNode::GetOperation()
+{
+	return operation;
+}

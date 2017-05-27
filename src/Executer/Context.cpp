@@ -3,6 +3,8 @@
 
 Context::Context()
 {
+	isProcedureContext = false;
+	isExecutionBlocked = false;
 }
 
 Context::~Context()
@@ -46,4 +48,24 @@ bool Context::GetArgument(std::string name, float& value)
 		return true;
 	}
 	return false; // brak elementu
+}
+
+bool Context::IsProcedureContext()
+{
+	return isProcedureContext;
+}
+
+void Context::SetProcedureContext()
+{
+	isProcedureContext = true;
+}
+
+void Context::SetExecutionBlocked()
+{
+	isExecutionBlocked = true;
+}
+
+bool Context::IsExecutionBlocked()
+{
+	return isExecutionBlocked;
 }

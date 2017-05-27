@@ -11,6 +11,9 @@ float calc(Executer* executer);
 	void check();
 	
 	OutAstNode(AstNode* parent);
+	
+	void SetOperation(std::string operation);
+	std::string GetOperation();
 
 
 private:

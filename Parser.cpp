@@ -23,6 +23,7 @@
 #include "src/Parser/SConditionAstNode.h"
 #include "src/Parser/QConditionAstNode.h"
 #include "src/Parser/TConditionAstNode.h"
+#include "src/Parser/OutAstNode.h"
 #include "ValAstNode.h"
 
 class setArgumentName;
@@ -637,7 +638,7 @@ int Parser::ProcedureCall(AstNode* parent)
 
 int Parser::Out(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	OutAstNode* currentAstNode = new OutAstNode(parent);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -650,6 +651,7 @@ int Parser::Out(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_OUTPUT" << std::endl;
+		currentAstNode->SetOperation("OUTPUT");
 		isLexemeUsed = true;
 		
 		if(Exp(currentAstNode) == 2)
@@ -668,6 +670,7 @@ int Parser::Out(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_PRINT" << std::endl;
+		currentAstNode->SetOperation("PRINT");
 		isLexemeUsed = true;
 		
 		if(Exp(currentAstNode) == 2)
@@ -686,6 +689,7 @@ int Parser::Out(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " KW_STOP" << std::endl;
+		currentAstNode->SetOperation("STOP");
 		isLexemeUsed = true;
 		
 		parent->AddChild(currentAstNode);

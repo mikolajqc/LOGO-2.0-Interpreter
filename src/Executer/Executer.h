@@ -21,7 +21,9 @@ public:
 	void AddProcedure(std::string procedureName, /*AstNode* pointerToProcedure,*/ std::vector<std::string> argumentsNames);
 	
 	float GetVariable(std::string name); //zwraca wartosc (nie wazne skad czy args czy local)
-	//AstNode* GetPointerToProcedure(std::string procedureName);
+	
+	void SetExecutionBlocked();
+	bool IsExecutionBlocked();
 	
 	void ExecuterTest();
 

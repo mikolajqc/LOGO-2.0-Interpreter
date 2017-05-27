@@ -86,3 +86,22 @@ void Executer::ExecuterTest()
 	std::cout << "c: " <<  GetVariable("c") << "\n";
 	
 }
+
+void Executer::SetExecutionBlocked()
+{
+	for(int i = stackOfContexts.size() - 1; i >= 0 ; --i)
+	{
+		stackOfContexts.GetPosition(i)->SetExecutionBlocked();
+		
+		if(stackOfContexts.GetPosition(i)->IsProcedureContext())
+		{
+			//doszlismy do kontekstu procedury
+			return;
+		}
+	}
+}
+
+bool Executer::IsExecutionBlocked()
+{
+	return stackOfContexts.GetTopPosition()->IsExecutionBlocked();
+}
