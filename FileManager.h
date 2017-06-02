@@ -15,7 +15,7 @@ private:
 	std::fstream fileStream;
 	
 	bool OpenFileStream();
-	bool CloseFileStream();
+	bool CloseFileStream(); 
 	
 	char GetNextChar();
 };
