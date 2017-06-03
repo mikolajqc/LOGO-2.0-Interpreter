@@ -1,8 +1,8 @@
 #include "LoopAstNode.h"
 #include <iostream>
 
-LoopAstNode::LoopAstNode(AstNode* parent)
-:AstNode(parent)
+LoopAstNode::LoopAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

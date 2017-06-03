@@ -1,7 +1,7 @@
 #include "ConditionAstNode.h"
 
-ConditionAstNode::ConditionAstNode(AstNode* parent)
-:AstNode(parent)
+ConditionAstNode::ConditionAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

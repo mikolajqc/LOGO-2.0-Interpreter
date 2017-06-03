@@ -1,8 +1,8 @@
 #include "InstructionListAstNode.h"
 #include <iostream>
 
-InstructionListAstNode::InstructionListAstNode(AstNode* parent)
-:AstNode(parent)
+InstructionListAstNode::InstructionListAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window )
 {
 	
 }

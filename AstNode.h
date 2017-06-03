@@ -2,14 +2,13 @@
 #define ASTNODE_H
 #include <vector>
 #include "src/Executer/Executer.h"
-
-//class Executer;
+#include "src/Window/Window.h"
 
 //todo: derivation of this class to more specific classes for ex: with a table of symbols
 class AstNode
 {
 public:
-	AstNode(AstNode* parent);
+	AstNode(AstNode* parent, Window* window);
 	virtual ~AstNode();
 	
 	void AddChild(AstNode* astNode);
@@ -31,7 +30,7 @@ protected:
 	AstNode* parent;
 	std::vector<AstNode*> children;
 	
-	//Executer* executer;
+	Window* window;
 	
 };
 

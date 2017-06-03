@@ -1,7 +1,7 @@
 #include "AddOpAstNode.h"
 
-AddOpAstNode::AddOpAstNode(AstNode* parent)
-:AstNode(parent)
+AddOpAstNode::AddOpAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

@@ -32,6 +32,7 @@ Parser::Parser()
 {
 	lexer = new Lexer("test.txt");
 	executer = new Executer();
+	window = new Window();
 }
 
 Parser::~Parser()
@@ -55,8 +56,9 @@ Lexeme Parser::NextLexeme()
 
 void Parser::start()
 {
-	astTree = new StartAstNode(nullptr);
 	std::cout << "start" << std::endl;
+	astTree = new StartAstNode(nullptr, window);
+	
 	if(InstructionList(astTree) == 2)
 	{
 		std::cout << "Parsing success!" << std::endl;
@@ -71,7 +73,7 @@ void Parser::start()
 int Parser::InnerStart(AstNode* parent)
 {
 	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
-	StartAstNode* currentAstNode = new StartAstNode(parent);
+	StartAstNode* currentAstNode = new StartAstNode(parent, window);
 	WritePrefix(currentAstNode);
 	std::cout << "InnerStart(NOT GRAMMAR ELEMENT!)" << std::endl;
 	
@@ -93,7 +95,7 @@ int Parser::InnerStart(AstNode* parent)
 int Parser::ArgumentsDecStart(AstNode* parent)
 {
 	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
-	StartAstNode* currentAstNode = new StartAstNode(parent);
+	StartAstNode* currentAstNode = new StartAstNode(parent, window );
 	WritePrefix(currentAstNode);
 	std::cout << "ArgumentsDecStart(NOT GRAMMAR ELEMENT!)" << std::endl;
 
@@ -105,7 +107,7 @@ int Parser::ArgumentsDecStart(AstNode* parent)
 	{
 		WritePrefix(currentAstNode);
 		std:: cout << " ID_VARIABLE" << std::endl;
-		ArgumentsDecAstNode* currentArgumentNode = new ArgumentsDecAstNode(currentAstNode);
+		ArgumentsDecAstNode* currentArgumentNode = new ArgumentsDecAstNode(currentAstNode, window);
 		currentArgumentNode->setArgumentName(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
@@ -122,7 +124,7 @@ int Parser::InstructionList(AstNode* parent)
 	//WritePrefix(currentAstNode);
 	std::cout << "InstructionList" <<std::endl;
 	
-	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent, window );
 	int instructionResult = Instruction(currentAstNode);  /// to moze walic!!!
 	int procedureResult  = ProcedureDeclaration(currentAstNode);  /// to tez
 	
@@ -155,7 +157,7 @@ int Parser::InstructionList(AstNode* parent)
 
 int Parser::Instruction(AstNode* parent)
 {
-	InstructionAstNode* currentAstNode = new InstructionAstNode(parent);
+	InstructionAstNode* currentAstNode = new InstructionAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -250,7 +252,7 @@ int Parser::Instruction(AstNode* parent)
 int Parser::Assignment(AstNode* parent)
 {
 	
-	AssignmentAstNode* currentAstNode = new AssignmentAstNode(parent);
+	AssignmentAstNode* currentAstNode = new AssignmentAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -304,7 +306,7 @@ int Parser::Assignment(AstNode* parent)
 
 int Parser::Exp(AstNode* parent)
 {
-	ExpAstNode* currentAstNode = new ExpAstNode(parent);
+	ExpAstNode* currentAstNode = new ExpAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -343,7 +345,7 @@ int Parser::Exp(AstNode* parent)
 
 int Parser::SExp(AstNode* parent)
 {
-	SExpAstNode* currentAstNode = new SExpAstNode(parent);
+	SExpAstNode* currentAstNode = new SExpAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -383,7 +385,7 @@ int Parser::SExp(AstNode* parent)
 
 int Parser::Factor(AstNode* parent)
 {
-	FactorAstNode* currentAstNode = new FactorAstNode(parent);
+	FactorAstNode* currentAstNode = new FactorAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -467,7 +469,7 @@ int Parser::Factor(AstNode* parent)
 
 int Parser::MultOp(AstNode* parent)
 {
-	MultOpAstNode* currentAstNode = new MultOpAstNode(parent);
+	MultOpAstNode* currentAstNode = new MultOpAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -507,7 +509,7 @@ int Parser::MultOp(AstNode* parent)
 
 int Parser::AddOp(AstNode* parent)
 {
-	AddOpAstNode* currentAstNode = new AddOpAstNode(parent);
+	AddOpAstNode* currentAstNode = new AddOpAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -547,7 +549,7 @@ int Parser::AddOp(AstNode* parent)
 
 int Parser::Arguments(AstNode* parent)
 {
-	ArgumentsAstNode* currentAstNode = new ArgumentsAstNode(parent);
+	ArgumentsAstNode* currentAstNode = new ArgumentsAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	
@@ -580,7 +582,7 @@ int Parser::Arguments(AstNode* parent)
 
 int Parser::ProcedureCall(AstNode* parent)
 {
-	ProcedureCallAstNode* currentAstNode = new ProcedureCallAstNode(parent);
+	ProcedureCallAstNode* currentAstNode = new ProcedureCallAstNode(parent,window);
 	
 	WritePrefix(currentAstNode);
 	std:: cout << "ProcedureCall" << std::endl;
@@ -639,7 +641,7 @@ int Parser::ProcedureCall(AstNode* parent)
 
 int Parser::Out(AstNode* parent)
 {
-	OutAstNode* currentAstNode = new OutAstNode(parent);
+	OutAstNode* currentAstNode = new OutAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -703,7 +705,7 @@ int Parser::Out(AstNode* parent)
 
 int Parser::Graphics(AstNode* parent)
 {
-	TempAstNode* currentAstNode = new TempAstNode(parent);
+	TempAstNode* currentAstNode = new TempAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -785,7 +787,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 {
 	std::cout << "InnerInstructionList" <<std::endl;
 	
-	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent);
+	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent,window);
 	int instructionResult = Instruction(currentAstNode);
 	/*
 	if(instructionResult != 2)
@@ -817,7 +819,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 
 int Parser::Condition(AstNode* parent)
 {
-	ConditionAstNode* currentAstNode = new ConditionAstNode(parent);
+	ConditionAstNode* currentAstNode = new ConditionAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	std:: cout << "Condition" << std::endl;
 	
@@ -856,7 +858,7 @@ int Parser::Condition(AstNode* parent)
 
 int Parser::SCondition(AstNode* parent)
 {
-	SConditionAstNode* currentAstNode = new SConditionAstNode(parent);
+	SConditionAstNode* currentAstNode = new SConditionAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "SCondition" << std::endl;
@@ -898,7 +900,7 @@ int Parser::SCondition(AstNode* parent)
 
 int Parser::QCondition(AstNode* parent)
 {
-	QConditionAstNode* currentAstNode = new QConditionAstNode(parent);
+	QConditionAstNode* currentAstNode = new QConditionAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "QCondition" << std::endl;
@@ -942,7 +944,7 @@ int Parser::QCondition(AstNode* parent)
 
 int Parser::TCondition(AstNode* parent)
 {
-	TConditionAstNode* currentAstNode = new TConditionAstNode(parent);
+	TConditionAstNode* currentAstNode = new TConditionAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	std:: cout << "TCondition" << std::endl;
 	
@@ -996,7 +998,7 @@ int Parser::TCondition(AstNode* parent)
 
 int Parser::Conditional(AstNode* parent)
 {
-	ConditionalAstNode* currentAstNode = new ConditionalAstNode(parent);
+	ConditionalAstNode* currentAstNode = new ConditionalAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	std:: cout << "Conditional" << std::endl;
 	
@@ -1056,7 +1058,7 @@ int Parser::Conditional(AstNode* parent)
 
 int Parser::ArgumentsDec(AstNode* parent)
 {
-	ArgumentsDecAstNode* currentAstNode = new ArgumentsDecAstNode(parent);
+	ArgumentsDecAstNode* currentAstNode = new ArgumentsDecAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	
 	std:: cout << "ArgumentDec" << std::endl;
@@ -1083,7 +1085,7 @@ int Parser::ArgumentsDec(AstNode* parent)
 
 int Parser::ProcedureDeclaration(AstNode* parent)
 {
-	ProcedureDeclarationAstNode* currentAstNode = new ProcedureDeclarationAstNode(parent);
+	ProcedureDeclarationAstNode* currentAstNode = new ProcedureDeclarationAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -1161,7 +1163,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 
 int Parser::Loop(AstNode* parent)
 {
-	LoopAstNode* currentAstNode = new LoopAstNode(parent);
+	LoopAstNode* currentAstNode = new LoopAstNode(parent,window);
 	WritePrefix(currentAstNode);
 	std:: cout << "Loop" << std::endl;
 	
@@ -1217,7 +1219,7 @@ int Parser::Loop(AstNode* parent)
 
 int Parser::Val(AstNode* parent)
 {
-	ValAstNode* currentAstNode = new ValAstNode(parent);
+	ValAstNode* currentAstNode = new ValAstNode(parent,window);
 	
 	unsigned int depth = DepthCalculate(currentAstNode);
 	for(unsigned int i = 0; i < depth; ++i)
@@ -1288,7 +1290,8 @@ void Parser::execute()
 	astTree->execute(executer);
 	//executer->ExecuterTest();
 	executer->DeleteContext();
-	window = new Window();
+	
+	//window->addOperation(std::pair<int, int>(0,120));
 	window->start();
 	
 }

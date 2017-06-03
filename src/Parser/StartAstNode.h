@@ -9,7 +9,7 @@ class StartAstNode : public AstNode
 public:
 	float calc(Executer* executer);
 	
-	StartAstNode(AstNode* parent);
+	StartAstNode(AstNode* parent, Window* window);
 
 	void execute(Executer* executer);
 	float calculate();

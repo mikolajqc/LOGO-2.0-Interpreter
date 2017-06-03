@@ -5,6 +5,8 @@
 #include "AstNode.h"
 #include "src/Window/Window.h"
 
+class AstNode;
+
 class Parser
 {
 public:

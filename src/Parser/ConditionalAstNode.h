@@ -11,7 +11,7 @@ float calc(Executer* executer);
 	void check();
 	void execute(Executer* executer);
 	
-	ConditionalAstNode(AstNode* parent);
+	ConditionalAstNode(AstNode* parent, Window*);
 private:
 	bool condition; // int z exp castowalny na boola
 };

@@ -10,7 +10,7 @@ float calc(Executer* executer);
 	void check();
 	void execute(Executer* executer);
 	
-	TConditionAstNode(AstNode* parent);
+	TConditionAstNode(AstNode* parent, Window*);
 private:
 };
 

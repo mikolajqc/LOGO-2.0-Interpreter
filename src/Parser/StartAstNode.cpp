@@ -1,8 +1,8 @@
 #include "StartAstNode.h"
 #include "iostream"
 
-StartAstNode::StartAstNode(AstNode* parent)
-:AstNode(parent)
+StartAstNode::StartAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 	
 }

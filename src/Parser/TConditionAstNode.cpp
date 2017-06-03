@@ -1,7 +1,7 @@
 #include "TConditionAstNode.h"
 
-TConditionAstNode::TConditionAstNode(AstNode* parent)
-:AstNode(parent)
+TConditionAstNode::TConditionAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

@@ -7,7 +7,7 @@ class SExpAstNode : public AstNode
 public:
 
 	float calc(Executer* executer);
-	SExpAstNode(AstNode* parent);
+	SExpAstNode(AstNode* parent, Window*);
 
 	float calculate();
 	void execute(Executer* executer);

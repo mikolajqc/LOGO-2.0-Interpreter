@@ -3,8 +3,8 @@
 #include <iostream>
 #include "ArgumentsDecAstNode.h"
 
-ProcedureDeclarationAstNode::ProcedureDeclarationAstNode(AstNode* parent)
-:AstNode(parent)
+ProcedureDeclarationAstNode::ProcedureDeclarationAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 float ProcedureDeclarationAstNode::calculate()

@@ -3,8 +3,8 @@
 #include <vector>
 #include "ProcedureCallAstNode.h"
 
-ArgumentsAstNode::ArgumentsAstNode(AstNode* parent)
-:AstNode(parent)
+ArgumentsAstNode::ArgumentsAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

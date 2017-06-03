@@ -3,8 +3,8 @@
 #include <iostream>
 #include "src/Parser/ArgumentsAstNode.h"
 
-ProcedureCallAstNode::ProcedureCallAstNode(AstNode* parent)
-:AstNode(parent)
+ProcedureCallAstNode::ProcedureCallAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 float ProcedureCallAstNode::calculate()

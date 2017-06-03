@@ -10,7 +10,7 @@ float calc(Executer* executer);
 	void execute(Executer* executer);
 	void check();
 	
-	LoopAstNode(AstNode* parent);
+	LoopAstNode(AstNode* parent, Window*);
 
 private:
 	int numberOfLoops;

@@ -1,8 +1,8 @@
 #include "FactorAstNode.h"
 #include "src/Parser/ProcedureCallAstNode.h"
 
-FactorAstNode::FactorAstNode(AstNode* parent)
-:AstNode(parent)
+FactorAstNode::FactorAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

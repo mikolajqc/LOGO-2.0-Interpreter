@@ -195,6 +195,12 @@ int Window::start()
 					{
 						b = operations[i].second;
 					}
+					if(operations[i].first == 9) //cs
+					{
+						//Clear screen
+						SDL_SetRenderDrawColor( gRenderer, 0xFF, 0xFF, 0xFF, 0xFF );
+						SDL_RenderClear( gRenderer );
+					}
 				}
 					 
 				

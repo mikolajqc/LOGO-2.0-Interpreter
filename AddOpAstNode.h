@@ -7,7 +7,7 @@ class AddOpAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
-	AddOpAstNode(AstNode* parent);
+	AddOpAstNode(AstNode* parent, Window* window);
 
 	void setIsPlus(bool isPlus);
 	float calculate(); //0 when minus and 1 when plus

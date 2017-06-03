@@ -16,8 +16,8 @@ T StringToNumber ( std::string &Text, T defValue = T() )
     return ss >> result ? result : defValue;
 }
 
-ValAstNode::ValAstNode(AstNode* parent)
-:AstNode(parent)
+ValAstNode::ValAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 	
 }

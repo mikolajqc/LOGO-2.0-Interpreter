@@ -1,7 +1,7 @@
 #include "MultOpAstNode.h"
 
-MultOpAstNode::MultOpAstNode(AstNode* parent)
-:AstNode(parent)
+MultOpAstNode::MultOpAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

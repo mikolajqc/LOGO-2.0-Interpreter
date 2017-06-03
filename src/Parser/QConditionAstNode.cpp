@@ -1,8 +1,8 @@
 #include "QConditionAstNode.h"
 #include <iostream>
 
-QConditionAstNode::QConditionAstNode(AstNode* parent)
-:AstNode(parent)
+QConditionAstNode::QConditionAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

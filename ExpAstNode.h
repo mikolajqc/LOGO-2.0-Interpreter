@@ -7,7 +7,7 @@ class ExpAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
-	ExpAstNode(AstNode* parent);
+	ExpAstNode(AstNode* parent, Window*);
 
 	float calculate();
 	void  execute(Executer* executer);

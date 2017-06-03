@@ -3,8 +3,8 @@
 #include "InstructionListAstNode.h"
 #include "src/Parser/StartAstNode.h"
 
-AssignmentAstNode::AssignmentAstNode(AstNode* parent)
-:AstNode(parent)
+AssignmentAstNode::AssignmentAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

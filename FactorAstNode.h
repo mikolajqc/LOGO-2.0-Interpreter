@@ -6,7 +6,7 @@ class FactorAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
-	FactorAstNode(AstNode* parent);
+	FactorAstNode(AstNode* parent, Window* window);
 
 	float calculate();
 	void execute(Executer* executer);

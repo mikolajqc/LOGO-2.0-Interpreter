@@ -11,7 +11,7 @@ class ValAstNode : public AstNode
 public:
 float calc(Executer* executer);
 //narazie tylko liczby 
-	ValAstNode(AstNode* parent);
+	ValAstNode(AstNode* parent, Window*);
 	
 	void SetValue(std::string value);
 	void SetIsVariable(bool isVariable);

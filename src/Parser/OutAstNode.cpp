@@ -1,8 +1,8 @@
 #include "OutAstNode.h"
 #include <iostream>
 
-OutAstNode::OutAstNode(AstNode* parent)
-:AstNode(parent)
+OutAstNode::OutAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 	
 }

@@ -7,7 +7,7 @@ class AssignmentAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
-	AssignmentAstNode(AstNode* parent);
+	AssignmentAstNode(AstNode* parent, Window*);
 
 	void execute(Executer* executer);
 	float calculate();

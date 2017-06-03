@@ -5,8 +5,8 @@
 #include "src/Parser/StartAstNode.h"
 #include "src/Parser/ProcedureDeclarationAstNode.h"
 
-AstNode::AstNode(AstNode* parent)
-:parent(parent)
+AstNode::AstNode(AstNode* parent, Window* window)
+:parent(parent), window(window)
 {
 }
 

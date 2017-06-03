@@ -15,7 +15,7 @@ float calc(Executer* executer);
 	void setArgumentName(std::string argumentName);
 	std::string GetArgumentName();
 	
-	ArgumentsDecAstNode(AstNode* parent);
+	ArgumentsDecAstNode(AstNode* parent, Window*);
 	
 private:
 	std::string argumentName;

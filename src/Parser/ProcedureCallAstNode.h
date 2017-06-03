@@ -13,7 +13,7 @@ float calc(Executer* executer);
 	void execute(Executer* executer);
 	
 	
-	ProcedureCallAstNode(AstNode* parent);
+	ProcedureCallAstNode(AstNode* parent, Window*);
 	
 	void SetProcedureName(std::string procedureName);
 	void SetArgumentsNumber(int argumentsNumber);

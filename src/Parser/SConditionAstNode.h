@@ -10,7 +10,7 @@ float calc(Executer* executer);
 	void check();
 	void execute(Executer* executer);
 	
-	SConditionAstNode(AstNode* parent);
+	SConditionAstNode(AstNode* parent, Window*);
 };
 
 #endif // SCONDITIONASTNODE_H

@@ -1,8 +1,8 @@
 #include "SExpAstNode.h"
 #include <iostream>
 
-SExpAstNode::SExpAstNode(AstNode* parent)
-:AstNode(parent)
+SExpAstNode::SExpAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window )
 {
 }
 

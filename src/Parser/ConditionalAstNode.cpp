@@ -1,8 +1,8 @@
 #include "ConditionalAstNode.h"
 #include <iostream>
 
-ConditionalAstNode::ConditionalAstNode(AstNode* parent)
-:AstNode(parent)
+ConditionalAstNode::ConditionalAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 float ConditionalAstNode::calculate()

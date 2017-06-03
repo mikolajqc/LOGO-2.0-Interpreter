@@ -6,7 +6,7 @@ class MultOpAstNode : public AstNode
 {
 public:
 float calc(Executer* executer);
-	MultOpAstNode(AstNode* parent);
+	MultOpAstNode(AstNode* parent, Window*);
 
 	void setIsMult(bool isMult);
 	float calculate(); //0 when minus and 1 when plus

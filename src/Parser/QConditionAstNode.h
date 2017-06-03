@@ -13,7 +13,7 @@ float calc(Executer* executer);
 	
 	void SetOperatorInString(std::string operatorInString);
 	
-	QConditionAstNode(AstNode* parent);
+	QConditionAstNode(AstNode* parent, Window*);
 	
 private:
 	std::string operatorInString;

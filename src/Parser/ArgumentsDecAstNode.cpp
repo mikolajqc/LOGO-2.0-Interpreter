@@ -2,8 +2,8 @@
 #include "StartAstNode.h"
 #include <iostream>
 
-ArgumentsDecAstNode::ArgumentsDecAstNode(AstNode* parent)
-:AstNode(parent)
+ArgumentsDecAstNode::ArgumentsDecAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 

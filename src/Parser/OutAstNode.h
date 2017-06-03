@@ -10,7 +10,7 @@ float calc(Executer* executer);
 	void execute(Executer* executer);
 	void check();
 	
-	OutAstNode(AstNode* parent);
+	OutAstNode(AstNode* parent, Window*);
 	
 	void SetOperation(std::string operation);
 	std::string GetOperation();

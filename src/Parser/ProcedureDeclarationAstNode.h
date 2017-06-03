@@ -21,7 +21,7 @@ float calc(Executer* executer);
 	
 	std::vector<std::string> GetArgumentsNames();
 	
-	ProcedureDeclarationAstNode(AstNode* parent);
+	ProcedureDeclarationAstNode(AstNode* parent, Window*);
 
 private:
 	std::string procedureName;

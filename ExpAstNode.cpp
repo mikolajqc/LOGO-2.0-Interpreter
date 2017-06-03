@@ -1,8 +1,8 @@
 #include "ExpAstNode.h"
 #include <iostream>
 
-ExpAstNode::ExpAstNode(AstNode* parent)
-:AstNode(parent)
+ExpAstNode::ExpAstNode(AstNode* parent, Window* window)
+:AstNode(parent, window)
 {
 }
 
