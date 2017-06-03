@@ -31,7 +31,7 @@ void Executer::DeleteContext()
 }
 
 void Executer::AddLocalVariable(std::string name, float value)
-{ 
+{
 	
 	stackOfContexts.GetTopPosition()->AddLocalVariable(name, value);
 	std::cout << "LocalVariable added!\n";

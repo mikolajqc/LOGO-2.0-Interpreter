@@ -39,6 +39,7 @@ Parser::~Parser()
 	delete lexer;
 	delete astTree;
 	delete executer;
+	delete window;
 }
 
 Lexeme Parser::NextLexeme()
@@ -1287,6 +1288,9 @@ void Parser::execute()
 	astTree->execute(executer);
 	//executer->ExecuterTest();
 	executer->DeleteContext();
+	window = new Window();
+	window->start();
+	
 }
 
 void Parser::check()

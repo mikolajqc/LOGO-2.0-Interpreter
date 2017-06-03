@@ -3,7 +3,7 @@
 
 #include "Lexer.h"
 #include "AstNode.h"
-//#include "src/Executer/Executer.h"
+#include "src/Window/Window.h"
 
 class Parser
 {
@@ -19,6 +19,9 @@ public:
 private:
 	Lexer* lexer;
 	Executer* executer;
+	
+	Window* window;
+	//std::vector<std::pair <int, int> > operations // for window - more info in docu
 	
 	Lexeme currentLexeme;
 	bool isLexemeUsed;
