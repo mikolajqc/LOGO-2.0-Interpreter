@@ -11,9 +11,7 @@ float calc(Executer* executer);
 	void check();
 	void execute(Executer* executer);
 	
-	
 	int GetArgumentsNumber();
-	//void SetArgumentName(std::string argumentName);
 	
 	ArgumentsAstNode(AstNode* parent, Window*);
 	

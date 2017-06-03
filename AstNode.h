@@ -4,7 +4,6 @@
 #include "src/Executer/Executer.h"
 #include "src/Window/Window.h"
 
-//todo: derivation of this class to more specific classes for ex: with a table of symbols
 class AstNode
 {
 public:
@@ -12,9 +11,7 @@ public:
 	virtual ~AstNode();
 	
 	void AddChild(AstNode* astNode);
-	//tu bedzie execute gdzies
 	
-	//ForDebug only:
 	AstNode* getParent();
 	std::vector<AstNode*> GetChildren();
 	

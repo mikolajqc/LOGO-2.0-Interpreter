@@ -30,7 +30,6 @@ void ProcedureCallAstNode::check()
 		else
 		{
 			startAstNode = dynamic_cast<StartAstNode*>(FindStartForCall(startAstNode));
-			std::cout << "chuj\n";
 		}
 	}
 	if(startAstNode == nullptr)

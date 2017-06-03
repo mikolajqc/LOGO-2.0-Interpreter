@@ -2,7 +2,6 @@
 
 StackOfContext::StackOfContext()
 {
-	//topPosition = 0;
 }
 
 StackOfContext::~StackOfContext()

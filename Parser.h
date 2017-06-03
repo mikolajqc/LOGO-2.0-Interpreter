@@ -12,9 +12,8 @@ class Parser
 public:
 	Parser();
 	~Parser();
-	void start();
 	
-	///only for debug.
+	void start();
 	void execute();
 	void check();
 	
@@ -23,15 +22,12 @@ private:
 	Executer* executer;
 	
 	Window* window;
-	//std::vector<std::pair <int, int> > operations // for window - more info in docu
 	
 	Lexeme currentLexeme;
 	bool isLexemeUsed;
 	Lexeme NextLexeme();
-	
 	AstNode* astTree;
 	
-	//funkcje rozbioru:
 	///3 values: 0 - error, 1 - not recognize, 2 - success
 	int ArgumentsDecStart(AstNode* parent);
 	int InnerStart(AstNode* parent);
@@ -57,10 +53,6 @@ private:
 	int ProcedureDeclaration(AstNode* parent);
 	int Loop(AstNode* parent);
 	int Val(AstNode* parent);
-	
-	//For Debug only:
-	int DepthCalculate(AstNode* astNode);
-	void WritePrefix(AstNode* astNode);
 	
 };
 

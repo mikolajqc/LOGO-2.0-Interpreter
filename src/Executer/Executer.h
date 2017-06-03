@@ -30,8 +30,6 @@ public:
 	void ExecuterTest();
 
 private:
-	
-	//Window* window;
 	StackOfContext stackOfContexts;
 	std::map<std::string, std::vector<std::string>  > procedures;
 };

@@ -12,17 +12,13 @@ float ConditionalAstNode::calculate()
 
 void ConditionalAstNode::check()
 {
-	//condition = children[0]->calculate();
-	
 	std::cout << "Condition = " << children[0]->calculate();
-	
 	children[1]->check();
 }
 
 void ConditionalAstNode::execute(Executer* executer)
 {
 	std::cout << "ConditionalExecution\n";
-	//float value = children[0]->calculate();
 	
 	float value = children[0]->calc(executer);
 	

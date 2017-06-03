@@ -14,9 +14,7 @@ AstNode::~AstNode()
 {
 	for(unsigned int i = 0; i < children.size(); ++i)
 	{
-		//std::cout << "delete child" << i << "\n";
 		if(children[i] != nullptr) delete children[i];
-		//std::cout << "delete child" << i << "\n";
 	}
 }
 
@@ -32,7 +30,7 @@ AstNode* AstNode::getParent()
 
 float AstNode::calculate()
 {
-	return 0; //this will be virtual
+	return 0;
 }
 
 void AstNode::execute(Executer* executer) ///TEMPORARY !!!!! poki co execute jest wykonywane w ramach semantyki - do zmiany

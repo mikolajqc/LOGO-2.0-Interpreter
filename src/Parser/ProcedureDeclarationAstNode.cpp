@@ -31,12 +31,11 @@ void ProcedureDeclarationAstNode::check()
 	}
 	
 	//checking argumentsdec
-	//std::cout << "Children in declaration: " << children.size() << "\n";
 	std::cout << "Children in declaration: " << children[0]->GetChildren().size() << "\n";
 	
 	
 	
-	argumentsNumber = children[0]->GetChildren().size();//(dynamic_cast<StartAstNode*>(children[0]))->GetArgumentsNumber();
+	argumentsNumber = children[0]->GetChildren().size();
 	std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 	if(argumentsNumber > 0)children[0]->check();
 	//checking inner

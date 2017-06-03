@@ -34,10 +34,8 @@ private:
 
 	bool init();
 
-	//Loads media
 	bool loadMedia();
 
-	//Frees media and shuts down SDL
 	void close();
 	SDL_Texture* loadTexture( std::string path );
 	SDL_Window* gWindow = NULL;

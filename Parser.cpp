@@ -74,8 +74,6 @@ int Parser::InnerStart(AstNode* parent)
 {
 	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
 	StartAstNode* currentAstNode = new StartAstNode(parent, window);
-	WritePrefix(currentAstNode);
-	std::cout << "InnerStart(NOT GRAMMAR ELEMENT!)" << std::endl;
 	
 	if(InnerInstructionsList(currentAstNode) == 2)
 	{
@@ -96,17 +94,9 @@ int Parser::ArgumentsDecStart(AstNode* parent)
 {
 	//to jest tylko straznik. Nie jest on uwzgledniony w gramatyce!
 	StartAstNode* currentAstNode = new StartAstNode(parent, window );
-	WritePrefix(currentAstNode);
-	std::cout << "ArgumentsDecStart(NOT GRAMMAR ELEMENT!)" << std::endl;
-
-	WritePrefix(currentAstNode);
-	
-	std:: cout << "ArgumentDec" << std::endl;
 	
 	while(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " ID_VARIABLE" << std::endl;
 		ArgumentsDecAstNode* currentArgumentNode = new ArgumentsDecAstNode(currentAstNode, window);
 		currentArgumentNode->setArgumentName(NextLexeme().GetValue());
 		isLexemeUsed = true;
@@ -120,10 +110,6 @@ int Parser::ArgumentsDecStart(AstNode* parent)
 
 int Parser::InstructionList(AstNode* parent)
 {
-	
-	//WritePrefix(currentAstNode);
-	std::cout << "InstructionList" <<std::endl;
-	
 	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent, window );
 	int instructionResult = Instruction(currentAstNode);  /// to moze walic!!!
 	int procedureResult  = ProcedureDeclaration(currentAstNode);  /// to tez
@@ -138,7 +124,7 @@ int Parser::InstructionList(AstNode* parent)
 	{
 		instructionResult = Instruction(currentAstNode);
 		procedureResult  = ProcedureDeclaration(currentAstNode);
-		//std::cout  << "after inst" <<  instructionResult <<"\n";
+		
 		if(instructionResult == 0 && procedureResult == 0) 
 		{
 			delete currentAstNode;
@@ -158,14 +144,7 @@ int Parser::InstructionList(AstNode* parent)
 int Parser::Instruction(AstNode* parent)
 {
 	InstructionAstNode* currentAstNode = new InstructionAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std::cout << "Instruction" <<std::endl;
-	
+
 	int instructionResult = Assignment(currentAstNode);
 	
 	if(instructionResult == 2)
@@ -253,31 +232,14 @@ int Parser::Assignment(AstNode* parent)
 {
 	
 	AssignmentAstNode* currentAstNode = new AssignmentAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Assignment" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
 		currentAstNode->setNameOfVariable(NextLexeme().GetValue());
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " ID_VARIABLE" << std::endl;
+
 		isLexemeUsed = true;
 		if(NextLexeme().GetCategory() == OP_ASSIGN)
 		{
-			
-			for(unsigned int i = 0; i < depth; ++i)
-			{
-				std::cout << " ";
-			}
-			std:: cout << " OP_ASSIGN" << std::endl;
 			isLexemeUsed = true;
 			
 			if(Exp(currentAstNode) == 2)
@@ -307,14 +269,7 @@ int Parser::Assignment(AstNode* parent)
 int Parser::Exp(AstNode* parent)
 {
 	ExpAstNode* currentAstNode = new ExpAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Exp" << std::endl;
-	
+
 	int sExpResult = SExp(currentAstNode);
 	
 	if(sExpResult == 0)
@@ -346,14 +301,7 @@ int Parser::Exp(AstNode* parent)
 int Parser::SExp(AstNode* parent)
 {
 	SExpAstNode* currentAstNode = new SExpAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "SExp" << std::endl;
-	
+
 	int factorResult = Factor(currentAstNode);
 	
 	if(factorResult == 0)
@@ -386,14 +334,7 @@ int Parser::SExp(AstNode* parent)
 int Parser::Factor(AstNode* parent)
 {
 	FactorAstNode* currentAstNode = new FactorAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Factor" << std::endl;
-	
+
 	int valResult = Val(currentAstNode);
 	
 	if(valResult == 2)
@@ -406,9 +347,7 @@ int Parser::Factor(AstNode* parent)
 		delete currentAstNode;
 		return 0;
 	}
-	
-	//valResult == 1
-	
+
 	int procedureCallResult = ProcedureCall(currentAstNode);
 	
 	if (procedureCallResult == 2)
@@ -421,29 +360,17 @@ int Parser::Factor(AstNode* parent)
 		delete currentAstNode;
 		return 0;
 	}
-	
-	//procedureCallResult = 1
-	
+
 	if(NextLexeme().GetCategory() == OB_CBRACKET)
 	{
 		isLexemeUsed = true;
-		
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " OB_CBRACKET" << std::endl;
-		
+
 		if(Exp(currentAstNode) == 2)
 		{
 			if(NextLexeme().GetCategory() == CB_CBRACKET)
 			{
 				isLexemeUsed = true;
-				for(unsigned int i = 0; i < depth; ++i)
-				{
-					std::cout << " ";
-				}
-				std:: cout << " CB_CBRACKET" << std::endl;
+
 				parent->AddChild(currentAstNode);
 				return 2;
 			}
@@ -451,8 +378,6 @@ int Parser::Factor(AstNode* parent)
 			{
 				std:: cout << ") was expected!\n";
 				exit(1);
-				//delete currentAstNode;
-				//return 0; //nieistotne czy nie rozpoznal exp czy blad w exp
 			}
 		}
 		else
@@ -470,23 +395,12 @@ int Parser::Factor(AstNode* parent)
 int Parser::MultOp(AstNode* parent)
 {
 	MultOpAstNode* currentAstNode = new MultOpAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "MultOp" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == OP_MULTIPLY)
 	{
 		currentAstNode->setIsMult(true);
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " OP_MULTIPLY" << std::endl;
+
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
@@ -494,11 +408,7 @@ int Parser::MultOp(AstNode* parent)
 	{
 		currentAstNode->setIsMult(false);
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " OP_DEVIDE" << std::endl;
+
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
@@ -510,23 +420,12 @@ int Parser::MultOp(AstNode* parent)
 int Parser::AddOp(AstNode* parent)
 {
 	AddOpAstNode* currentAstNode = new AddOpAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "AddOp" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == OP_PLUS)
 	{
 		currentAstNode->setIsPlus(true);
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " OP_PLUS" << std::endl;
+
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
@@ -534,11 +433,7 @@ int Parser::AddOp(AstNode* parent)
 	{
 		currentAstNode->setIsPlus(false);
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " OP_MINUS" << std::endl;
+
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
@@ -550,55 +445,35 @@ int Parser::AddOp(AstNode* parent)
 int Parser::Arguments(AstNode* parent)
 {
 	ArgumentsAstNode* currentAstNode = new ArgumentsAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Arguments" << std::endl;
-	
+
 	int expResult = Exp(currentAstNode);
 	
 	while(expResult == 2)
 	{
-		//Arguments(currentAstNode);
-		
-		//parent->AddChild(currentAstNode);
 		expResult = Exp(currentAstNode);
-		//return 2;
 	}
 	if(expResult == 0)
 	{
 		delete currentAstNode;
 		return 0;
 	}
-	
-	//delete currentAstNode;
-	parent->AddChild(currentAstNode); // to jest ";"
+
+	parent->AddChild(currentAstNode);
 	return 2;
 }
 
 int Parser::ProcedureCall(AstNode* parent)
 {
 	ProcedureCallAstNode* currentAstNode = new ProcedureCallAstNode(parent,window);
-	
-	WritePrefix(currentAstNode);
-	std:: cout << "ProcedureCall" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == ID_PROCEDURE)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " ID_PROCEDURE" << std::endl;
 		currentAstNode->SetProcedureName(NextLexeme().GetValue());
 		
 		isLexemeUsed = true;
 		
 		if(NextLexeme().GetCategory() == OB_SBRACKET)
 		{
-			WritePrefix(currentAstNode);
-			std:: cout << " OB_SBRACKET" << std::endl;
 			isLexemeUsed = true;
 			
 			if(Arguments(currentAstNode) == 2)
@@ -606,10 +481,7 @@ int Parser::ProcedureCall(AstNode* parent)
 				
 				if(NextLexeme().GetCategory() == CB_SBRACKET)
 				{
-					WritePrefix(currentAstNode);
-					std:: cout << " CB_SBRACKET" << std::endl;
 					isLexemeUsed = true;
-					
 					parent->AddChild(currentAstNode);
 					return 2;
 					
@@ -642,18 +514,9 @@ int Parser::ProcedureCall(AstNode* parent)
 int Parser::Out(AstNode* parent)
 {
 	OutAstNode* currentAstNode = new OutAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Out" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == KW_OUTPUT)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_OUTPUT" << std::endl;
 		currentAstNode->SetOperation("OUTPUT");
 		isLexemeUsed = true;
 		
@@ -671,8 +534,6 @@ int Parser::Out(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == KW_PRINT)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_PRINT" << std::endl;
 		currentAstNode->SetOperation("PRINT");
 		isLexemeUsed = true;
 		
@@ -690,8 +551,6 @@ int Parser::Out(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == KW_STOP)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_STOP" << std::endl;
 		currentAstNode->SetOperation("STOP");
 		isLexemeUsed = true;
 		
@@ -707,18 +566,8 @@ int Parser::Graphics(AstNode* parent)
 {
 	TempAstNode* currentAstNode = new TempAstNode(parent,window);
 	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	
-	std:: cout << "Graphics" << std::endl;
-	
 	if(NextLexeme().GetCategory() == KW_MOVE)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_MOVE" << std::endl;
 		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
@@ -736,25 +585,18 @@ int Parser::Graphics(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == KW_SETPC)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_SETPC" << std::endl;
 		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
 		if(NextLexeme().GetCategory() == OB_SBRACKET)
 		{
-			WritePrefix(currentAstNode);
-			std:: cout << " OB_SBRACKET" << std::endl;
 			isLexemeUsed = true;
 			
 			if((Exp(currentAstNode) == 2)  && (Exp(currentAstNode) == 2) && (Exp(currentAstNode) == 2))
 			{
 				if(NextLexeme().GetCategory() == CB_SBRACKET)
 				{
-					WritePrefix(currentAstNode);
-					std:: cout << " CB_SBRACKET" << std::endl;
 					isLexemeUsed = true;
-					
 					parent->AddChild(currentAstNode);
 					return 2;
 				}
@@ -769,8 +611,6 @@ int Parser::Graphics(AstNode* parent)
 	
 	if(NextLexeme().GetCategory() == KW_SCREEN)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_SCREEN" << std::endl;
 		currentAstNode->SetOperation(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
@@ -785,17 +625,8 @@ int Parser::Graphics(AstNode* parent)
 
 int Parser::InnerInstructionsList(AstNode* parent)
 {
-	std::cout << "InnerInstructionList" <<std::endl;
-	
 	InstructionListAstNode* currentAstNode = new InstructionListAstNode(parent,window);
 	int instructionResult = Instruction(currentAstNode);
-	/*
-	if(instructionResult != 2)
-	{
-		delete currentAstNode;
-		return 0;
-	}
-	*/
 	
 	while(instructionResult == 2)
 	{
@@ -820,9 +651,7 @@ int Parser::InnerInstructionsList(AstNode* parent)
 int Parser::Condition(AstNode* parent)
 {
 	ConditionAstNode* currentAstNode = new ConditionAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	std:: cout << "Condition" << std::endl;
-	
+
 	int sConditionResult = SCondition(currentAstNode);
 	
 	if(sConditionResult == 2)
@@ -859,18 +688,13 @@ int Parser::Condition(AstNode* parent)
 int Parser::SCondition(AstNode* parent)
 {
 	SConditionAstNode* currentAstNode = new SConditionAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	
-	std:: cout << "SCondition" << std::endl;
-	
+
 	int qConditionResult = QCondition(currentAstNode);
 	
 	if(qConditionResult == 2)
 	{
 		if(NextLexeme().GetCategory() == OP_AND)
 		{
-			WritePrefix(currentAstNode);
-			std:: cout << " OP_AND" << std::endl;
 			isLexemeUsed = true;
 			
 			if(SCondition(currentAstNode) == 2)
@@ -901,18 +725,13 @@ int Parser::SCondition(AstNode* parent)
 int Parser::QCondition(AstNode* parent)
 {
 	QConditionAstNode* currentAstNode = new QConditionAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	
-	std:: cout << "QCondition" << std::endl;
-	
+
 	int tConditionResult = TCondition(currentAstNode);
 	
 	if(tConditionResult == 2)
 	{
 		if(NextLexeme().GetCategory() == OP_COMPARISON)
 		{
-			WritePrefix(currentAstNode);
-			std:: cout << " OP_COMPARISON" << std::endl;
 			currentAstNode->SetOperatorInString(NextLexeme().GetValue());
 			
 			isLexemeUsed = true;
@@ -945,21 +764,15 @@ int Parser::QCondition(AstNode* parent)
 int Parser::TCondition(AstNode* parent)
 {
 	TConditionAstNode* currentAstNode = new TConditionAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	std:: cout << "TCondition" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == OB_CBRACKET)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " OB_CBRACKET" << std::endl;
 		isLexemeUsed = true;
 		
 		if(Condition(currentAstNode) == 2)
 		{
 			if(NextLexeme().GetCategory() == CB_CBRACKET)
 			{
-				WritePrefix(currentAstNode);
-				std:: cout << " CB_CBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
 				parent->AddChild(currentAstNode);
@@ -999,31 +812,22 @@ int Parser::TCondition(AstNode* parent)
 int Parser::Conditional(AstNode* parent)
 {
 	ConditionalAstNode* currentAstNode = new ConditionalAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	std:: cout << "Conditional" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == KW_IF)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_IF" << std::endl;
 		isLexemeUsed = true;
 		
 		if(Condition(currentAstNode) == 2)
 		{
 			if(NextLexeme().GetCategory() == OB_SBRACKET)
 			{
-				WritePrefix(currentAstNode);
-				std:: cout << " OB_SBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
-				if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
+				if(InnerStart(currentAstNode) == 2)
 				{
 					if(NextLexeme().GetCategory() == CB_SBRACKET)
 					{
-						WritePrefix(currentAstNode);
-						std:: cout << " OB_SBRACKET" << std::endl;
 						isLexemeUsed = true;
-						
 						parent->AddChild(currentAstNode);
 						return 2;
 					}
@@ -1059,14 +863,9 @@ int Parser::Conditional(AstNode* parent)
 int Parser::ArgumentsDec(AstNode* parent)
 {
 	ArgumentsDecAstNode* currentAstNode = new ArgumentsDecAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	
-	std:: cout << "ArgumentDec" << std::endl;
-	
+
 	while(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " ID_VARIABLE" << std::endl;
 		currentAstNode->setArgumentName(NextLexeme().GetValue());
 		isLexemeUsed = true;
 		
@@ -1086,35 +885,21 @@ int Parser::ArgumentsDec(AstNode* parent)
 int Parser::ProcedureDeclaration(AstNode* parent)
 {
 	ProcedureDeclarationAstNode* currentAstNode = new ProcedureDeclarationAstNode(parent,window);
-	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "ProcedureDeclaration" << std::endl;
-	
+
 	if(NextLexeme().GetCategory() == KW_TO)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_TO" << std::endl;
 		isLexemeUsed = true;
 		
 		if(NextLexeme().GetCategory() == ID_PROCEDURE)
 		{
-			WritePrefix(currentAstNode);
-			std:: cout << " ID_PROCEDURE" << std::endl;
-			
 			currentAstNode->SetProcedureName(NextLexeme().GetValue());
 			isLexemeUsed = true;
 			
-			if(ArgumentsDecStart(currentAstNode) == 2/*ArgumentsDec(currentAstNode) == 2*/)
+			if(ArgumentsDecStart(currentAstNode) == 2)
 			{
 				
 				if(NextLexeme().GetCategory() == OB_SBRACKET)
 				{
-					WritePrefix(currentAstNode);
-					std:: cout << " OB_SBRACKET" << std::endl;
 					isLexemeUsed = true;
 					///WE HAVE TO CHANGE GRAMATICS
 					
@@ -1122,10 +907,7 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 					{
 						if(NextLexeme().GetCategory() == CB_SBRACKET)
 						{
-							WritePrefix(currentAstNode);
-							std:: cout << " CB_SBRACKET" << std::endl;
 							isLexemeUsed = true;
-							
 							parent->AddChild(currentAstNode);
 							return 2;
 						}
@@ -1164,31 +946,22 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 int Parser::Loop(AstNode* parent)
 {
 	LoopAstNode* currentAstNode = new LoopAstNode(parent,window);
-	WritePrefix(currentAstNode);
-	std:: cout << "Loop" << std::endl;
 	
 	if(NextLexeme().GetCategory() == KW_REPEAT)
 	{
-		WritePrefix(currentAstNode);
-		std:: cout << " KW_REPEAT" << std::endl;
 		isLexemeUsed = true;
 		
 		if(Exp(currentAstNode) == 2)
 		{
 			if(NextLexeme().GetCategory() == OB_SBRACKET)
 			{
-				WritePrefix(currentAstNode);
-				std:: cout << " OB_SBRACKET" << std::endl;
 				isLexemeUsed = true;
 				
-				if(InnerStart(currentAstNode) == 2/*InnerInstructionsList(currentAstNode) == 2*/)
+				if(InnerStart(currentAstNode) == 2)
 				{
 					if(NextLexeme().GetCategory() == CB_SBRACKET)
 					{
-						WritePrefix(currentAstNode);
-						std:: cout << " CB_SBRACKET" << std::endl;
 						isLexemeUsed = true;
-						
 						parent->AddChild(currentAstNode);
 						return 2; 
 					}
@@ -1221,23 +994,12 @@ int Parser::Val(AstNode* parent)
 {
 	ValAstNode* currentAstNode = new ValAstNode(parent,window);
 	
-	unsigned int depth = DepthCalculate(currentAstNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-	std:: cout << "Val" << std::endl;
-	
 	if(NextLexeme().GetCategory() == ID_VARIABLE)
 	{
 		currentAstNode->SetIsVariable(true);
 		currentAstNode->SetValue(NextLexeme().GetValue());
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " ID_VARIABLE" << std::endl;
+
 		parent->AddChild(currentAstNode);
 		return 2; //everthing is ok
 	}
@@ -1246,11 +1008,6 @@ int Parser::Val(AstNode* parent)
 		currentAstNode->SetIsVariable(false);
 		currentAstNode->SetValue(NextLexeme().GetValue());
 		isLexemeUsed = true;
-		for(unsigned int i = 0; i < depth; ++i)
-		{
-			std::cout << " ";
-		}
-		std:: cout << " VALUE" << std::endl;
 		parent->AddChild(currentAstNode);
 		return 2;
 	}
@@ -1259,39 +1016,13 @@ int Parser::Val(AstNode* parent)
 	return 1; //i dont know what is it but i m not sure if it is an error
 }
 
-int Parser::DepthCalculate(AstNode* astNode)
-{
-	int result = 0;
-	
-	AstNode* currentNode = astNode;
-	while(currentNode->getParent() != nullptr)
-	{
-		++result;
-		currentNode = currentNode->getParent();
-	}
-	
-	return result;
-}
-
-void Parser::WritePrefix(AstNode* astNode)
-{
-	unsigned int depth = DepthCalculate(astNode);
-	for(unsigned int i = 0; i < depth; ++i)
-	{
-		std::cout << " ";
-	}
-}
-
-
 void Parser::execute()
 {
 	std::cout << "Parser executing\n";
 	executer->AddContext();
 	astTree->execute(executer);
-	//executer->ExecuterTest();
 	executer->DeleteContext();
 	
-	//window->addOperation(std::pair<int, int>(0,120));
 	window->start();
 	
 }
