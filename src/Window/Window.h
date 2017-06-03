@@ -15,14 +15,14 @@ public:
 	~Window();
 	int start();
 	
-	void addOperation(std::pair <int, int> operation);
+	void addOperation(std::pair <int, double> operation);
 	
 private:
 
 	const int SCREEN_WIDTH = 640;
 	const int SCREEN_HEIGHT = 480;
-	int xPosition = SCREEN_WIDTH/2;
-	int yPosition = SCREEN_HEIGHT/2;
+	double xPosition = SCREEN_WIDTH/2;
+	double yPosition = SCREEN_HEIGHT/2;
 	bool isActive = true;
 	int r = 0;
 	int g = 0;
@@ -30,7 +30,7 @@ private:
 	int angle = 0;
 	bool isSet = false;
 	
-	std::vector<std::pair<int, int> > operations;
+	std::vector<std::pair<int, double> > operations;
 
 	bool init();
 

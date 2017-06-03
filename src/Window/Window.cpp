@@ -158,8 +158,8 @@ int Window::start()
 					{
 						int d = (operations[i].first == 0) ? operations[i].second : -operations[i].second;
 						
-						int newX = xPosition + d * cos(angle * 3.14 / 180.0);
-						int newY = yPosition + d * sin(angle * 3.14 / 180.0);
+						double newX = xPosition + d * cos(angle * 3.14 / 180.0);
+						double newY = yPosition + d * sin(angle * 3.14 / 180.0);
 
 						SDL_SetRenderDrawColor( gRenderer, r, g, b, 0xFF );		
 						if(isActive)SDL_RenderDrawLine( gRenderer, xPosition, yPosition, newX , newY);
@@ -221,7 +221,7 @@ int Window::start()
 	return 0;
 }
 
-void Window::addOperation(std::pair<int, int> operation)
+void Window::addOperation(std::pair<int, double> operation)
 {
 	operations.push_back(operation);
 }
