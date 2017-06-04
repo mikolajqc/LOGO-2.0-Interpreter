@@ -488,8 +488,9 @@ int Parser::ProcedureCall(AstNode* parent)
 				}
 				else
 				{
+					std::cout << "] was expected in procedure call!";
 					delete currentAstNode;
-					return 0;
+					exit(1);//return 0;
 				}
 			}
 			else
@@ -501,8 +502,9 @@ int Parser::ProcedureCall(AstNode* parent)
 		}
 		else
 		{
+			std::cout << "[ was expected in procedure call!";
 			delete currentAstNode;
-			return 0;
+			exit(1);//return 0;
 		}
 	}
 	
@@ -600,12 +602,24 @@ int Parser::Graphics(AstNode* parent)
 					parent->AddChild(currentAstNode);
 					return 2;
 				}
+				else
+				{
+					std::cout << "] was expected in SETPC call!";
+					delete currentAstNode;
+					exit(1);
+				}
 			}
 			else
 			{
 				delete currentAstNode;
 				return 0;
 			}
+		}
+		else
+		{
+			std::cout << "[ was expected in SETPC call!";
+			delete currentAstNode;
+			exit(1);
 		}
 	}
 	
@@ -833,8 +847,9 @@ int Parser::Conditional(AstNode* parent)
 					}
 					else
 					{
+						std::cout << "] was expected in IF call!";
 						delete currentAstNode;
-						return 0;
+						exit(1);
 					}
 				}
 				else
@@ -845,8 +860,9 @@ int Parser::Conditional(AstNode* parent)
 			}
 			else
 			{
+				std::cout << "[ was expected in IF body!";
 				delete currentAstNode;
-				return 0;
+				exit(1);
 			}
 		}
 		else
@@ -965,6 +981,12 @@ int Parser::Loop(AstNode* parent)
 						parent->AddChild(currentAstNode);
 						return 2; 
 					}
+					else
+					{
+						std::cout << "] was expected in REPEAT body!";
+						delete currentAstNode;
+						exit(1);
+					}
 				}
 				else
 				{
@@ -974,8 +996,9 @@ int Parser::Loop(AstNode* parent)
 			}
 			else
 			{
+				std::cout << "[ was expected in REPEAT body!";
 				delete currentAstNode;
-				return 0;
+				exit(1);
 			}
 		}
 		else
