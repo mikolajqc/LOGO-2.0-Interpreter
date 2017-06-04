@@ -35,7 +35,7 @@ float AstNode::calculate()
 
 void AstNode::execute(Executer* executer) ///TEMPORARY !!!!! poki co execute jest wykonywane w ramach semantyki - do zmiany
 {
-	std::cout << "executeAstNode\n";
+	//std::cout << "executeAstNode\n";
 	children[0]->execute(executer);
 }
 
@@ -48,10 +48,10 @@ AstNode* AstNode::FindStartForCall(AstNode* sourceNode)
 	if(currentNode == nullptr) return nullptr;
 	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
 	{
-		std::cout << "I am in \n";
+		//std::cout << "I am in \n";
 		
 		currentNode = currentNode->parent;
-		std::cout << "I am in2 \n";
+		//std::cout << "I am in2 \n";
 		if(currentNode == nullptr) 
 		{
 			exit(1);
@@ -71,7 +71,7 @@ AstNode* AstNode::FindStart(AstNode* sourceNode)
 	if(currentNode == nullptr) return nullptr;
 	while(!(startNode = dynamic_cast<StartAstNode*>(currentNode)))
 	{
-		std::cout << "I am in \n";
+		//std::cout << "I am in \n";
 		//AstNode* before = currentNode;
 		
 		

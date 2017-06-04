@@ -9,7 +9,7 @@ InstructionListAstNode::InstructionListAstNode(AstNode* parent, Window* window)
 
 void InstructionListAstNode::execute(Executer* executer)
 {
-	std::cout << "InstructionListAstNode executing\n";
+	//std::cout << "InstructionListAstNode executing\n";
 	
 	//executer->AddContext();
 	

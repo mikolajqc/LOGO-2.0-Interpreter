@@ -10,13 +10,13 @@ AssignmentAstNode::AssignmentAstNode(AstNode* parent, Window* window)
 
 void AssignmentAstNode::execute(Executer* executer)
 {
-	std::cout << "AssignmentAstNode executing\n";
+	//std::cout << "AssignmentAstNode executing\n";
 	
 	int value = children[0]->calc(executer);
 	
 	executer->AddLocalVariable(nameOfVariable, value);
 	
-	std::cout << "value: " << value << "\n";
+	//std::cout << "value: " << value << "\n";
 	
 	
 }

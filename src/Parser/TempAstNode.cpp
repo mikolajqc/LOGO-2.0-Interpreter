@@ -55,7 +55,7 @@ void TempAstNode::check()
 {
 	for(unsigned int i = 0; i < children.size(); ++i)
 	{
-		std::cout <<"Value: "  << children[i]->calculate() << "\n";
+		children[i]->calculate();
 	}
 }
 float TempAstNode::calc(Executer* executer)

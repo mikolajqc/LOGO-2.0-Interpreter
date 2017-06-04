@@ -24,7 +24,7 @@ void ProcedureCallAstNode::check()
 		{
 			pointerToProcedureDeclaration = static_cast<ProcedureDeclarationAstNode*>(startAstNode->
 			GetPointerToProcedureNode(procedureName)); ///CHECK IT!!!
-			std::cout << "pointer name: " << pointerToProcedureDeclaration->GetProcedureName() << "\n";
+			//std::cout << "pointer name: " << pointerToProcedureDeclaration->GetProcedureName() << "\n";
 			break;
 		}
 		else
@@ -58,7 +58,7 @@ void ProcedureCallAstNode::check()
 
 void ProcedureCallAstNode::execute(Executer* executer)
 {
-	std::cout <<"ProcedureCallAstNode executing\n";
+	//std::cout <<"ProcedureCallAstNode executing\n";
 	executer->AddContext();
 	executer->SetProcedureContext();
 	
@@ -69,7 +69,7 @@ void ProcedureCallAstNode::execute(Executer* executer)
 	
 	pointerToProcedureDeclaration->GetChildren()[1]->execute(executer);
 	
-	std::cout <<"ProcedureCallAstNode executed value: " << executer->GetReturnValue() << "\n";
+	//std::cout <<"ProcedureCallAstNode executed value: " << executer->GetReturnValue() << "\n";
 	executer->DeleteContext();
 }
 
@@ -86,7 +86,7 @@ float ProcedureCallAstNode::calc(Executer* executer)
 {
 	float result;
 	
-	std::cout <<"ProcedureCallAstNode calculating\n";
+	//std::cout <<"ProcedureCallAstNode calculating\n";
 	executer->AddContext();
 	executer->SetProcedureContext();
 	
@@ -99,7 +99,7 @@ float ProcedureCallAstNode::calc(Executer* executer)
 	
 	result = executer->GetReturnValue();
 	executer->DeleteContext();
-	std::cout <<"ProcedureCallAstNode executed\n";
+	//std::cout <<"ProcedureCallAstNode executed\n";
 	return result;
 }
 

@@ -42,7 +42,6 @@ void ValAstNode::SetIsVariable(bool isVariable)
 
 float ValAstNode::calculate()
 {
-	//std::cout << "asd\n";
 	float result;
 	if(isVariable == true)
 	{
@@ -53,16 +52,9 @@ float ValAstNode::calculate()
 		{
 			if(startAstNode->checkVariable(textValue))
 			{
-				std::cout << "found";
 				return startAstNode->GetValue(textValue);
 			}
-			else
-			{
-				std::cout << "Name " + textValue + " doent exist in this scope!\n";
-				//idziemy wyzej
-			}
 			startAstNode = dynamic_cast<StartAstNode*>(FindStart(startAstNode));
-			std::cout << "idziemy o poziom wyzej!\n";
 		}
 		
 	}
@@ -88,7 +80,7 @@ float ValAstNode::calc(Executer* executer)
 	float result;
 	if(isVariable == true)
 	{
-		std::cout << "textValue: " << textValue << "\n";
+		//std::cout << "textValue: " << textValue << "\n";
 		result = executer->GetVariable(textValue);
 	}
 	else

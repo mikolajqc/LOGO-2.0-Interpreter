@@ -64,7 +64,7 @@ void Context::SetProcedureContext()
 void Context::SetExecutionBlocked()
 {
 	isExecutionBlocked = true;
-	std::cout << "Execution blocked!\n";
+	//std::cout << "Execution blocked!\n";
 }
 
 bool Context::IsExecutionBlocked()

@@ -14,7 +14,7 @@ float LoopAstNode::calculate()
 void LoopAstNode::execute(Executer* executer)
 {
 	numberOfLoops = children[0]->calc(executer);
-	std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
+	//std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
 	
 	
 	for(int i = 0; i < numberOfLoops; ++i)
@@ -29,7 +29,7 @@ void LoopAstNode::execute(Executer* executer)
 void LoopAstNode::check()
 {
 	numberOfLoops = children[0]->calculate();
-	std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
+	//std::cout << "NumberOfLoops: " << numberOfLoops << "\n";
 	children[1]->check();
 }
 float LoopAstNode::calc(Executer* executer)

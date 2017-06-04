@@ -930,15 +930,17 @@ int Parser::ProcedureDeclaration(AstNode* parent)
 					}
 					else
 					{
+						std::cout << "] was expected in procedure declaration!\n";
 						delete currentAstNode;
-						return 0;
+						exit(1);//return 0;
 					}
 					
 				}
 				else
 				{
+					std::cout << "[ was expected in procedure declaration!\n";
 					delete currentAstNode;
-					return 0;
+					exit(1);//return 0;
 				}
 				
 			}
@@ -1040,7 +1042,7 @@ int Parser::Val(AstNode* parent)
 
 void Parser::execute()
 {
-	std::cout << "Parser executing\n";
+	std::cout << "Executing\n";
 	executer->AddContext();
 	astTree->execute(executer);
 	executer->DeleteContext();

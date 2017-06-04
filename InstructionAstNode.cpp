@@ -9,11 +9,11 @@ InstructionAstNode::InstructionAstNode(AstNode* parent, Window* window)
 
 void InstructionAstNode::execute(Executer* executer)
 {
-	std::cout << "InstructionAstNode executing\n";
+	//std::cout << "InstructionAstNode executing\n";
 	
 	if(executer->IsExecutionBlocked())
 	{
-		std::cout << "execution is blocked\n";
+		//std::cout << "execution is blocked\n";
 		return;
 	}
 	

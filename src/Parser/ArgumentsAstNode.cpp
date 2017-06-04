@@ -16,7 +16,7 @@ float ArgumentsAstNode::calculate()
 
 void ArgumentsAstNode::check()
 {
-	std::cout << "checking Arguments\n";
+	//std::cout << "checking Arguments\n";
 	
 	for(size_t i = 0; i < children.size(); ++i)
 	{
@@ -27,7 +27,7 @@ void ArgumentsAstNode::check()
 
 void ArgumentsAstNode::execute(Executer* executer)
 {
-	std::cout << "ArgumentsAstNode executing\n";
+	//std::cout << "ArgumentsAstNode executing\n";
 	std::vector<std::string> argumentsNames = (dynamic_cast<ProcedureCallAstNode*>(parent))->GetPointerToProcedure()->GetArgumentsNames();
 	
 	for(size_t i = 0; i < children.size(); ++i)

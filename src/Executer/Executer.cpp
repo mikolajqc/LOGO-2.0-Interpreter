@@ -18,35 +18,35 @@ void Executer::AddContext()
 {
 	
 	stackOfContexts.push(new Context);
-	std::cout << "Context added!\n";
+	//std::cout << "Context added!\n";
 }
 
 void Executer::DeleteContext()
 {
 	
 	stackOfContexts.pop();
-	std::cout << "Context deleted!\n";
+	//std::cout << "Context deleted!\n";
 }
 
 void Executer::AddLocalVariable(std::string name, float value)
 {
 	
 	stackOfContexts.GetTopPosition()->AddLocalVariable(name, value);
-	std::cout << "LocalVariable added!\n";
+	//std::cout << "LocalVariable added!\n";
 }
 
 void Executer::AddArgument(std::string name, float value)
 {
 	
 	stackOfContexts.GetTopPosition()->AddArgument(name, value);
-	std::cout << "argument added! "<< value << "\n";
+	//std::cout << "argument added! "<< value << "\n";
 }
 
 void Executer::AddProcedure(std::string procedureName, std::vector<std::string> argumentsNames)
 {
 	
 	procedures[procedureName] = argumentsNames;
-	std::cout << "procedure added!\n";
+	//std::cout << "procedure added!\n";
 }
 
 float Executer::GetVariable(std::string name)

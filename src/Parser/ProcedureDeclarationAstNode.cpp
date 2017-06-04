@@ -31,12 +31,12 @@ void ProcedureDeclarationAstNode::check()
 	}
 	
 	//checking argumentsdec
-	std::cout << "Children in declaration: " << children[0]->GetChildren().size() << "\n";
+	//std::cout << "Children in declaration: " << children[0]->GetChildren().size() << "\n";
 	
 	
 	
 	argumentsNumber = children[0]->GetChildren().size();
-	std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
+	//std::cout << "NumberOfArguments: " << argumentsNumber << "\n";
 	if(argumentsNumber > 0)children[0]->check();
 	//checking inner
 	children[1]->check(); //inner instructions list with guard
@@ -46,7 +46,7 @@ void ProcedureDeclarationAstNode::check()
 
 void ProcedureDeclarationAstNode::execute(Executer* executer)
 {
-	std::cout << "ProcedureDeclaration execution\n";
+	//std::cout << "ProcedureDeclaration execution\n";
 	
 	//TODO
 	executer->AddProcedure(procedureName, GetArgumentsNames());
@@ -84,8 +84,8 @@ std::vector<std::string> ProcedureDeclarationAstNode::GetArgumentsNames()
 	for (size_t i = 0; i < children[0]->GetChildren().size();++i)
 	{
 		resultVector.push_back((dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[i]))->GetArgumentName());
-		std::cout << "args: " << (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[i]))->GetArgumentName() << " ";
+		//std::cout << "args: " << (dynamic_cast<ArgumentsDecAstNode*>(children[0]->GetChildren()[i]))->GetArgumentName() << " ";
 	}
-	std::cout <<"\n";
+	//std::cout <<"\n";
 	return resultVector;
 }

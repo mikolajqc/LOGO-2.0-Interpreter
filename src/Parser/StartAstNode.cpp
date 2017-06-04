@@ -9,7 +9,7 @@ StartAstNode::StartAstNode(AstNode* parent, Window* window)
 
 void StartAstNode::execute(Executer* executer)
 {
-	std::cout << "StartAstNode executing\n";
+	//std::cout << "StartAstNode executing\n";
 	for (unsigned int i = 0; i < children.size(); ++i)
 	{
 		children[i]->execute(executer);
@@ -23,7 +23,7 @@ float StartAstNode::calculate()
 
 void StartAstNode::addVariable(std::string variableName, float value)
 {
-	std::cout << "Adding variable to table: " << variableName << " " << value  << "\n";
+	//std::cout << "Adding variable to table: " << variableName << " " << value  << "\n";
 	variables.insert(std::pair<std::string, float>(variableName, value));
 }
 
@@ -71,7 +71,7 @@ bool StartAstNode::CheckProcedure(std::string procedureName)
 
 void StartAstNode::AddProcedure(std::string procedureName, AstNode* pointerToProcedureNode)
 {
-	std::cout << "Adding procedure to table: " << procedureName << "\n";
+	//std::cout << "Adding procedure to table: " << procedureName << "\n";
 			
 	procedures.insert(std::pair<std::string,AstNode*>(procedureName, pointerToProcedureNode));
 }
@@ -91,7 +91,7 @@ AstNode* StartAstNode::GetPointerToProcedureNode(std::string procedureName)
 
 int StartAstNode::GetArgumentsNumber()
 {
-	std::cout << "children number: " << children.size() << "\n";
+	//std::cout << "children number: " << children.size() << "\n";
 	return children.size();
 	
 }
