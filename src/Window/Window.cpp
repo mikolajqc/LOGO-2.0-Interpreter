@@ -156,7 +156,7 @@ int Window::start()
 				{
 					if(operations[i].first == 0 || operations[i].first == 1)
 					{
-						int d = (operations[i].first == 0) ? operations[i].second : -operations[i].second;
+						double d = (operations[i].first == 0) ? operations[i].second : -operations[i].second;
 						
 						double newX = xPosition + d * cos(angle * 3.14 / 180.0);
 						double newY = yPosition + d * sin(angle * 3.14 / 180.0);

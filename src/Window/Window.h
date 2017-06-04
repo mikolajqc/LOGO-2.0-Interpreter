@@ -24,10 +24,10 @@ private:
 	double xPosition = SCREEN_WIDTH/2;
 	double yPosition = SCREEN_HEIGHT/2;
 	bool isActive = true;
-	int r = 0;
-	int g = 0;
-	int b = 0;
-	int angle = 0;
+	double r = 0;
+	double g = 0;
+	double b = 0;
+	double angle = 0;
 	bool isSet = false;
 	
 	std::vector<std::pair<int, double> > operations;
