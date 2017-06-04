@@ -2,7 +2,7 @@
 
 Lexer::Lexer(std::string filePath)
 {
-	fileManager = new FileManager("test.txt");
+	fileManager = new FileManager(filePath);
 }
 
 Lexer::~Lexer()

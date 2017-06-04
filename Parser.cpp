@@ -27,10 +27,10 @@
 #include "ValAstNode.h"
 
 class setArgumentName;
-Parser::Parser()
+Parser::Parser(std::string path)
 :isLexemeUsed(true), astTree(nullptr)
 {
-	lexer = new Lexer("test.txt");
+	lexer = new Lexer(path);
 	executer = new Executer();
 	window = new Window();
 }
@@ -1007,7 +1007,6 @@ int Parser::Loop(AstNode* parent)
 			return 0;
 		}
 	}
-	
 	
 	delete currentAstNode;
 	return 1;

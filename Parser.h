@@ -10,7 +10,7 @@ class AstNode;
 class Parser
 {
 public:
-	Parser();
+	Parser(std::string path);
 	~Parser();
 	
 	void start();
